@@ -24,7 +24,7 @@ public class BDDConnection {
 	public BDDConnection(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			c = DriverManager.getConnection("jdbc:mysql://webtp.fil.univ-lille1.fr:3306/vanelle?user=vanelle&password=mouais^^030792");
+			c = DriverManager.getConnection("jdbc:mysql://172.18.15.22:3306/vanelle?user=vanelle&password=mouais^^030792");
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("Erreur classforname");
@@ -45,4 +45,5 @@ public class BDDConnection {
 	public Connection getC(){
 		return this.c;
 	}
+
 }
