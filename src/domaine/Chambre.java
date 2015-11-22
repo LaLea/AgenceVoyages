@@ -13,9 +13,9 @@ public class Chambre {
 	private Categorie categorie;
 	private int idHotel;
 	/**
-	 * @param id_chambre
-	 * @param categorie
-	 * @param idHotel
+	 * @param id_chambre the unique id to the chambre
+	 * @param categorie the categorie, categorie object
+	 * @param idHotel the id about the tower
 	 */
 	public Chambre(int id_chambre, Categorie categorie, int idHotel) {
 		this.id_chambre = id_chambre;

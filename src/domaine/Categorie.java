@@ -7,7 +7,7 @@ package domaine;
  * @author Tchioben
  *
  */
-public abstract class Categorie {
+public class Categorie {
 
 	private int id_categorie;
 	

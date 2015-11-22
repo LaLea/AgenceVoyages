@@ -3,6 +3,8 @@
  */
 package domaine;
 
+import java.util.ArrayList;
+
 /**
  * @author Tchioben
  *
@@ -14,6 +16,8 @@ public class Hotel {
 	private String nom;
 	
 	private int id_ville;
+	
+	private ArrayList<Categorie> lesCategories ;
 
 	/** create a new hotel 
 	 * @param id_hotel
@@ -24,6 +28,7 @@ public class Hotel {
 		this.id_hotel = id_hotel;
 		this.nom = nom;
 		this.id_ville = id_ville;
+		this.lesCategories = new ArrayList<Categorie>();
 	}
 
 	/**
