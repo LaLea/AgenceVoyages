@@ -37,9 +37,7 @@ public class FabriqueChambre {
 	
 	
 	private void addChambre(Chambre chambre){
-		if (lesChambres.get(chambre.getCategorie().hashCode())==null){
-			lesChambres.put(chambre.getCategorie().hashCode(),chambre);
-		}
+
 	}
 	
 	/**

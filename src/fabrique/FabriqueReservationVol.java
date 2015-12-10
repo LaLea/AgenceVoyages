@@ -16,17 +16,14 @@ public class FabriqueReservationVol {
 	
 	private HashMap<Integer,ReservationVol> lesReservationVols;
 	
-	private int idUnique; //permet de donner un id unique à chaque categorie
-	
 	
 	private FabriqueReservationVol(){
 		this.lesReservationVols = new HashMap<Integer,ReservationVol>();
-		
-		this.idUnique=1;
+	
 	}
 	
 	
-	public FabriqueReservationVol getInstance(){
+	public static FabriqueReservationVol getInstance(){
 		if (INSTANCE==null){
 			INSTANCE = new FabriqueReservationVol();
 		}

@@ -11,7 +11,6 @@ public class Voyage {
 
 	 private int id_voyage;
 	 
-	 private int numVoyage;
 	 
 	 private int idReservation;
 	 
@@ -21,15 +20,13 @@ public class Voyage {
 
 	/**
 	 * @param id_voyage
-	 * @param numVoyage
 	 * @param idReservation
 	 * @param idReservationChambre
 	 * @param idClient
 	 */
-	public Voyage(int id_voyage, int numVoyage, int idReservation,
+	public Voyage(int id_voyage, int idReservation,
 			int idReservationChambre, int idClient) {
 		this.id_voyage = id_voyage;
-		this.numVoyage = numVoyage;
 		this.idReservation = idReservation;
 		this.idReservationChambre = idReservationChambre;
 		this.idClient = idClient;
@@ -49,19 +46,6 @@ public class Voyage {
 		this.id_voyage = id_voyage;
 	}
 
-	/**
-	 * @return the numVoyage
-	 */
-	public int getNumVoyage() {
-		return numVoyage;
-	}
-
-	/**
-	 * @param numVoyage the numVoyage to set
-	 */
-	public void setNumVoyage(int numVoyage) {
-		this.numVoyage = numVoyage;
-	}
 
 	/**
 	 * @return the idReservation
@@ -116,7 +100,6 @@ public class Voyage {
 		result = prime * result + idReservation;
 		result = prime * result + idReservationChambre;
 		result = prime * result + id_voyage;
-		result = prime * result + numVoyage;
 		return result;
 	}
 
@@ -139,8 +122,6 @@ public class Voyage {
 		if (idReservationChambre != other.idReservationChambre)
 			return false;
 		if (id_voyage != other.id_voyage)
-			return false;
-		if (numVoyage != other.numVoyage)
 			return false;
 		return true;
 	}

@@ -27,10 +27,21 @@ public class FabriqueClient {
 	}
 	
 	
-	public FabriqueClient getInstance(){
+	public static FabriqueClient getInstance(){
 		if (INSTANCE==null){
 			INSTANCE = new FabriqueClient();
 		}
 		return INSTANCE;
+	}
+
+	/**
+	 * ajoute un client, si le client existe deja, il renvoie l'id de l'existant
+	 * @return numero d'identification du client
+	 */
+	public int addClient(String nom,String prenom,int id_ville,String date) {
+		int id = BDDConnection.addClient(nom,prenom,id_ville,date);	
+		Client client= new Client(id,nom,prenom,date,id_ville);
+		this.lesClients.put(id,client);
+		return id;
 	}
 }

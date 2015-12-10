@@ -28,7 +28,7 @@ public class Hotel {
 		this.id_hotel = id_hotel;
 		this.nom = nom;
 		this.id_ville = id_ville;
-		this.lesCategories = new ArrayList<Categorie>();
+		this.setLesCategories(new ArrayList<Categorie>());
 	}
 
 	/**
@@ -105,6 +105,20 @@ public class Hotel {
 		} else if (!nom.equals(other.nom))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the lesCategories
+	 */
+	public ArrayList<Categorie> getLesCategories() {
+		return lesCategories;
+	}
+
+	/**
+	 * @param lesCategories the lesCategories to set
+	 */
+	public void setLesCategories(ArrayList<Categorie> lesCategories) {
+		this.lesCategories = lesCategories;
 	}
 	
 	

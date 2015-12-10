@@ -6,20 +6,18 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
 
 
 public class BDDConnection {
-	
-	String url = "sql2.olympe.in";
-	String userName = "y5cf3srf";
-	String password = "P@ssw0rd2015";
-	
+
 	private static BDDConnection INSTANCE = null;
 	
-	private Connection c;
+	private static Connection c;
 	
 	public BDDConnection(){
 		try {
@@ -41,9 +39,27 @@ public class BDDConnection {
 			return INSTANCE;
 		}
 	}
+
 	
-	public Connection getC(){
-		return this.c;
+	/**
+	 * retourne la categorie avec ce nom et cet identifiant d'hotel correspondant
+	 * @param idHotel 
+	 * @param nom about the categorie
+	 * @return
+	 */
+	public static  ResultSet selectCategorie(int idHotel, String nom){
+		PreparedStatement stmt;
+		ResultSet numero = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Categorie where Id_hotel = ? and Nom= ?);");
+			stmt.setInt(1, idHotel);
+			stmt.setString(2, nom);
+			numero = stmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return numero;
 	}
 
 }
