@@ -10,8 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @author Tchioben
- *
+ * @author Lea Vannelle & Benoit Bailleul
+ * CLIENT,CATEGORIE,CHAMBRE,HOTEL,VILLE => OK
  */
 public class BDDConnection {
 
@@ -40,7 +40,7 @@ public class BDDConnection {
 		}
 	}
 
-	
+	//CATEGORIE
 	
 	/**
 	 * retourne la categorie avec ce nom et cet identifiant d'hotel correspondant
@@ -48,57 +48,98 @@ public class BDDConnection {
 	 * @param nom about the categorie
 	 * @return
 	 */
-	public static  ResultSet selectCategorie(int idHotel, String nom){
+	private static  ResultSet selectCategorie(int idHotel, String nom){
+		BDDConnection.getInstance();
 		PreparedStatement stmt;
 		ResultSet categorie = null;
 		try {
-			BDDConnection.getInstance();
 			stmt = c.prepareStatement("select * from Categorie where IDHotel = ? and Nom= ?);");
 			stmt.setInt(1, idHotel);
 			stmt.setString(2, nom);
 			categorie = stmt.executeQuery();
+			categorie.next();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return null;
 		}
 		return categorie;
 	}
 
 	/**
-	 * ajoute une categorie à un hotel et renvoie le id de la categorie
-	 * @param id_hotel l'id de l'hotel auquel on veut rajouter la categorie
-	 * @param nom de la categorie
-	 * @param capacite le nombre de place dans la chambre
-	 * @param tarif le prix
-	 * @return
-	 * @throws SQLException 
+	 * ajoute une categorie dans la BDD si elle n'existe pas
+	 * @param id_hotel
+	 * @param nom
+	 * @param capacite
+	 * @param tarif
+	 * @return idCategorie
 	 */
-	@SuppressWarnings("unused")
-	public static int addCategorie(int id_hotel, String nom, int capacite,float tarif) throws SQLException {
-		PreparedStatement stmt;
-		ResultSet resultat = BDDConnection.selectCategorie(id_hotel, nom);
-		resultat.next();
-		if (resultat==null){ //si le retour du select est vide alors il doit le creer
-			try { 
-				BDDConnection.getInstance();
+	public static int addCategorie(int id_hotel, String nom, int capacite,float tarif) {
+		BDDConnection.getInstance();
+		int idCategorie = BDDConnection.getCategorie(id_hotel, nom);
+		if (idCategorie == 0){
+			try {
+				PreparedStatement stmt;
 				stmt = c.prepareStatement("insert into Categorie(IDHotel,Nom,Capacite,Tarif) values (?,?,?,?)");
 				stmt.setInt(1, id_hotel);
 				stmt.setString(2, nom);
 				stmt.setInt(3, capacite);
 				stmt.setFloat(4, tarif);
-				resultat = BDDConnection.selectCategorie(id_hotel, nom);
+				ResultSet resultat = stmt.executeQuery();
 				resultat.next();
+				idCategorie = BDDConnection.getCategorie(id_hotel, nom);
+				return resultat.findColumn("ID_Categorie");
 			} catch (SQLException e) {
-				e.printStackTrace();
+				return 0;
 			}
 		}
-		return resultat.findColumn("ID_Categorie");
+		return idCategorie;
+	}
+	
+	
+	/**
+	 * recupere l'id de la categorie
+	 * @param id_hotel l'id de l'hotel auquel on veut rajouter la categorie
+	 * @param nom de la categorie
+	 * @param capacite le nombre de place dans la chambre
+	 * @param tarif le prix
+	 * @return 0 si il y a eu un probleme
+	 */
+	public static int getCategorie(int id_hotel, String nom){
+		ResultSet idCategorie= BDDConnection.selectCategorie(id_hotel,nom);
+		try {
+			idCategorie.next();
+			return idCategorie.findColumn("ID_Categorie");
+		}
+		catch (SQLException e){
+			return 0;
+		}
+	}
+	
+	/**
+	 * permet de recuperer la ligne entiere d'une categorie grace à l'id 
+	 * de la categorie
+	 * @param idCategorie
+	 * @return le ResultSet si la ligne existe sinon null, ( le .next pour être 
+	 * sur la ligne a deja ete realise
+	 */
+	public static ResultSet ligneCategorie(int idCategorie){
+		BDDConnection.getInstance();
+		try{
+			PreparedStatement stmt = c.prepareStatement("select * from Catgorie where ID_Categorie=?");
+			stmt.setInt(1,idCategorie);
+			ResultSet resultat = stmt.executeQuery();
+			resultat.next();
+			return resultat;
+		}
+		catch (SQLException e){
+			return null;
+		}
 	}
 	
 	/**
 	 * supprime la categorie de la base grace à son id
 	 * @param id_categorie
 	 */
-	public static void deleteCategore( int id_categorie){
+	public static void deleteCategorie( int id_categorie){
 			try {
 				BDDConnection.getInstance();
 				PreparedStatement stmt = c.prepareStatement("delete from Categorie where ID_Categorie=?");
@@ -110,48 +151,91 @@ public class BDDConnection {
 			}
 	}
 
+	// FIN CATEGORIE
 	
-
+	
+	
+	
+	// CHAMBRE
+	
 	public static  ResultSet selectChambre(int id_hotel,int id_categorie,int numero){
 		PreparedStatement stmt;
-		ResultSet categorie = null;
+		ResultSet ligneChambre = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Chambre where IDHotel=? and IDCategorie=? and numero= ?);");
+			stmt = c.prepareStatement("select * from Chambre where IDHotel=? and IDCategorie=? and Numero= ?);");
 			stmt.setInt(1,id_hotel );
 			stmt.setInt(2, id_categorie);
 			stmt.setInt(3, numero);			
-			categorie = stmt.executeQuery();
+			ligneChambre = stmt.executeQuery();
+			ligneChambre.next();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return null;
 		}
-		return categorie;
+		return ligneChambre;
+	}
+	
+	public static  ResultSet ligneChambre(int idChambre){
+		PreparedStatement stmt;
+		ResultSet ligneChambre = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Chambre where ID_Chambre= ?);");
+			stmt.setInt(1,idChambre );;			
+			ligneChambre = stmt.executeQuery();
+			ligneChambre.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneChambre;
 	}
 
+	
+	public static int getChambre(int id_hotel,int id_categorie,int numero){
+		BDDConnection.getInstance();
+		ResultSet ligneChambre = BDDConnection.selectChambre(id_hotel, id_categorie, numero);
+		try {
+			return ligneChambre.findColumn("ID_Chambre");
+		}
+		catch (SQLException e){
+			return 0;
+		}
+	}
 
-	@SuppressWarnings("unused")
-	public static int addChambre(int id_hotel,int id_categorie,int numero) throws SQLException{
-		PreparedStatement stmt;
-		ResultSet resultat = BDDConnection.selectChambre(id_hotel,id_categorie,numero);
-		resultat.next();
-		if (resultat==null){ //si le retour du select est vide alors il doit le creer
-			try { 
-				BDDConnection.getInstance();
+	/**
+	 * permet de creer une chambre dans la base de données, ne la crée pas 
+	 * si elle existe déjà
+	 * @param id_hotel id_hotel
+	 * @param id_categorie id_categorie
+	 * @param numero numero de la chambre
+	 * @return le numero de l'id_chambre que l'on vient de créer ou recuperer
+	 * dans la base, 0 si il y a eu un quelconque probleme
+	 */
+	public static int addChambre(int id_hotel,int id_categorie,int numero){
+		BDDConnection.getInstance();
+		int idChambre = BDDConnection.getChambre(id_hotel, id_categorie, numero);
+		try {			
+			if (idChambre==0){
+				PreparedStatement stmt;
 				stmt = c.prepareStatement("insert into Client(ID_Client,IDVilleOrigine,Nom,Prenom,DateNaissance) values (?,?,?,?,?)");
 				stmt.setInt(1,id_hotel );
 				stmt.setInt(2, id_categorie);
 				stmt.setInt(3, numero);	
 				stmt.executeQuery();
-				resultat = BDDConnection.selectChambre(id_hotel,id_categorie,numero);
-				resultat.next();
-			} catch (SQLException e) {
-				e.printStackTrace();
+				idChambre=getChambre(id_hotel, id_categorie, numero);
+				return idChambre;
 			}
 		}
-		return resultat.findColumn("ID_Client");
+		catch (SQLException e){
+			return 0;
+		}
+		return idChambre;
 	}
 	
-
+	/**
+	 * supprime la chambre d'apres on id_chambre
+	 * @param id_chambre id de la chambre
+	 */
 	public static void deleteChambre(int id_chambre){
 			try {
 				BDDConnection.getInstance();
@@ -160,34 +244,57 @@ public class BDDConnection {
 				stmt.setInt(1,id_chambre);
 				stmt.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 	}
 	
+	//FIN CHAMBRE
 	
 	
 	
+	//CLIENT
 	/**
 	 * retourne le select avec son nom et prenom
 	 * @param nom son nom
 	 * @param prenom son prenom
 	 * @return son identifiant
 	 */
-	public static  ResultSet selectClient(String nom, String prenom){
+	private static  ResultSet selectClient(String nom, String prenom){
+		BDDConnection.getInstance();
 		PreparedStatement stmt;
-		ResultSet categorie = null;
+		ResultSet client = null;
 		try {
-			BDDConnection.getInstance();
 			stmt = c.prepareStatement("select * from Client where Nom = ? and Prenom= ?);");
 			stmt.setString(1, nom);
 			stmt.setString(2, prenom);
-			categorie = stmt.executeQuery();
+			client = stmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return categorie;
+		return client;
 	}
 
+	/**
+	 * permet de recuperer la ligne avec l'id correspondant
+	 * @param id_client
+	 * @return null si il y a eu un probleme avec la BDD, 
+	 * sinon la ligne avec l'id correspondant
+	 */
+	public static ResultSet ligneClient(int id_client){
+		BDDConnection.getInstance();
+		try {
+			PreparedStatement stmt;
+			ResultSet ligneClient;
+			stmt = c.prepareStatement("select * from Client where ID_Client=?");
+			stmt.setInt(1, id_client);
+			ligneClient = stmt.executeQuery();
+			ligneClient.next();
+			return ligneClient;
+		}
+		catch (SQLException e){
+			return null;
+		}
+	}
+	
 	/**
 	 * ajoute un client et renvoie son id
 	 * @param nom
@@ -197,29 +304,44 @@ public class BDDConnection {
 	 * @return 0 if he have a problem
 	 * @throws SQLException 
 	 */
-	@SuppressWarnings("unused")
 	public static int addClient( String nom, String prenom, int id_ville, String date) {
-		try {
-		PreparedStatement stmt;
-		ResultSet resultat = BDDConnection.selectClient(nom,prenom);
-		resultat.next();
-		if (resultat==null){ //si le retour du select est vide alors il doit le creer
-				BDDConnection.getInstance();
-				stmt = c.prepareStatement("insert into Client(ID_Client,IDVilleOrigine,Nom,Prenom,DateNaissance) values (?,?,?,?,?)");
+		BDDConnection.getInstance();
+		int idClient= BDDConnection.getClient(nom, prenom);
+		if(idClient==0){
+			try{
+				PreparedStatement stmt;
+				stmt= c.prepareStatement("insert into Client(ID_Client,IDVilleOrigine,Nom,Prenom,DateNaissance) values (?,?,?,?,?)");
 				stmt.setString(1, nom );
 				stmt.setString(2, prenom);
 				stmt.setInt(3, id_ville);
 				stmt.setDate(4,java.sql.Date.valueOf(date));
 				stmt.execute();
-				resultat = BDDConnection.selectClient(nom,prenom);
-				resultat.next();
+				idClient= BDDConnection.getClient(nom, prenom);
+			}
+			catch(SQLException e){
+				return 0;
+			}
 		}
-		return resultat.findColumn("ID_Client");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
+		return idClient;
 	}
+
+	/**
+	 * permet de recuperer l'id d'un client
+	 * @param nom
+	 * @param prenom
+	 * @return l'id du client sinon 0
+	 */
+	public static int getClient(String nom, String prenom){
+		ResultSet idClient= BDDConnection.selectClient(nom, prenom);
+		try {
+			idClient.next();
+			return idClient.findColumn("ID_Client");
+		}
+		catch (SQLException e){
+			return 0;
+		}
+	}
+	
 	
 	
 	/**
@@ -238,46 +360,79 @@ public class BDDConnection {
 			}
 	}
 	
+	// FIN CLIENT
 	
 
-	public static  ResultSet selectHotel(int id_ville, String nom){
+	//HOTEL
+	
+	/**
+	 * permet de recuperer la ligne d'un hotel
+	 * @param id_ville
+	 * @param nom
+	 * @return null si l'hotel n'existe pas en base
+	 */
+	public static  ResultSet ligneHotel(int id_ville, String nom){
+		BDDConnection.getInstance();
 		PreparedStatement stmt;
-		ResultSet categorie = null;
+		ResultSet ligneHotel = null;
 		try {
-			BDDConnection.getInstance();
 			stmt = c.prepareStatement("select * from Hotel where Nom = ? and IDVille= ?);");
 			stmt.setString(1, nom);
 			stmt.setInt(2, id_ville);
-			categorie = stmt.executeQuery();
+			ligneHotel = stmt.executeQuery();
+			ligneHotel.next();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return null;
 		}
-		return categorie;
+		return ligneHotel;
 	}
 
-
-	@SuppressWarnings("unused")
-	public static int addHotel(int id_ville, String nom) throws SQLException{
-		PreparedStatement stmt;
-		ResultSet resultat = BDDConnection.selectHotel(id_ville,nom);
-		resultat.next();
-		if (resultat==null){ //si le retour du select est vide alors il doit le creer
+	/**
+	 * permet de recuperer l'id d'un hotel
+	 * @param id_ville
+	 * @param nom
+	 * @return l'id de l'hotel, 0 si il n'existe pas en base
+	 */
+	public static int getHotel(int id_ville,String nom){
+		int idHotel;
+		ResultSet ligneHotel = BDDConnection.ligneHotel(id_ville, nom);
+		try{
+			idHotel=ligneHotel.findColumn("ID_Hotel");
+			return idHotel;
+		}
+		catch ( SQLException e){
+			return 0;
+		}
+	}
+	
+	/**
+	 * permet de creer un hotel
+	 * @param id_ville
+	 * @param nom
+	 * @return l'id de l'hotel créé ou récuperé sinon 0 si la base n'a pas reussi à le creer.
+	 */
+	public static int addHotel(int id_ville, String nom){
+		BDDConnection.getInstance();
+		int idHotel = BDDConnection.getHotel(id_ville, nom);
+		if (idHotel == 0){ //si le retour du select est vide alors il doit le creer
 			try { 
-				BDDConnection.getInstance();
+				PreparedStatement stmt;
 				stmt = c.prepareStatement("insert into Hotel(IDVille,Nom) values (?,?)");
 				stmt.setInt(1, id_ville );
 				stmt.setString(2, nom);
 				stmt.execute();
-				resultat = BDDConnection.selectHotel(id_ville,nom);
-				resultat.next();
+				idHotel = BDDConnection.getHotel(id_ville, nom);				
 			} catch (SQLException e) {
-				e.printStackTrace();
+				return 0;
 			}
 		}
-		return resultat.findColumn("ID_Client");
+		return idHotel;
 	}
 	
-
+	/**
+	 * permet de supprimer un hotel de la BDD grace a l'id
+	 * @param id_hotel
+	 */
 	public static void deleteHotel(int id_hotel){
 			try {
 				BDDConnection.getInstance();
@@ -289,6 +444,12 @@ public class BDDConnection {
 				e.printStackTrace();
 			}
 	}
+	
+	//FIN HOTEL
+
+	
+	
+	//RESERVATION CHAMBRE
 	
 	public static  ResultSet selectReserversationChambre(int id_chambre){
 		PreparedStatement stmt;
@@ -338,56 +499,94 @@ public class BDDConnection {
 			}
 	}
 	
-	public static  ResultSet selectVille(String nom, String pays ){
+	
+	//VILLE
+	/**
+	 * permet de recuperer une ligne de la table Ville grace a son nom
+	 * et pays
+	 * @param nom
+	 * @param pays
+	 * @return la ligne de la ville sinon null
+	 */
+	public static  ResultSet ligneVille(String nom, String pays ){
 		PreparedStatement stmt;
-		ResultSet categorie = null;
+		ResultSet ligneVille = null;
 		try {
 			BDDConnection.getInstance();
 			stmt = c.prepareStatement("select * from Ville where Nom=? and Pays=?);");
 			stmt.setString(1, nom);
 			stmt.setString(2, pays);
-			categorie = stmt.executeQuery();
+			ligneVille = stmt.executeQuery();
+			ligneVille.next();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return null;
 		}
-		return categorie;
+		return ligneVille;
 	}
 
-
-	@SuppressWarnings("unused")
+	/**
+	 * permet de recuperer id d'une ville grace a son nom et son pays
+	 * @param nom
+	 * @param pays
+	 * @return l'id de la ville sinon 0
+	 */
+	public static int getVille(String nom, String pays){
+		int idVille = 0;
+		try {
+			ResultSet ligneVille = BDDConnection.ligneVille(nom, pays);
+			idVille=ligneVille.findColumn("ID_Ville");
+		}
+		catch(SQLException e){
+			return 0;
+		}
+		return idVille;
+	}
+	
+	/**
+	 * permet d'ajouter une ville a la bdd
+	 * @param nom
+	 * @param pays
+	 * @return l'identifiant de la base dans la BDD sinon 0
+	 * @throws SQLException
+	 */
 	public static int addVille(String nom, String pays ) throws SQLException{
-		PreparedStatement stmt;
-		ResultSet resultat = BDDConnection.selectVille( nom, pays );
-		resultat.next();
-		if (resultat==null){ //si le retour du select est vide alors il doit le creer
+		BDDConnection.getInstance();
+		int idVille = BDDConnection.getVille(nom, pays);
+		
+		if (idVille==0){ //si le retour du select est vide alors il doit le creer
 			try { 
-				BDDConnection.getInstance();
+				PreparedStatement stmt;
 				stmt = c.prepareStatement("insert into Ville(Nom,Pays) values (?,?)");
 				stmt.setString(1, nom);
 				stmt.setString(2, pays);
 				stmt.execute();
-				resultat = BDDConnection.selectVille(nom,pays);
-				resultat.next();
+				idVille = BDDConnection.getVille(nom,pays);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				return 0;
 			}
 		}
-		return resultat.findColumn("ID_Ville");
+		return idVille;
 	}
 	
-
-	public static void deleteVille(String nom, String pays){
+	/**
+	 * supprime une ville de la base grace à son id
+	 * @param nom
+	 * @param pays
+	 */
+	public static void deleteVille(int idVille){
 			try {
 				BDDConnection.getInstance();
 				PreparedStatement stmt = c.prepareStatement("delete from Ville where ID_Ville=?");
 				stmt.clearParameters();		
-				stmt.setString(1, nom);
-				stmt.setString(2, pays);
+				stmt.setInt(1, idVille);
 				stmt.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 	}
+	
+	
+	// FIN VILLE
+	
 	
 	public static  ResultSet selectVoyage(int id_reserv_vol, int id_reserv_chambre, int id_client ){
 		PreparedStatement stmt;
@@ -433,7 +632,7 @@ public class BDDConnection {
 	public static void deleteVoyage(int id_reserv_vol, int id_reserv_chambre, int id_client ){
 			try {
 				BDDConnection.getInstance();
-				PreparedStatement stmt = c.prepareStatement("delete from YVoyage where IDReservationVol=? and IDReservationChambre=? and IDClient = ?");
+				PreparedStatement stmt = c.prepareStatement("delete from Voyage where IDReservationVol=? and IDReservationChambre=? and IDClient = ?");
 				stmt.clearParameters();		
 				stmt.setInt(1, id_reserv_vol);
 				stmt.setInt(2, id_reserv_chambre);
@@ -443,5 +642,6 @@ public class BDDConnection {
 				e.printStackTrace();
 			}
 	}
+
 	
 }

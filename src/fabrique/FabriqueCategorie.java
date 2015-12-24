@@ -10,7 +10,7 @@ import java.util.HashMap;
 import domaine.Categorie;
 
 /**
- * @author Tchioben
+ * @author Lea Vannelle & Benoit Bailleul
  *
  */
 public class FabriqueCategorie {
@@ -32,23 +32,37 @@ public class FabriqueCategorie {
 	}
 	
 	/**
-	 * crée la categorie dans la base de données si elle n'existe pas déjà et l'ajoute à la fabrique
+	 * crée la categorie dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et à la fabrique
 	 * @param capacite
 	 * @param tarif
-	 * @return le numero d'identification de la categorie dans la bDD et dna sla hashmap
+	 * @return la categorie
 	 */
-	public int ajouteCategorie(int id_hotel,String nom,int capacite,float tarif) throws SQLException{
+	public Categorie addCategorie(int id_hotel,String nom,int capacite,float tarif) throws SQLException{
 		int numero_id_categorie = BDDConnection.addCategorie(id_hotel, nom, capacite, tarif);	
-		Categorie cat = new Categorie(numero_id_categorie, capacite, tarif);
+		Categorie cat = new Categorie(numero_id_categorie, capacite, tarif, id_hotel,nom);
 		this.lesCategories.put(numero_id_categorie, cat);
-		return numero_id_categorie;
+		return cat;
+	}
+	
+	/**
+	 * crée la categorie dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et à la fabrique
+	 * @param capacite
+	 * @param tarif
+	 * @return la categorie
+	 */
+	public Categorie addCategorieDansFabrique(int idCategorie ,int id_hotel,String nom,int capacite,float tarif) throws SQLException{
+		Categorie cat = new Categorie(idCategorie, capacite, tarif, id_hotel,nom);
+		this.lesCategories.put(idCategorie, cat);
+		return cat;
 	}
 
 	
 	/**
 	 * recupere la categorie en fonction du numero id.
 	 */
-	public  Categorie getCategorieWithId(int id_categorie) {
+	private  Categorie getCategorieWithId(int id_categorie) {
 		return this.lesCategories.get(id_categorie);
 	}
 	
@@ -58,21 +72,57 @@ public class FabriqueCategorie {
 	 * @param nom de lla categorie
 	 * @return Categorie sinon null si la categorie n'existe pas en base
 	 */
-	public Categorie getCategorieWithNomAndHotel(int idHotel, String nom){
-		try {
-			ResultSet rs = BDDConnection.selectCategorie(idHotel, nom);
-			rs.next();
-			int numero = ajouteCategorie(idHotel, nom, rs.getInt("Capacite"), rs.getFloat("Tarif"));
-			return getCategorieWithId(numero);
-		}
-		catch(Exception e){
-			System.out.println("la categorie n'a pas ete trouvee");
-		}
-		return null;
+	public Categorie getCategorieBDDWithNomAndHotel(int id_hotel, String nom){
+		int idCategorie = BDDConnection.getCategorie(id_hotel, nom);
+		Categorie categorie = this.getCategorieWithId(idCategorie);
+		//si la categorie n'existe pas dans al farbqiue, il faut aller chercher les
+		//infos dans la base pour le creer
+		if (categorie== null){
+			ResultSet ligneCategorie = BDDConnection.ligneCategorie(idCategorie);
+			try{
+				int capacite = ligneCategorie.findColumn("Capacite");
+				float tarif = ligneCategorie.findColumn("Tarif");
+				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif);
+			}
+			catch (SQLException e){
+				return null;
+			}
+		}// fin IF
+		return categorie;
 	}
-
-
 	
+	/**
+	 * permet de recuperer la categorie en fonction de l'id de la categorie
+	 * @param idHotel id de l'hotel
+	 * @param nom de lla categorie
+	 * @return Categorie sinon null si la categorie n'existe pas en base
+	 */
+	public Categorie getCategorieWithIdCategorie(int idCategorie){
+		Categorie categorie = this.getCategorieWithId(idCategorie);
+		//si la categorie n'existe pas dans al farbqiue, il faut aller chercher les
+		//infos dans la base pour le creer
+		if (categorie== null){
+			ResultSet ligneCategorie = BDDConnection.ligneCategorie(idCategorie);
+			try{
+				int id_hotel = ligneCategorie.findColumn("IDHotel");
+				String nom = ligneCategorie.getString(3);
+				int capacite = ligneCategorie.findColumn("Capacite");
+				float tarif = ligneCategorie.findColumn("Tarif");
+				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif);
+			}
+			catch (SQLException e){
+				return null;
+			}
+		}// fin IF
+		return categorie;
+	}
 	
-	
+	public void deleteCategorie(int id_categorie){
+		BDDConnection.deleteCategorie(id_categorie);
+		try{
+			this.lesCategories.remove(id_categorie);
+		}
+		catch (Exception e){
+		}
+	}
 }

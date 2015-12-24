@@ -4,7 +4,7 @@
 package domaine;
 
 /**
- * @author Tchioben
+ * @author Lea Vannelle & Benoit Bailleul
  *
  */
 public class Categorie {
@@ -14,16 +14,22 @@ public class Categorie {
 	private int capacite;
 	
 	private float tarif;
+	
+	private int id_ville;
+	
+	private String nom;
 
 	/**
 	 * @param id_categorie
 	 * @param capacite
 	 * @param tarif
 	 */
-	public Categorie(int id_categorie, int capacite, float tarif) {
+	public Categorie(int id_categorie, int capacite, float tarif, int id_ville, String nom) {
 		this.id_categorie = id_categorie;
 		this.capacite = capacite;
 		this.tarif = tarif;
+		this.id_ville = id_ville;
+		this.nom = nom;
 	}
 
 	/**
@@ -68,6 +74,24 @@ public class Categorie {
 		this.tarif = tarif;
 	}
 
+
+	public int getId_ville() {
+		return id_ville;
+	}
+
+	public void setId_ville(int id_ville) {
+		this.id_ville = id_ville;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
