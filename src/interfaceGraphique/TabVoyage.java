@@ -1,8 +1,5 @@
 package interfaceGraphique;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import domaine.Client;
@@ -21,26 +17,26 @@ import domaine.Voyage;
 
 public class TabVoyage extends JPanel{
 
-	private JTextField tfSearchCust;
+	private JTextField tfSearchCust= new JTextField(15);
 	private JComboBox<String> cbSearchCust;
 	private JList<Client> lCust;
 	private DefaultListModel<Client> dlmCust;
 	private JList<Voyage> lVoyage;
 	private DefaultListModel<Voyage> dlmVoyage;
-	private JTextField tfVilleDepVol;
-	private JTextField tfVilleArrVol;
-	private JTextField tfJourVol;
-	private JTextField tfHHeureVol;
-	private JTextField tfMnHeureVol;
-	private JTextField tfHDureeVol;
-	private JTextField tfMnDureeVol;
+	private JTextField tfVilleDepVol = new JTextField(20);
+	private JTextField tfVilleArrVol = new JTextField(20);
+	private JTextField tfJourVol = new JTextField(20);
+	private JTextField tfHHeureVol = new JTextField(2);
+	private JTextField tfMnHeureVol = new JTextField(2);
+	private JTextField tfHDureeVol = new JTextField(2);
+	private JTextField tfMnDureeVol = new JTextField(2);
 	private JRadioButton rb1Classe;
 	private JRadioButton rb2Classe;
-	private JTextField tfTarifVol;
-	private JTextField tfVilleHotel;
-	private JTextField tfNomHotel;
-	private JTextField tfCatChbre;
-	private JTextField tfNbPers;
+	private JTextField tfTarifVol = new JTextField(20);
+	private JTextField tfVilleHotel = new JTextField(20);
+	private JTextField tfNomHotel = new JTextField(20);
+	private JTextField tfCatChbre = new JTextField(20);
+	private JTextField tfNbPers = new JTextField(2);
 
 	public TabVoyage(){
 		super();
@@ -63,25 +59,33 @@ public class TabVoyage extends JPanel{
 		JPanel rightMidPane = new JPanel();
 		rightMidPane.setLayout(new BoxLayout(rightMidPane, BoxLayout.Y_AXIS));
 		rightMidPane.add(InterfaceGraphique.createSubTitle("Le vol :"));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Ville de départ :", 20, tfVilleDepVol));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Ville d'arrivée :", 20, tfVilleArrVol));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Jour :", 20, tfJourVol));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Ville de départ :", tfVilleDepVol));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Ville d'arrivée :", tfVilleArrVol));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Jour :", tfJourVol));
 		JPanel heure = new JPanel();
-		heure.add(InterfaceGraphique.createInputBox("Heure :", 2, tfHHeureVol));
-		heure.add(InterfaceGraphique.createInputBox(" : ", 2, tfMnHeureVol));
+		heure.add(new JLabel("Heure :"));
+		heure.add(tfHHeureVol);
+		heure.add(new JLabel(":"));
+		heure.add(tfMnHeureVol);
+		//heure.add(InterfaceGraphique.createInputBox("Heure :", tfHHeureVol));
+		//heure.add(InterfaceGraphique.createInputBox(" : ", tfMnHeureVol));
 		rightMidPane.add(heure);
 		JPanel duree = new JPanel();
-		duree.add(InterfaceGraphique.createInputBox("Durée :", 2, tfHDureeVol));
-		duree.add(InterfaceGraphique.createInputBox(" : ", 2, tfMnDureeVol));
+		duree.add(new JLabel("Durée de vol :"));
+		duree.add(tfHDureeVol);
+		duree.add(new JLabel(":"));
+		duree.add(tfMnDureeVol);
+		//duree.add(InterfaceGraphique.createInputBox("Durée :", tfHDureeVol));
+		//duree.add(InterfaceGraphique.createInputBox(" : ", tfMnDureeVol));
 		rightMidPane.add(duree);
 		rightMidPane.add(InterfaceGraphique.createGroupRadioButton("Classe :", rb1Classe, "1ère classe", rb2Classe, "2ème classe",false));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Tarif :", 20, tfTarifVol));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Tarif :", tfTarifVol));
 		
 		rightMidPane.add(InterfaceGraphique.createSubTitle("L'hébergement :"));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Ville :", 20, tfVilleHotel));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Nom hotel :", 20, tfNomHotel));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Catégorie de la chambre :", 20, tfCatChbre));
-		rightMidPane.add(InterfaceGraphique.createInputBox("Nombre de personnes supplémentaires :", 2, tfNbPers));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Ville :", tfVilleHotel));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Nom hotel :", tfNomHotel));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Catégorie de la chambre :", tfCatChbre));
+		rightMidPane.add(InterfaceGraphique.createInputBox("Nombre de personnes supplémentaires :", tfNbPers));
 		rightMidPane.add(InterfaceGraphique.createOneButton(new AnnulReservListener(), "Annuler la réservation"));
 		return rightMidPane;
 	}
@@ -99,21 +103,13 @@ public class TabVoyage extends JPanel{
 		JPanel leftMidPane = new JPanel();
 		leftMidPane.setLayout(new BoxLayout(leftMidPane, BoxLayout.Y_AXIS));
 		leftMidPane.add(InterfaceGraphique.createSubTitle("Rechercher un client :"));
-		leftMidPane.add(InterfaceGraphique.createSearchCust(tfSearchCust, new SearchCustListener(), cbSearchCust));
+		leftMidPane.add(InterfaceGraphique.createSearchCust(tfSearchCust, new SearchCustListener(cbSearchCust, tfSearchCust, dlmCust), cbSearchCust));
 		leftMidPane.add(InterfaceGraphique.createSubTitle("Les clients :"));
 		leftMidPane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 200));
 		leftMidPane.add(InterfaceGraphique.createButtonsPair(new DeselCustListener(), new AffToutCustListener()));
 		return leftMidPane;
 	}
-	
-	private class SearchCustListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-	
+		
 	private class DeselCustListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {

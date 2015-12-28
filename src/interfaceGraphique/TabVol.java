@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -14,26 +15,27 @@ import domaine.Vol;
 
 public class TabVol extends JPanel{
 
-	private JTextField tfSearchVilleDep;
+	private JTextField tfSearchVilleDep = new JTextField(15);
 	private DefaultListModel<Ville> dlmVillesDep;
 	private JList<Ville> lVillesDep;
-	private JTextField tfSearchVilleArr;
+	private JTextField tfSearchVilleArr = new JTextField(15);
 	private JList<Ville> lVillesArr;
 	private DefaultListModel<Ville> dlmVillesArr;
 	private JList<Vol> lVol;
 	private DefaultListModel<Vol> dlmVol;
-	private JTextField tfVilleDep;
-	private JTextField tfJour;
-	private JTextField tfHHeure;
-	private JTextField tMnHeure;
-	private JTextField tfHDurVol;
-	private JTextField tfMnDurVol;
-	private JTextField tfNbPers1Class;
-	private JTextField tfTarif1Class;
-	private JTextField tfTarif2Class;
-	private JTextField tfNbPers2Class;
-	private JTextField tfDelai;
-
+	private JTextField tfVilleDep = new JTextField(20);
+	private JTextField tfVilleAr = new JTextField(20);
+	private JTextField tfJour = new JTextField(20);
+	private JTextField tfHHeure = new JTextField(2);
+	private JTextField tMnHeure = new JTextField(2);
+	private JTextField tfHDurVol = new JTextField(2);
+	private JTextField tfMnDurVol = new JTextField(2);
+	private JTextField tfNbPers1Class = new JTextField(2);
+	private JTextField tfTarif1Class = new JTextField(10);
+	private JTextField tfTarif2Class = new JTextField(10);
+	private JTextField tfNbPers2Class = new JTextField(2);
+	private JTextField tfDelai = new JTextField(10);
+	
 	public TabVol(){
 		super();
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -50,22 +52,31 @@ public class TabVol extends JPanel{
 		JPanel four = new JPanel();
 		four.setLayout(new BoxLayout(four,BoxLayout.Y_AXIS));
 		four.add(InterfaceGraphique.createSubTitle("Le vol :"));
-		four.add(InterfaceGraphique.createInputBox("Ville de départ :", 20, tfVilleDep));
-		four.add(InterfaceGraphique.createInputBox("Ville d'arrivée :", 20, tfVilleDep));
-		four.add(InterfaceGraphique.createInputBox("Jour :", 20, tfJour));
+		four.add(InterfaceGraphique.createInputBox("Ville de départ :", tfVilleDep));
+		four.add(InterfaceGraphique.createInputBox("Ville d'arrivée :", tfVilleAr ));
+		four.add(InterfaceGraphique.createInputBox("Jour :", tfJour));
 		JPanel heure = new JPanel();
-		heure.add(InterfaceGraphique.createInputBox("Heure : ", 5, tfHHeure));
-		heure.add(InterfaceGraphique.createInputBox(": ", 5, tMnHeure));
+		heure.add(new JLabel("Heure :"));
+		heure.add(tfHHeure);
+		heure.add(new JLabel(":"));
+		heure.add(tMnHeure);
+		//heure.add(InterfaceGraphique.createInputBox("Heure : ",tfHHeure));
+		//heure.add(InterfaceGraphique.createInputBox(": ", tMnHeure));
 		four.add(heure);
 		JPanel durVol = new JPanel();
-		durVol.add(InterfaceGraphique.createInputBox("Durée de vol : ", 5, tfHDurVol));
-		durVol.add(InterfaceGraphique.createInputBox(": ", 5, tfMnDurVol));
+		durVol.add(new JLabel("Durée de vol :"));
+		durVol.add(tfHDurVol);
+		durVol.add(new JLabel(":"));
+		durVol.add(tfMnDurVol);
+		//durVol.add(InterfaceGraphique.createInputBox("Durée de vol : ", tfHDurVol));
+		//durVol.add(InterfaceGraphique.createInputBox(": ", tfMnDurVol));
 		four.add(durVol);
-		four.add(InterfaceGraphique.createInputBox("Nombre de passagers en 1ère classe : ", 2, tfNbPers1Class));
-		four.add(InterfaceGraphique.createInputBox("Tarif en 1ère classe : ", 10, tfTarif1Class));
-		four.add(InterfaceGraphique.createInputBox("Nombre de passagers en 2ème classe : ", 10, tfNbPers2Class));
-		four.add(InterfaceGraphique.createInputBox("Tarif en 2ème classe : ", 10, tfTarif2Class));
-		four.add(InterfaceGraphique.createInputBox("Délai d'annulation :", 10, tfDelai));
+		four.add(InterfaceGraphique.createInputBox("Nombre de passagers en 1ère classe : ", tfNbPers1Class));
+		four.add(InterfaceGraphique.createInputBox("Tarif en 1ère classe : ", tfTarif1Class));
+		four.add(InterfaceGraphique.createInputBox("Nombre de passagers en 2ème classe : ", tfNbPers2Class));
+		four.add(InterfaceGraphique.createInputBox("Tarif en 2ème classe : ", tfTarif2Class));
+		four.add(InterfaceGraphique.createInputBox("Délai d'annulation :", tfDelai));
+		four.add(InterfaceGraphique.createButtonAddDelEd(new addVolListener(), new delVolListener(), new editVolListener()));
 		return four;
 	}
 
@@ -149,6 +160,30 @@ public class TabVol extends JPanel{
 	}
 	
 	private class DeselVolListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class addVolListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class editVolListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class delVolListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
