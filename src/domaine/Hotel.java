@@ -121,6 +121,10 @@ public class Hotel {
 		this.lesCategories = lesCategories;
 	}
 	
+	public String toString(){
+		return this.getNom();
+	}
+	
 	
 	
 }

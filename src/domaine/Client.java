@@ -14,7 +14,11 @@ public class Client {
 	
 	private String prenom;
 	
-	private String dateNaissance;
+	private int jour;
+	
+	private int mois;
+	
+	private int annee;
 	
 	private int id_villeOrigine;
 
@@ -28,12 +32,13 @@ public class Client {
 	 * @param dateNaissance
 	 * @param id_villeOrigine refer to the class Ville
 	 */
-	public Client(int id_client, String nom, String prenom,
-			String dateNaissance, int id_villeOrigine) {
+	public Client(int id_client, String nom, String prenom,int jour, int mois, int annee, int id_villeOrigine) {
 		this.id_client = id_client;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.dateNaissance = dateNaissance;
+		this.jour = jour;
+		this.mois = mois;
+		this.annee = annee;
 		this.id_villeOrigine = id_villeOrigine;
 	}
 
@@ -44,42 +49,11 @@ public class Client {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((dateNaissance == null) ? 0 : dateNaissance.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Client other = (Client) obj;
-		if (dateNaissance == null) {
-			if (other.dateNaissance != null)
-				return false;
-		} else if (!dateNaissance.equals(other.dateNaissance))
-			return false;
-		if (nom == null) {
-			if (other.nom != null)
-				return false;
-		} else if (!nom.equals(other.nom))
-			return false;
-		if (prenom == null) {
-			if (other.prenom != null)
-				return false;
-		} else if (!prenom.equals(other.prenom))
-			return false;
-		return true;
-	}
 
 	/**
 	 * @return the id_client
@@ -123,19 +97,7 @@ public class Client {
 		this.prenom = prenom;
 	}
 
-	/**
-	 * @return the dateNaissance
-	 */
-	public String getDateNaissance() {
-		return dateNaissance;
-	}
 
-	/**
-	 * @param dateNaissance the dateNaissance to set
-	 */
-	public void setDateNaissance(String dateNaissance) {
-		this.dateNaissance = dateNaissance;
-	}
 
 	/**
 	 * @return the id_villeOrigine
@@ -152,7 +114,51 @@ public class Client {
 	}
 
 	
-	
+	public String toString(){
+		return this.getNom()+" "+this.getPrenom();
+	}
+
+	/**
+	 * @return the mois
+	 */
+	public int getMois() {
+		return mois;
+	}
+
+	/**
+	 * @param mois the mois to set
+	 */
+	public void setMois(int mois) {
+		this.mois = mois;
+	}
+
+	/**
+	 * @return the annee
+	 */
+	public int getAnnee() {
+		return annee;
+	}
+
+	/**
+	 * @param annee the annee to set
+	 */
+	public void setAnnee(int annee) {
+		this.annee = annee;
+	}
+
+	/**
+	 * @return the jour
+	 */
+	public int getJour() {
+		return jour;
+	}
+
+	/**
+	 * @param jour the jour to set
+	 */
+	public void setJour(int jour) {
+		this.jour = jour;
+	}
 
 	
 }

@@ -113,6 +113,8 @@ public class Ville {
 		this.pays = pays;
 	}
 	
-	
+	public String toString(){
+		return "Ville : "+this.nom+", Pays : "+this.getPays();
+	}
 	
 }

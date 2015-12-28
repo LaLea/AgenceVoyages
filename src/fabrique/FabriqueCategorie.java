@@ -24,7 +24,7 @@ public class FabriqueCategorie {
 		this.lesCategories = new HashMap<Integer, Categorie>();
 	}
 	
-	public FabriqueCategorie getInstance(){
+	public static FabriqueCategorie getInstance(){
 		if (INSTANCE==null){
 			INSTANCE = new FabriqueCategorie();
 		}
@@ -38,7 +38,7 @@ public class FabriqueCategorie {
 	 * @param tarif
 	 * @return la categorie
 	 */
-	public Categorie addCategorie(int id_hotel,String nom,int capacite,float tarif) throws SQLException{
+	public Categorie addCategorie(int id_hotel,String nom,int capacite,float tarif){
 		int numero_id_categorie = BDDConnection.addCategorie(id_hotel, nom, capacite, tarif);	
 		Categorie cat = new Categorie(numero_id_categorie, capacite, tarif, id_hotel,nom);
 		this.lesCategories.put(numero_id_categorie, cat);
@@ -80,8 +80,8 @@ public class FabriqueCategorie {
 		if (categorie== null){
 			ResultSet ligneCategorie = BDDConnection.ligneCategorie(idCategorie);
 			try{
-				int capacite = ligneCategorie.findColumn("Capacite");
-				float tarif = ligneCategorie.findColumn("Tarif");
+				int capacite = ligneCategorie.getInt(4);
+				float tarif = ligneCategorie.getFloat(5);
 				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif);
 			}
 			catch (SQLException e){
@@ -104,10 +104,10 @@ public class FabriqueCategorie {
 		if (categorie== null){
 			ResultSet ligneCategorie = BDDConnection.ligneCategorie(idCategorie);
 			try{
-				int id_hotel = ligneCategorie.findColumn("IDHotel");
+				int id_hotel = ligneCategorie.getInt(2);
 				String nom = ligneCategorie.getString(3);
-				int capacite = ligneCategorie.findColumn("Capacite");
-				float tarif = ligneCategorie.findColumn("Tarif");
+				int capacite = ligneCategorie.getInt(4);
+				float tarif = ligneCategorie.getFloat(5);
 				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif);
 			}
 			catch (SQLException e){
