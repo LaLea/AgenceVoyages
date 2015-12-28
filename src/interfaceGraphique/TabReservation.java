@@ -22,7 +22,7 @@ import domaine.Vol;
 public class TabReservation extends JPanel{
 
 	// Barre de recherche
-	private JTextField tfSearch;
+	private JTextField tfSearch = new JTextField(15);
 	private JComboBox<String> cbSearch;
 	// Liste de clients
 	private JList<Client> lCust;
@@ -30,9 +30,9 @@ public class TabReservation extends JPanel{
 	// Champs a remplir
 	private JComboBox<String> cbVilleDep;
 	private JComboBox<String> cbVilleArr;
-	private JDateChooser dcDteAller;
-	private JDateChooser dcDteRetr;
-	private JTextField tfNbPersAcc;
+	private JDateChooser dcDteAller = new JDateChooser();
+	private JDateChooser dcDteRetr = new JDateChooser();
+	private JTextField tfNbPersAcc = new JTextField(2);
 	// Boutons Radio
 	private JRadioButton rbPriceOrder;
 	private JRadioButton rbTimeOrder;
@@ -69,10 +69,11 @@ public class TabReservation extends JPanel{
 		leftMiddlePane.setLayout(new BoxLayout(leftMiddlePane,BoxLayout.Y_AXIS));
 		// Barre de recherche
 		leftMiddlePane.add(InterfaceGraphique.createSubTitle("Rechercher un client :"));
-		leftMiddlePane.add(InterfaceGraphique.createSearchCust(tfSearch, new bSearchReservListener(), cbSearch));
+		leftMiddlePane.add(InterfaceGraphique.createSearchCust(tfSearch, new SearchCustListener(cbSearch, tfSearch, dlmCust), cbSearch));
 		// Liste des clients
 		leftMiddlePane.add(InterfaceGraphique.createSubTitle("Les clients :"));
 		leftMiddlePane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 150));
+		//InterfaceGraphique.addAllClientsIntoList(dlmCust);
 		// Boutons
 		leftMiddlePane.add(InterfaceGraphique.createButtonsPair(new bDeselCustListener(),new bAffCustListener()));
 		//Champs a remplir
@@ -80,7 +81,7 @@ public class TabReservation extends JPanel{
 		leftMiddlePane.add(InterfaceGraphique.createCBVille("Ville d'arrivée :", cbVilleArr));
 		leftMiddlePane.add(InterfaceGraphique.createDateChooser("Date de départ :",dcDteAller));
 		leftMiddlePane.add(InterfaceGraphique.createDateChooser("Date de retour :",dcDteRetr));
-		leftMiddlePane.add(InterfaceGraphique.createInputBox("Nombre de personnes accompagnantes :", 2, tfNbPersAcc));
+		leftMiddlePane.add(InterfaceGraphique.createInputBox("Nombre de personnes accompagnantes :", tfNbPersAcc));
 		
 		return leftMiddlePane;
 	}
@@ -109,15 +110,30 @@ public class TabReservation extends JPanel{
 		rightTwoListPane.add(InterfaceGraphique.createListCat(dlmCat, lCat, 30, 150));
 		return rightMiddlePane;
 	}
-
 	
-	
-	private class bSearchReservListener implements ActionListener{
+	/*private class bSearchReservListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			ResultSet rs;
+			FabriqueClient fc = FabriqueClient.getInstance();
+			ArrayList<Client> lClients = new ArrayList<Client>();
+			if (cbSearch.getSelectedItem() == "Prénom"){
+				rs = BDDConnection.selectClientWithPrenom(tfSearch.getText());
+			}
+			else {
+				rs = BDDConnection.selectClientWithNom(tfSearch.getText());
+			}
+			try {
+				while (rs.next()){
+					Client c = fc.createClient(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+					lClients.add(c);
+				}
+				InterfaceGraphique.addClientIntoList(lClients, dlmCust);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-	}
+	}*/
 	
 	private class bDeselCustListener implements ActionListener{
 		@Override

@@ -3,7 +3,11 @@ package interfaceGraphique;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -29,6 +33,8 @@ import domaine.Hotel;
 import domaine.Ville;
 import domaine.Vol;
 import domaine.Voyage;
+import fabrique.BDDConnection;
+import fabrique.FabriqueClient;
 
 /**
  *
@@ -75,10 +81,10 @@ public class InterfaceGraphique extends JFrame {
 		return this.frame;
 	}
 	
-	public static JPanel createInputBox(String label, int taille, JTextField tf){
+	public static JPanel createInputBox(String label, JTextField tf){
 		JPanel content = new JPanel();
 		content.add(new JLabel(label));
-		tf = new JTextField(taille);
+		//tf = new JTextField(taille);
 		content.add(tf);
 		return content;
 	}
@@ -100,7 +106,7 @@ public class InterfaceGraphique extends JFrame {
 	
 	public static JPanel createSearchCust(JTextField tf, ActionListener al, JComboBox<String> cb){
 		JPanel search = new JPanel();
-		tf = new JTextField(15);
+		//tf = new JTextField(15);
 		search.add(tf);
 		String [] content = {"Prénom","Nom"};
 		cb = new JComboBox<String>(content);
@@ -139,6 +145,25 @@ public class InterfaceGraphique extends JFrame {
 		dlm = new DefaultListModel<Client>();
 		l.setModel(dlm);
 		return sp;
+	}
+	
+	public static void addAllClientsIntoList(DefaultListModel<Client> dlm){
+		ResultSet rs = BDDConnection.selectAllClient();
+		FabriqueClient fc = FabriqueClient.getInstance();
+		try {
+			while (rs.next()){
+				Client c = fc.createClient(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
+				dlm.addElement(c);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void addClientIntoList(ArrayList<Client> list, DefaultListModel<Client> dlm){
+		for (Client client : list) {
+			dlm.addElement(client);
+		}
 	}
 	
 	public static JScrollPane createListHotel(DefaultListModel<Hotel> dlm, JList<Hotel> l, int lgr, int htr) {
@@ -216,17 +241,20 @@ public class InterfaceGraphique extends JFrame {
 		buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JButton bAdd = new JButton("Ajouter");
 		bAdd.addActionListener(add);
+		buttons.add(bAdd);
 		JButton bDel = new JButton("Supprimer");
 		bDel.addActionListener(del);
+		buttons.add(bDel);
 		JButton bEdit = new JButton("Modifier");
 		bEdit.addActionListener(edit);
+		buttons.add(bEdit);
 		return buttons;
 	}
 	
 	public static JPanel createDateChooser(String label, JDateChooser dcDte){
 		JPanel chooseDate = new JPanel();
 		chooseDate.add(new JLabel(label));
-		dcDte = new JDateChooser();
+		//dcDte = new JDateChooser();
 		dcDte.setPreferredSize(new Dimension(145,20));
 		chooseDate.add(dcDte);
 		return chooseDate;

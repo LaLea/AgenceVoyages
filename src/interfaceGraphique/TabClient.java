@@ -2,6 +2,7 @@ package interfaceGraphique;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -13,18 +14,20 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import domaine.Client;
+import fabrique.BDDConnection;
+import fabrique.FabriqueClient;
 
 public class TabClient extends JPanel{
 	// Pane de gauche
-	private JTextField tfSearchCust;
+	private JTextField tfSearchCust = new JTextField(15);
 	private JComboBox<String> cbSearchCust;
 	private DefaultListModel<Client> dlmCust;
 	private JList<Client> lClient;
 	// Pane de droite
-	private JTextField tfCustNom;
-	private JTextField tfPrenomCust;
-	private JDateChooser dcDteNaissCust;
-	private JTextField tfVilleCust;
+	private JTextField tfCustNom = new JTextField(20);
+	private JTextField tfPrenomCust = new JTextField(20);
+	private JDateChooser dcDteNaissCust = new JDateChooser();
+	private JTextField tfVilleCust = new JTextField(20);
 
 	public TabClient(){
 		super();
@@ -42,7 +45,7 @@ public class TabClient extends JPanel{
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.add(InterfaceGraphique.createSubTitle("Rechercher un client :"));
-		p.add(InterfaceGraphique.createSearchCust(tfSearchCust, new SearchCustListener(), cbSearchCust));
+		p.add(InterfaceGraphique.createSearchCust(tfSearchCust, new SearchCustListener(cbSearchCust, tfCustNom, dlmCust), cbSearchCust));
 		p.add(InterfaceGraphique.createSubTitle("Les clients :"));
 		p.add(InterfaceGraphique.createListCust(dlmCust, lClient, 60, 200));
 		p.add(InterfaceGraphique.createButtonsPair(new DeselCustListener(), new AffToutCustListener()));
@@ -53,20 +56,12 @@ public class TabClient extends JPanel{
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
 		p.add(InterfaceGraphique.createSubTitle("Le client :"));
-		p.add(InterfaceGraphique.createInputBox("Nom :", 20, tfCustNom));
-		p.add(InterfaceGraphique.createInputBox("Prénom :", 20, tfPrenomCust));
+		p.add(InterfaceGraphique.createInputBox("Nom :", tfCustNom));
+		p.add(InterfaceGraphique.createInputBox("Prénom :", tfPrenomCust));
 		p.add(InterfaceGraphique.createDateChooser("Date de naissance :", dcDteNaissCust));
-		p.add(InterfaceGraphique.createInputBox("Ville d'origine :", 20, tfVilleCust));
+		p.add(InterfaceGraphique.createInputBox("Ville d'origine :", tfVilleCust));
 		p.add(InterfaceGraphique.createButtonAddDelEd(new AddCustListener(), new DelCustListener(), new EditCustListener()));
 		return p;
-	}
-	
-	private class SearchCustListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
 	}
 	
 	private class DeselCustListener implements ActionListener{
@@ -88,8 +83,9 @@ public class TabClient extends JPanel{
 	private class AddCustListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			FabriqueClient fc = FabriqueClient.getInstance();
+			int idVille = BDDConnection.selectIDVille(tfVilleCust.getText());
+			fc.addClient(tfCustNom.getText(), tfPrenomCust.getText(), idVille, dcDteNaissCust.getDate().toString());
 		}
 	}
 	
@@ -108,5 +104,6 @@ public class TabClient extends JPanel{
 			
 		}
 	}
+	
 }
 

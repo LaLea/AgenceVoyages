@@ -27,14 +27,14 @@ public class TabHotel extends JPanel{
 	private DefaultListModel<Chambre> dlmChbres;
 	private JList<Chambre> lChbres;
 	// Les champs texte
-	private JTextField tfNomVille;
-	private JTextField tfPaysVille;
-	private JTextField tfNomHotel;
-	private JTextField tfVilleHotel;
-	private JTextField tfNomCat;
-	private JTextField tfCapCat;
-	private JTextField tfTarifCat;
-	private JTextField tfNomChbre;
+	private JTextField tfNomVille = new JTextField(20);
+	private JTextField tfPaysVille = new JTextField(20);
+	private JTextField tfNomHotel = new JTextField(20);
+	private JTextField tfVilleHotel = new JTextField(20);
+	private JTextField tfNomCat = new JTextField(20);
+	private JTextField tfCapCat = new JTextField(20);
+	private JTextField tfTarifCat = new JTextField(20);
+	private JTextField tfNomChbre = new JTextField(20);
 	
 	public TabHotel(){
 		super();
@@ -89,23 +89,23 @@ public class TabHotel extends JPanel{
 		JPanel droite = new JPanel();
 		droite.setLayout(new BoxLayout(droite,BoxLayout.Y_AXIS));
 		droite.add(InterfaceGraphique.createSubTitle("La ville :"));
-		droite.add(InterfaceGraphique.createInputBox("Nom :", 20, tfNomVille));
-		droite.add(InterfaceGraphique.createInputBox("Pays :", 20, tfPaysVille));
+		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomVille));
+		droite.add(InterfaceGraphique.createInputBox("Pays :", tfPaysVille));
 		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddVilleListener(), new bDelVilleListener(), new bEditVilleListener()));
 		
 		droite.add(InterfaceGraphique.createSubTitle("L'hotel :"));
-		droite.add(InterfaceGraphique.createInputBox("Nom :", 20, tfNomHotel));
-		droite.add(InterfaceGraphique.createInputBox("Ville :", 20, tfVilleHotel));
+		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomHotel));
+		droite.add(InterfaceGraphique.createInputBox("Ville :", tfVilleHotel));
 		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddHotelListener(), new bDelHotelListener(), new bEditHotelListener()));
 		
 		droite.add(InterfaceGraphique.createSubTitle("La catégorie :"));
-		droite.add(InterfaceGraphique.createInputBox("Nom :", 20, tfNomCat));
-		droite.add(InterfaceGraphique.createInputBox("Capacité :", 20, tfCapCat));
-		droite.add(InterfaceGraphique.createInputBox("Tarif :", 20, tfTarifCat));
+		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomCat));
+		droite.add(InterfaceGraphique.createInputBox("Capacité :", tfCapCat));
+		droite.add(InterfaceGraphique.createInputBox("Tarif :", tfTarifCat));
 		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddCatListener(), new bDelCatListener(), new bEditCatListener()));
 		
 		droite.add(InterfaceGraphique.createSubTitle("La chambre :"));
-		droite.add(InterfaceGraphique.createInputBox("Nom :", 20, tfNomChbre));
+		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomChbre));
 		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddChbreListener(), new bDelChbreListener(), new bEditChbreListener()));
 		return droite;
 	}
