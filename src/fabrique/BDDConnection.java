@@ -272,6 +272,49 @@ public class BDDConnection {
 		}
 		return client;
 	}
+	
+	
+	
+	/**
+	 * retourne le select avec son nom et prenom
+	 * @param nom son nom
+	 * @param prenom son prenom
+	 * @return son identifiant
+	 */
+	public static  ResultSet selectClientsParNom(String nom){
+		BDDConnection.getInstance();
+		PreparedStatement stmt;
+		ResultSet client = null;
+		try {
+			stmt = c.prepareStatement("select * from Client where Nom=?");
+			stmt.setString(1,nom);
+			client = stmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return client;
+	}
+	
+	
+	/**
+	 * retourne le select avec son nom et prenom
+	 * @param nom son nom
+	 * @param prenom son prenom
+	 * @return son identifiant
+	 */
+	public static  ResultSet selectClientsParPrenom(String prenom){
+		BDDConnection.getInstance();
+		PreparedStatement stmt;
+		ResultSet client = null;
+		try {
+			stmt = c.prepareStatement("select * from Client where Prenom=?");
+			stmt.setString(1,prenom);
+			client = stmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return client;
+	}
 
 	/**
 	 * permet de recuperer la ligne avec l'id correspondant
