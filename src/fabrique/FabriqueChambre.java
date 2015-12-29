@@ -42,9 +42,9 @@ public class FabriqueChambre {
 	 * @param tarif
 	 * @return la Chambre
 	 */
-	public Chambre addChambre(int id_hotel,int id_categorie, int numero) throws SQLException{
-		int idChambre = BDDConnection.addChambre(id_hotel, );	
-		Chambre chambre = new Chambre(numero_id_Chambre, capacite, tarif, id_hotel,nom);
+	public Chambre addChambre(int id_hotel,int id_categorie,int numero){
+		int numero_id_Chambre = BDDConnection.addChambre(id_hotel, id_categorie,numero);	
+		Chambre cat = new Chambre(numero_id_Chambre,id_hotel,id_categorie,numero);
 		this.lesChambres.put(numero_id_Chambre, cat);
 		return cat;
 	}
@@ -56,10 +56,10 @@ public class FabriqueChambre {
 	 * @param tarif
 	 * @return la Chambre
 	 */
-	public Chambre addChambreDansFabrique(int idChambre ,int id_hotel,String nom,int capacite,float tarif) throws SQLException{
-		Chambre cat = new Chambre(idChambre, capacite, tarif, id_hotel,nom);
-		this.lesChambres.put(idChambre, cat);
-		return cat;
+	public Chambre addChambreDansFabrique(int idChambre ,int id_hotel,int id_categorie,int numero){
+		Chambre chambre = new Chambre(idChambre, id_hotel,id_categorie,numero);
+		this.lesChambres.put(idChambre,chambre);
+		return chambre;
 	}
 
 	
@@ -76,21 +76,13 @@ public class FabriqueChambre {
 	 * @param nom de lla Chambre
 	 * @return Chambre sinon null si la Chambre n'existe pas en base
 	 */
-	public Chambre getChambreBDDWithNomAndHotel(int id_hotel, String nom){
-		int idChambre = BDDConnection.getChambre(id_hotel, nom);
+	public Chambre getChambreBDDWithIdhotelIdcategorieAndNumero(int id_hotel,int id_categorie,int numero) throws SQLException{
+		int idChambre = BDDConnection.getChambre(id_hotel,id_categorie,numero);
 		Chambre Chambre = this.getChambreWithId(idChambre);
 		//si la Chambre n'existe pas dans al farbqiue, il faut aller chercher les
 		//infos dans la base pour le creer
 		if (Chambre== null){
-			ResultSet ligneChambre = BDDConnection.ligneChambre(idChambre);
-			try{
-				int capacite = ligneChambre.findColumn("Capacite");
-				float tarif = ligneChambre.findColumn("Tarif");
-				Chambre = this.addChambreWithIdChambre(idChambre,id_hotel, nom, capacite, tarif);
-			}
-			catch (SQLException e){
-				return null;
-			}
+			Chambre = this.addChambreDansFabrique(idChambre, id_hotel,id_categorie,numero);
 		}// fin IF
 		return Chambre;
 	}
@@ -108,11 +100,10 @@ public class FabriqueChambre {
 		if (Chambre== null){
 			ResultSet ligneChambre = BDDConnection.ligneChambre(idChambre);
 			try{
-				int id_hotel = ligneChambre.findColumn("IDHotel");
-				String nom = ligneChambre.getString(3);
-				int capacite = ligneChambre.findColumn("Capacite");
-				float tarif = ligneChambre.findColumn("Tarif");
-				Chambre = this.addChambreWithIdChambre(idChambre,id_hotel, nom, capacite, tarif);
+				int id_hotel = ligneChambre.getInt(2);
+				int id_categorie = ligneChambre.getInt(3);
+				int numero = ligneChambre.getInt(4);
+				Chambre = this.addChambreDansFabrique(idChambre, id_hotel,id_categorie,numero);
 			}
 			catch (SQLException e){
 				return null;
@@ -121,4 +112,12 @@ public class FabriqueChambre {
 		return Chambre;
 	}
 	
+	public void deleteChambre(int id_Chambre){
+		BDDConnection.deleteChambre(id_Chambre);
+		try{
+			this.lesChambres.remove(id_Chambre);
+		}
+		catch (Exception e){
+		}
+	}
 }

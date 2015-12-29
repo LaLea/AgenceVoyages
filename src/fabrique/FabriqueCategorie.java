@@ -52,7 +52,7 @@ public class FabriqueCategorie {
 	 * @param tarif
 	 * @return la categorie
 	 */
-	public Categorie addCategorieDansFabrique(int idCategorie ,int id_hotel,String nom,int capacite,float tarif) throws SQLException{
+	public Categorie addCategorieDansFabrique(int idCategorie ,int id_hotel,String nom,int capacite,float tarif){
 		Categorie cat = new Categorie(idCategorie, capacite, tarif, id_hotel,nom);
 		this.lesCategories.put(idCategorie, cat);
 		return cat;

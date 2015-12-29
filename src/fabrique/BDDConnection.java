@@ -41,6 +41,23 @@ public class BDDConnection {
 		}
 	}
 
+	
+	
+	public static ResultSet laTable(String table){
+		BDDConnection.getInstance();
+		PreparedStatement stmt;
+		ResultSet laTable = null;
+		try {
+			stmt = c.prepareStatement("select * from "+table);
+			laTable = stmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return laTable;
+	}
+	
+	
+	
 	//CATEGORIE
 	
 	/**
@@ -407,6 +424,7 @@ public class BDDConnection {
 			}
 	}
 	
+	
 	// FIN CLIENT
 	
 
@@ -516,58 +534,7 @@ public class BDDConnection {
 	
 	//FIN HOTEL
 
-	
-	
-	//RESERVATION CHAMBRE
-	
-	public static  ResultSet selectReserversationChambre(int id_chambre){
-		PreparedStatement stmt;
-		ResultSet categorie = null;
-		try {
-			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from ReserversationChambre where IDChambre= ?);");
-			stmt.setInt(2, id_chambre);
-			categorie = stmt.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return categorie;
-	}
 
-
-	@SuppressWarnings("unused")
-	public static int addChambre(int id_chambre) throws SQLException{
-		PreparedStatement stmt;
-		ResultSet resultat = BDDConnection.selectReserversationChambre(id_chambre);
-		resultat.next();
-		if (resultat==null){ //si le retour du select est vide alors il doit le creer
-			try { 
-				BDDConnection.getInstance();
-				stmt = c.prepareStatement("insert into Hotel(IDVille,Nom) values (?,?)");
-				stmt.setInt(1, id_chambre );
-				stmt.execute();
-				resultat = BDDConnection.selectReserversationChambre(id_chambre);
-				resultat.next();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return resultat.findColumn("ID_ReservationChambre");
-	}
-	
-
-	public static void deleteReserversationChambre(int id_chambre){
-			try {
-				BDDConnection.getInstance();
-				PreparedStatement stmt = c.prepareStatement("delete from ReservationChambre where ID_ReservationChambre=?");
-				stmt.clearParameters();
-				stmt.setInt(1,id_chambre);
-				stmt.execute();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-	}
-	
 	
 	//VILLE
 	
@@ -680,6 +647,65 @@ public class BDDConnection {
 	
 	
 	// FIN VILLE
+	
+	
+	
+	
+	
+	//RESERVATION CHAMBRE
+	
+	public static  ResultSet selectReserversationChambre(int id_chambre){
+		PreparedStatement stmt;
+		ResultSet categorie = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from ReserversationChambre where IDChambre= ?);");
+			stmt.setInt(2, id_chambre);
+			categorie = stmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categorie;
+	}
+
+
+	@SuppressWarnings("unused")
+	public static int addChambre(int id_chambre) throws SQLException{
+		PreparedStatement stmt;
+		ResultSet resultat = BDDConnection.selectReserversationChambre(id_chambre);
+		resultat.next();
+		if (resultat==null){ //si le retour du select est vide alors il doit le creer
+			try { 
+				BDDConnection.getInstance();
+				stmt = c.prepareStatement("insert into Hotel(IDVille,Nom) values (?,?)");
+				stmt.setInt(1, id_chambre );
+				stmt.execute();
+				resultat = BDDConnection.selectReserversationChambre(id_chambre);
+				resultat.next();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return resultat.findColumn("ID_ReservationChambre");
+	}
+	
+
+	public static void deleteReserversationChambre(int id_chambre){
+			try {
+				BDDConnection.getInstance();
+				PreparedStatement stmt = c.prepareStatement("delete from ReservationChambre where ID_ReservationChambre=?");
+				stmt.clearParameters();
+				stmt.setInt(1,id_chambre);
+				stmt.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	
+	
+	// FIN RESERVATION CHAMBRE
+	
 	
 	
 	public static  ResultSet selectVoyage(int id_reserv_vol, int id_reserv_chambre, int id_client ){

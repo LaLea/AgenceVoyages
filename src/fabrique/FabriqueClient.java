@@ -129,42 +129,67 @@ public class FabriqueClient {
 		}
 	}
 	
-	public ArrayList<Client> rechercheClientParNom(String nom) throws SQLException{
+	
+	public ArrayList<Client> rechercheClientParNom(String nom){
 		ArrayList<Client> lesClients = new ArrayList<Client>();
 		ResultSet rs = BDDConnection.selectClientsParNom(nom);
-		while (rs.next()){
-			try{
-			int n = rs.getInt(1);
-			int n2 = rs.getInt(2);
-			String nom1= rs.getString(3);
-			String prenom1 =  rs.getString(4);
-			Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
-			lesClients.add(client);	
+		try{
+			while (rs.next()){
+				int n = rs.getInt(1);
+				int n2 = rs.getInt(2);
+				String nom1= rs.getString(3);
+				String prenom1 =  rs.getString(4);
+				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
+				lesClients.add(client);	
+			}
 		}
 		catch (Exception e){
 			e.printStackTrace();;
 		}
-	}
 		return lesClients;
 	}
 	
 	
-	public ArrayList<Client> rechercheClientParPrenom(String prenom) throws SQLException{
+	public ArrayList<Client> rechercheClientParPrenom(String prenom){
 		ArrayList<Client> lesClients = new ArrayList<Client>();
 		ResultSet rs = BDDConnection.selectClientsParPrenom(prenom);
-		while (rs.next()){
-			try{
-			int n = rs.getInt(1);
-			int n2 = rs.getInt(2);
-			String nom1= rs.getString(3);
-			String prenom1 =  rs.getString(4);
-			Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
-			lesClients.add(client);	
+		try{
+			while (rs.next()){
+				int n = rs.getInt(1);
+				int n2 = rs.getInt(2);
+				String nom1= rs.getString(3);
+				String prenom1 =  rs.getString(4);
+				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
+				lesClients.add(client);	
+			}
 		}
 		catch (Exception e){
 			e.printStackTrace();;
 		}
-	}
 		return lesClients;
 	}
+	
+	/**
+	 * permet de recuperer tous les clients
+	 * @return la liste des clients
+	 */
+	public ArrayList<Client> allClients(){
+		ArrayList<Client> lesClients = new ArrayList<Client>();
+		ResultSet rs = BDDConnection.laTable("Client");
+		try{
+			while (rs.next()){
+				int n = rs.getInt(1);
+				int n2 = rs.getInt(2);
+				String nom1= rs.getString(3);
+				String prenom1 =  rs.getString(4);
+				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
+				lesClients.add(client);	
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();;
+		}
+		return lesClients;
+	}
+	
 }

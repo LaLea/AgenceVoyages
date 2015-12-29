@@ -5,8 +5,10 @@ package fabrique;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import domaine.Client;
 import domaine.Ville;
 
 /**
@@ -120,5 +122,27 @@ public class FabriqueVille {
 		}
 		catch (Exception e){
 		}
+	}
+	
+	/**
+	 * permet de recuperer toute les villes
+	 * @return une liste avec les villes
+	 */
+	public ArrayList<Ville> allVilles(){
+		ArrayList<Ville> lesVilles = new ArrayList<Ville>();
+		ResultSet rs = BDDConnection.laTable("Ville");
+		try{
+			while (rs.next()){
+				int n = rs.getInt(1);
+				String nom1= rs.getString(2);
+				String pays =  rs.getString(3);
+				Ville ville= this.addVilleDansFabrique(n,nom1,pays);
+				lesVilles.add(ville);	
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();;
+		}
+		return lesVilles;
 	}
 }
