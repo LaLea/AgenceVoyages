@@ -35,11 +35,17 @@ public class FabriqueVol {
 	 * @param tarif
 	 * @return la Vol
 	 */
-	public Vol addVol(int id_hotel,String nom,int capacite,float tarif){
-		int numero_id_Vol = BDDConnection.addVol(id_hotel, nom, capacite, tarif);	
-		Vol cat = new Vol(numero_id_Vol, capacite, tarif, id_hotel,nom);
-		this.lesVols.put(numero_id_Vol, cat);
-		return cat;
+	public Vol addVol(int id_villeDepart, int id_villeArrivee,String jours,
+			int heure,int min ,int heureDuree,int minDuree,int nb1ereClasse, float prix1ereClasse,
+			int nb2emeClasse, float prix2emeClasse, int dureeAnnulation){
+		int numero_id_Vol = BDDConnection.addVol(id_villeDepart,id_villeArrivee,jours,
+				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
+				nb2emeClasse,prix2emeClasse,dureeAnnulation);	
+		Vol vol = new Vol(numero_id_Vol,id_villeDepart,id_villeArrivee,jours,
+				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
+				nb2emeClasse,prix2emeClasse,dureeAnnulation);
+		this.lesVols.put(numero_id_Vol, vol);
+		return vol;
 	}
 	
 	/**
@@ -49,10 +55,14 @@ public class FabriqueVol {
 	 * @param tarif
 	 * @return la Vol
 	 */
-	public Vol addVolDansFabrique(int idVol ,int id_hotel,String nom,int capacite,float tarif){
-		Vol cat = new Vol(idVol, capacite, tarif, id_hotel,nom);
-		this.lesVols.put(idVol, cat);
-		return cat;
+	public Vol addVolDansFabrique(int idVol ,int id_villeDepart, int id_villeArrivee,String jours,
+			int heure,int min ,int heureDuree,int minDuree,int nb1ereClasse, float prix1ereClasse,
+			int nb2emeClasse, float prix2emeClasse, int dureeAnnulation){
+		Vol vol = new Vol(idVol,id_villeDepart,id_villeArrivee,jours,
+				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
+				nb2emeClasse,prix2emeClasse,dureeAnnulation);
+		this.lesVols.put(idVol, vol);
+		return vol;
 	}
 
 	

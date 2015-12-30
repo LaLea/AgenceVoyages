@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 
 /**
  * @author Lea Vannelle & Benoit Bailleul
@@ -375,7 +376,7 @@ public class BDDConnection {
 				stmt.setString(2, nom );
 				stmt.setString(3, prenom);
 				@SuppressWarnings("deprecation")
-				java.sql.Date sqlDate = new java.sql.Date(annee, mois, jours);
+				java.sql.Date sqlDate = new java.sql.Date(annee-1900, mois-1, jours);
 				stmt.setDate(4,sqlDate);
 				//stmt.setDate(4,java.sql.Date.valueOf(date));
 				stmt.execute();
@@ -764,4 +765,170 @@ public class BDDConnection {
 	}
 
 	
+	// VOL
+	
+
+
+	
+	/**
+	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de départ
+	 * @param idVille ville de départ
+	 * @return la ligne de la Vol sinon null
+	 */
+	public static  ResultSet lesVolsAvecVilleDepart(int ID_Ville ){
+		PreparedStatement stmt;
+		ResultSet ligneVol = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=?");
+			stmt.setInt(1, ID_Ville);
+			ligneVol = stmt.executeQuery();
+			ligneVol.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneVol;
+	}
+
+	/**
+	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de départ
+	 * @param idVille ville de départ
+	 * @return la ligne de la Vol sinon null
+	 */
+	public static  ResultSet lesVolsAvecVilleArrivee(int ID_Ville ){
+		PreparedStatement stmt;
+		ResultSet ligneVol = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Vol where IDVilleArrivee=?");
+			stmt.setInt(1, ID_Ville);
+			ligneVol = stmt.executeQuery();
+			ligneVol.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneVol;
+	}
+	
+	
+	public static  ResultSet selectVol(int ID_Vol ){
+		PreparedStatement stmt;
+		ResultSet ligneVol = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Vol where ID_Vol=?");
+			stmt.setInt(1, ID_Vol);
+			ligneVol = stmt.executeQuery();
+			ligneVol.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneVol;
+	}
+	
+	
+	/**
+	 * permet de recuperer id d'une Vol grace a son nom et son pays
+	 * @param nom
+	 * @param pays
+	 * @return l'id de la Vol sinon 0
+	 */
+	public static int getVol(int id_vol){
+		int idVol = 0;
+		try {
+			ResultSet ligneVol = BDDConnection.selectVol(id_vol);
+			idVol=ligneVol.getInt(1);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+		return idVol;
+	}
+	
+	
+/**	public int getVolLigne (int id_villeDepart, int id_villeArrivee,
+	String jours, int heure, int min, int heureDuree, int minDuree,
+	int nb1ereClasse, float prix1ereClasse, int nb2emeClasse,
+	float prix2emeClasse, int dureeAnnulation){
+		PreparedStatement stmt;
+		ResultSet ligneVol = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Vol where `IDVilleDepart`=? and"
+						+ "`IDVilleArrivee`= `Jour`, `Heure`, `Duree`, `NbPassgr1Classe`, "
+						+ "`Tarif1Classe`, `NbPassr2Classe`, `Tarif2Classe`, `DelaiAnnulation`");
+			stmt.setInt(1, ID_Vol);
+			ligneVol = stmt.executeQuery();
+			ligneVol.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneVol;
+	}
+	
+	*/
+	
+	
+	
+	/**
+	 * permet d'ajouter une Vol a la bdd
+	 * @param nom
+	 * @param pays
+	 * @return l'identifiant de la base dans la BDD sinon 0
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("deprecation")
+	public static int addVol(int id_villeDepart, int id_villeArrivee,
+			String jours, int heure, int min, int heureDuree, int minDuree,
+			int nb1ereClasse, float prix1ereClasse, int nb2emeClasse,
+			float prix2emeClasse, int dureeAnnulation){
+		BDDConnection.getInstance();
+		int idVol = 0;//BDDConnection.getVol(nom, pays);
+		if (idVol==0){ //si le retour du select est vide alors il doit le creer
+			try { 
+				PreparedStatement stmt;
+				stmt = c.prepareStatement("insert into Vol(`IDVilleDepart`,"
+						+ "`IDVilleArrivee`, `Jour`, `Heure`, `Duree`, `NbPassgr1Classe`, "
+						+ "`Tarif1Classe`, `NbPassr2Classe`, `Tarif2Classe`, `DelaiAnnulation`)"
+						+ " values (?,?,?,?,?,?,?,?,?,?)");
+				stmt.setInt(1, id_villeDepart);
+				stmt.setInt(2, id_villeArrivee);
+				stmt.setString(3, jours);
+				stmt.setTime(4,new Time(heure,min,0));
+				stmt.setTime(5,new Time(heureDuree,minDuree,0));
+				stmt.setInt(6, nb1ereClasse);
+				stmt.setFloat(7, prix1ereClasse);
+				stmt.setInt(8, nb2emeClasse);
+				stmt.setFloat(9, prix2emeClasse);
+				stmt.setInt(10, dureeAnnulation);
+				stmt.execute();
+				//idVol = BDDConnection.getVol(nom,pays);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		}
+		return idVol;
+	}
+	
+	/**
+	 * supprime une Vol de la base grace à son id
+	 * @param nom
+	 * @param pays
+	 */
+	public static void deleteVol(int idVol){
+			try {
+				BDDConnection.getInstance();
+				PreparedStatement stmt = c.prepareStatement("delete from Vol where ID_Vol=?");
+				stmt.clearParameters();		
+				stmt.setInt(1, idVol);
+				stmt.execute();
+			} catch (SQLException e) {
+			}
+	}
+	
+	
+	
+	// FIN VOL
 }
