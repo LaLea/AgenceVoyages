@@ -1,5 +1,7 @@
 package metier;
 
+import java.util.ArrayList;
+
 import domaine.Hotel;
 import fabrique.FabriqueHotel;
 
@@ -21,5 +23,8 @@ public class GestionHotel {
 		fh.deleteHotel(hotel.getId_hotel());
 	}
 	
-	public static 
+	public static ArrayList<Hotel> listerHotelDUneVille(int idVille){
+		FabriqueHotel fh = FabriqueHotel.getInstance();
+		return fh.getHotelAvecIdVille(idVille);
+	}
 }
