@@ -6,7 +6,6 @@ import metier.GestionVoyages;
 
 import org.junit.Test;
 
-import fabrique.BDDConnection;
 
 public class TestGestionVoyage {
 
