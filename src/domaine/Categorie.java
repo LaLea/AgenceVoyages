@@ -18,18 +18,21 @@ public class Categorie {
 	private int id_ville;
 	
 	private String nom;
+	
+	private int delai;
 
 	/**
 	 * @param id_categorie
 	 * @param capacite
 	 * @param tarif
 	 */
-	public Categorie(int id_categorie, int capacite, float tarif, int id_ville, String nom) {
+	public Categorie(int id_categorie, int capacite, float tarif, int id_ville, String nom,int delai) {
 		this.id_categorie = id_categorie;
 		this.capacite = capacite;
 		this.tarif = tarif;
 		this.id_ville = id_ville;
 		this.nom = nom;
+		this.setDelai(delai);
 	}
 
 	/**
@@ -124,6 +127,20 @@ public class Categorie {
 		if (Float.floatToIntBits(tarif) != Float.floatToIntBits(other.tarif))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the delai
+	 */
+	public int getDelai() {
+		return delai;
+	}
+
+	/**
+	 * @param delai the delai to set
+	 */
+	public void setDelai(int delai) {
+		this.delai = delai;
 	}
 	
 	

@@ -91,17 +91,18 @@ public class BDDConnection {
 	 * @param tarif
 	 * @return idCategorie
 	 */
-	public static int addCategorie(int id_hotel, String nom, int capacite,float tarif) {
+	public static int addCategorie(int id_hotel, String nom, int capacite,float tarif,int delai) {
 		BDDConnection.getInstance();
 		int idCategorie = BDDConnection.getCategorie(id_hotel, nom);
 		if (idCategorie == 0){
 			try {
 				PreparedStatement stmt;
-				stmt = c.prepareStatement("insert into Categorie(IDHotel,Nom,Capacite,Tarif) values (?,?,?,?)");
+				stmt = c.prepareStatement("insert into Categorie(IDHotel,Nom,Capacite,Tarif,Delai) values (?,?,?,?,?)");
 				stmt.setInt(1, id_hotel);
 				stmt.setString(2, nom);
 				stmt.setInt(3, capacite);
 				stmt.setFloat(4, tarif);
+				stmt.setInt(5, delai);
 				stmt.executeUpdate();
 				idCategorie = BDDConnection.getCategorie(id_hotel, nom);
 			} catch (SQLException e) {
@@ -979,8 +980,76 @@ public class BDDConnection {
 			} catch (SQLException e) {
 			}
 	}
-
 	
 	
 	// FIN VOL
+	
+	
+	
+	//Reservation
+	
+	
+
+
+	public static void ajouteReservation(int idClient, int idVol, int classe,
+			Date dateVol, int idCategorie, Date dateReservationChambre, int nbPersonne) {
+		BDDConnection.getInstance(); 
+			try { 
+				PreparedStatement stmt;
+				stmt = c.prepareStatement("insert into Reservation(IDClient,IDVol,Classe,DateVol,IDCategorie,DateReservation,NombrePersonne) values (?,?,?,?,?,?,?)");
+				stmt.setInt(1, idClient);
+				stmt.setInt(2, idVol);
+				stmt.setInt(3,classe);
+				stmt.setDate(4, dateVol);
+				stmt.setInt(5, idCategorie);
+				stmt.setDate(6, dateReservationChambre);
+				stmt.setInt(7,nbPersonne);
+				stmt.execute();
+				//idVol = BDDConnection.getVol(nom,pays);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+	}
+
+	public static ResultSet selectReservation(int idPers) {
+		PreparedStatement stmt;
+		ResultSet lignes = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Reservation where IDClient=?");
+			stmt.setInt(1, idPers);
+			lignes = stmt.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+		return lignes;
+	}
+
+	public static Date getDateDuJour() {
+		PreparedStatement stmt;
+		ResultSet lignes = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select CURDATE()");
+			lignes = stmt.executeQuery();
+			lignes.next();
+			return lignes.getDate(1);
+		} catch (SQLException e) {
+			return null;
+	}
+	}
+
+	public static void supprimeReservation(int id_reservation) {
+		try {
+			BDDConnection.getInstance();
+			PreparedStatement stmt = c.prepareStatement("delete from Reservation where ID_Reservation=?");
+			stmt.clearParameters();		
+			stmt.setInt(1, id_reservation);
+			stmt.execute();
+		} catch (SQLException e) {
+		}
+	}
+	
+	//FIN RESERVATION
 }

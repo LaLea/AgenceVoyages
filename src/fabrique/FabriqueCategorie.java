@@ -38,9 +38,9 @@ public class FabriqueCategorie {
 	 * @param tarif
 	 * @return la categorie
 	 */
-	public Categorie addCategorie(int id_hotel,String nom,int capacite,float tarif){
-		int numero_id_categorie = BDDConnection.addCategorie(id_hotel, nom, capacite, tarif);	
-		Categorie cat = new Categorie(numero_id_categorie, capacite, tarif, id_hotel,nom);
+	public Categorie addCategorie(int id_hotel,String nom,int capacite,float tarif,int delai){
+		int numero_id_categorie = BDDConnection.addCategorie(id_hotel, nom, capacite, tarif,delai);	
+		Categorie cat = new Categorie(numero_id_categorie, capacite, tarif, id_hotel,nom,delai);
 		this.lesCategories.put(numero_id_categorie, cat);
 		return cat;
 	}
@@ -52,8 +52,8 @@ public class FabriqueCategorie {
 	 * @param tarif
 	 * @return la categorie
 	 */
-	public Categorie addCategorieDansFabrique(int idCategorie ,int id_hotel,String nom,int capacite,float tarif){
-		Categorie cat = new Categorie(idCategorie, capacite, tarif, id_hotel,nom);
+	public Categorie addCategorieDansFabrique(int idCategorie ,int id_hotel,String nom,int capacite,float tarif,int delai){
+		Categorie cat = new Categorie(idCategorie, capacite, tarif, id_hotel,nom,delai);
 		this.lesCategories.put(idCategorie, cat);
 		return cat;
 	}
@@ -82,7 +82,8 @@ public class FabriqueCategorie {
 			try{
 				int capacite = ligneCategorie.getInt(4);
 				float tarif = ligneCategorie.getFloat(5);
-				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif);
+				int delai= ligneCategorie.getInt(6);
+				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif,delai);
 			}
 			catch (SQLException e){
 				return null;
@@ -108,7 +109,8 @@ public class FabriqueCategorie {
 				String nom = ligneCategorie.getString(3);
 				int capacite = ligneCategorie.getInt(4);
 				float tarif = ligneCategorie.getFloat(5);
-				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif);
+				int delai = ligneCategorie.getInt(6);
+				categorie = this.addCategorieDansFabrique(idCategorie,id_hotel, nom, capacite, tarif,delai);
 			}
 			catch (SQLException e){
 				return null;
