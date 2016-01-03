@@ -15,7 +15,7 @@ public class TestCategorie {
 	@Test
 	public void addCategorie(){
 		FabriqueCategorie fc = FabriqueCategorie.getInstance();
-		fc.addCategorie(1, "Luxe",2, new Float(350));
+		fc.addCategorie(1, "Luxe",2, new Float(350),5);
 	}
 
 /**	@Test
