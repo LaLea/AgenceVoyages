@@ -5,6 +5,7 @@ package fabrique;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import domaine.Hotel;
@@ -115,6 +116,27 @@ public class FabriqueHotel {
 		}
 		catch (Exception e){
 		}
+	}
+	
+	
+	/**
+	 * permet de recuperer la liste des hotels en fonction de la ville
+	 * @param id_ville la ville où l'on cherche les hotels
+	 * @return la liste des hotels
+	 */
+	public ArrayList<Hotel> getHotelAvecIdVille(int id_ville){
+		ResultSet rs = BDDConnection.getHotelWithVille(id_ville);
+		ArrayList<Hotel> lesHotels = new ArrayList<Hotel>();
+		try {
+			while (rs.next()){
+				Hotel hotel = getHotelWithId(rs.getInt(1));
+				lesHotels.add(hotel);
+			}
+		}
+		catch (Exception e){
+			return lesHotels;
+			}
+		return lesHotels;
 	}
 	
 	

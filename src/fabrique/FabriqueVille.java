@@ -91,6 +91,29 @@ public class FabriqueVille {
 		return Ville;
 	}
 	
+	
+	
+	/**
+	 * permet de recuperer la Ville en fonction du nom de la Ville
+	 * @param nom de lla Ville
+	 * @return Ville sinon null si la Ville n'existe pas en base
+	 */
+	public Ville getVilleBDDWithNom(String nom){
+		//si la Ville n'existe pas dans al farbqiue, il faut aller chercher les
+		//infos dans la base pour le creer
+		Ville ville2 = null;
+		ResultSet ville = BDDConnection.getVille(nom);;
+			try{
+				int idVille = ville.getInt(1);
+				String pays = ville.getString(3);
+				ville2= this.addVilleDansFabrique(idVille,nom,pays);
+			}
+			catch (Exception e) {
+				return null;
+			}	
+		return ville2;
+	}
+	
 	/**
 	 * permet de recuperer la Ville en fonction de l'id de la Ville
 	 * @param idHotel id de l'hotel

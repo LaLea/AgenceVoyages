@@ -17,9 +17,13 @@ public class Vol {
 		
 		private String jour;
 		
-		private String heure;
+		private int heureDepart;
 		
-		private String dureeVol;
+		private int minDepart;
+		
+		private int heureDuree;
+		
+		private int minDuree;
 		
 		private int nbPassagersFirstClass;
 		
@@ -44,23 +48,26 @@ public class Vol {
 		 * @param priceSecondClass
 		 * @param delaiAnnulation
 		 */
-		public Vol(int id_vol, int id_villeDepart, int id_villeArrivee,
-				String jour, String heure, String dureeVol,
-				int nbPassagersFirstClass, int nbPassagersSecondClass,
-				float priceFirstClass, float priceSecondClass,
-				int delaiAnnulation) {
+		public Vol(int id_vol, int id_villeDepart2,
+				int id_villeArrivee2, String jours, int heure2, int min,
+				int heureDuree, int minDuree, int nb1ereClasse,
+				float prix1ereClasse, int nb2emeClasse, float prix2emeClasse,
+				int dureeAnnulation) {
 			this.id_vol = id_vol;
-			this.id_villeDepart = id_villeDepart;
-			this.id_villeArrivee = id_villeArrivee;
-			this.jour = jour;
-			this.heure = heure;
-			this.dureeVol = dureeVol;
-			this.nbPassagersFirstClass = nbPassagersFirstClass;
-			this.nbPassagersSecondClass = nbPassagersSecondClass;
-			this.priceFirstClass = priceFirstClass;
-			this.priceSecondClass = priceSecondClass;
-			this.delaiAnnulation = delaiAnnulation;
+			this.id_villeDepart = id_villeDepart2;
+			this.id_villeArrivee = id_villeArrivee2;
+			this.jour = jours;
+			this.heureDepart = heure2;
+			this.minDepart = min;
+			this.heureDuree = heureDuree;
+			this.minDuree = minDuree;
+			this.nbPassagersFirstClass = nb1ereClasse;
+			this.nbPassagersSecondClass = nb2emeClasse;
+			this.priceFirstClass = prix1ereClasse;
+			this.priceSecondClass = prix2emeClasse;
+			this.delaiAnnulation = dureeAnnulation;
 		}
+
 
 		/**
 		 * @return the id_vol
@@ -118,33 +125,6 @@ public class Vol {
 			this.jour = jour;
 		}
 
-		/**
-		 * @return the heure
-		 */
-		public String getHeure() {
-			return heure;
-		}
-
-		/**
-		 * @param heure the heure to set
-		 */
-		public void setHeure(String heure) {
-			this.heure = heure;
-		}
-
-		/**
-		 * @return the dureeVol
-		 */
-		public String getDureeVol() {
-			return dureeVol;
-		}
-
-		/**
-		 * @param dureeVol the dureeVol to set
-		 */
-		public void setDureeVol(String dureeVol) {
-			this.dureeVol = dureeVol;
-		}
 
 		/**
 		 * @return the nbPassagersFirstClass
@@ -243,9 +223,75 @@ public class Vol {
 				return false;
 			return true;
 		}
+
+
+		/**
+		 * @return the heureDuree
+		 */
+		public int getHeureDuree() {
+			return heureDuree;
+		}
+
+
+		/**
+		 * @param heureDuree the heureDuree to set
+		 */
+		public void setHeureDuree(int heureDuree) {
+			this.heureDuree = heureDuree;
+		}
+
+
+		/**
+		 * @return the heureDepart
+		 */
+		public int getHeureDepart() {
+			return heureDepart;
+		}
+
+
+		/**
+		 * @param heureDepart the heureDepart to set
+		 */
+		public void setHeureDepart(int heureDepart) {
+			this.heureDepart = heureDepart;
+		}
+
+
+		/**
+		 * @return the minDepart
+		 */
+		public int getMinDepart() {
+			return minDepart;
+		}
+
+
+		/**
+		 * @param minDepart the minDepart to set
+		 */
+		public void setMinDepart(int minDepart) {
+			this.minDepart = minDepart;
+		}
+
+
+		/**
+		 * @return the minDuree
+		 */
+		public int getMinDuree() {
+			return minDuree;
+		}
+
+
+		/**
+		 * @param minDuree the minDuree to set
+		 */
+		public void setMinDuree(int minDuree) {
+			this.minDuree = minDuree;
+		}
 		
-		
-		
+	
+		public String toString(){
+			return this.id_vol+","+this.id_villeDepart+","+this.id_villeArrivee+","+this.heureDepart+","+this.heureDuree;
+		}
 		
 	
 }

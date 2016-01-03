@@ -3,6 +3,7 @@
  */
 package fabrique;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class FabriqueClient {
 	 * @param prenom du client
 	 * @return Client sinon null si la Client n'existe pas en base
 	 */
+	@SuppressWarnings("deprecation")
 	public Client getClientBDDWithNomAndPrenom(String nom,String prenom){
 		int idClient = BDDConnection.getClient( nom,prenom);
 		Client Client = this.getClientWithId(idClient);
@@ -84,8 +86,8 @@ public class FabriqueClient {
 			ResultSet rs = BDDConnection.ligneClient(idClient);
 			try {
 				int id_ville = rs.getInt(4);
-				String date = rs.getString(5);
-				//Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, jours , mois,annee);
+				Date date = rs.getDate(5);
+				Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, date.getDay() , date.getMonth(),date.getYear());
 			}
 			catch (SQLException e){
 				return null;
@@ -110,8 +112,8 @@ public class FabriqueClient {
 				String nom = ligneClient.getString(3);
 				String prenom = ligneClient.getString(4); 
 				int id_ville = ligneClient.getInt(2);
-				//String date = ligneClient.getString(5);
-				//Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, date);
+				Date date = ligneClient.getDate(5);
+				Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, date.getDay() , date.getMonth(),date.getYear());
 			}
 			catch (SQLException e){
 				return null;

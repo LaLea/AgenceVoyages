@@ -3,6 +3,10 @@
  */
 package fabrique;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import domaine.Vol;
@@ -74,55 +78,39 @@ public class FabriqueVol {
 	}
 	
 	/**
-	 * permet de recuperer la Vol en fonction de l'id de l'hotel et du nom de la Vol
-	 * @param idHotel id de l'hotel
-	 * @param nom de lla Vol
+	 * permet de recuperer la Vol en fonction de l'id du Vol
+	 * @param id_vol id du vol
 	 * @return Vol sinon null si la Vol n'existe pas en base
 	 */
-	public Vol getVolBDDWithNomAndHotel(int id_hotel, String nom){
-		int idVol = BDDConnection.getVol(id_hotel, nom);
-		Vol Vol = this.getVolWithId(idVol);
+	@SuppressWarnings("deprecation")
+	public Vol getVolBDDWithIdVol(int id_vol){
+		int idVol = BDDConnection.getVol(id_vol);
+		Vol vol = this.getVolWithId(idVol);
 		//si la Vol n'existe pas dans al farbqiue, il faut aller chercher les
 		//infos dans la base pour le creer
-		if (Vol== null){
-			ResultSet ligneVol = BDDConnection.ligneVol(idVol);
+		if (vol== null){
+			ResultSet ligneVol = BDDConnection.selectVol(idVol);
 			try{
-				int capacite = ligneVol.getInt(4);
-				float tarif = ligneVol.getFloat(5);
-				Vol = this.addVolDansFabrique(idVol,id_hotel, nom, capacite, tarif);
+				int idVilleDepart = ligneVol.getInt(2);
+				int idVilleArrivee = ligneVol.getInt(3);
+				String jours = ligneVol.getString(4);
+				Time heure = ligneVol.getTime(5);
+				Time duree = ligneVol.getTime(6);
+				int nb1ereClasse = ligneVol.getInt(7);
+				float prix1ere = ligneVol.getFloat(8);
+				int nb2emeClasse = ligneVol.getInt(9);
+				float prix2eme = ligneVol.getFloat(10);
+				int dureeAnnulation = ligneVol.getInt(11);
+				vol = this.addVolDansFabrique(idVol,idVilleDepart,idVilleArrivee,jours,heure.getHours(),heure.getMinutes(),
+						duree.getHours(),duree.getMinutes(),nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
 			}
 			catch (SQLException e){
 				return null;
 			}
 		}// fin IF
-		return Vol;
+		return vol;
 	}
 	
-	/**
-	 * permet de recuperer la Vol en fonction de l'id de la Vol
-	 * @param idHotel id de l'hotel
-	 * @param nom de lla Vol
-	 * @return Vol sinon null si la Vol n'existe pas en base
-	 */
-	public Vol getVolWithIdVol(int idVol){
-		Vol Vol = this.getVolWithId(idVol);
-		//si la Vol n'existe pas dans al farbqiue, il faut aller chercher les
-		//infos dans la base pour le creer
-		if (Vol== null){
-			ResultSet ligneVol = BDDConnection.ligneVol(idVol);
-			try{
-				int id_hotel = ligneVol.getInt(2);
-				String nom = ligneVol.getString(3);
-				int capacite = ligneVol.getInt(4);
-				float tarif = ligneVol.getFloat(5);
-				Vol = this.addVolDansFabrique(idVol,id_hotel, nom, capacite, tarif);
-			}
-			catch (SQLException e){
-				return null;
-			}
-		}// fin IF
-		return Vol;
-	}
 	
 	public void deleteVol(int id_Vol){
 		BDDConnection.deleteVol(id_Vol);
@@ -132,4 +120,39 @@ public class FabriqueVol {
 		catch (Exception e){
 		}
 	}
+
+	public ArrayList<Vol> getVolsAvecVilleDepartEtArrivee(int id_ville,
+			int id_ville2) {
+		ArrayList<Vol> lesVols = new ArrayList<Vol>();
+		ResultSet rs = BDDConnection.lesVolsAvecVilleDepartetArrivee(id_ville,id_ville2);
+		recupereVol(rs, lesVols);
+		return lesVols;
+	}
+	
+	private void recupereVol(ResultSet ligneVol, ArrayList<Vol> lesVols){
+		try{
+			while (ligneVol.next()){
+				int idVol = ligneVol.getInt(1);
+				int idVilleDepart = ligneVol.getInt(2);
+				int idVilleArrivee = ligneVol.getInt(3);
+				String jours = ligneVol.getString(4);
+				Time heure = ligneVol.getTime(5);
+				Time duree = ligneVol.getTime(6);
+				int nb1ereClasse = ligneVol.getInt(7);
+				float prix1ere = ligneVol.getFloat(8);
+				int nb2emeClasse = ligneVol.getInt(9);
+				float prix2eme = ligneVol.getFloat(10);
+				int dureeAnnulation = ligneVol.getInt(11);
+				Vol vol = this.addVolDansFabrique(idVol,idVilleDepart,idVilleArrivee,jours,heure.getHours(),heure.getMinutes(),
+						duree.getHours(),duree.getMinutes(),nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
+				lesVols.add(vol);
+			}
+		}
+		catch (Exception e){
+			
+		}
+	}
+	
+	
+	
 }
