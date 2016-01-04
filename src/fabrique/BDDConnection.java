@@ -133,6 +133,22 @@ public class BDDConnection {
 		}
 	}
 	
+	
+	public static ResultSet getCategorie(int idHotel) {
+		BDDConnection.getInstance();
+		PreparedStatement stmt;
+		ResultSet categorie = null;
+		try {
+			stmt = c.prepareStatement("select * from Categorie where IDHotel = ?");
+			stmt.setInt(1, idHotel);
+			categorie = stmt.executeQuery();
+			categorie.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return categorie;
+	}
+	
 	/**
 	 * permet de recuperer la ligne entiere d'une categorie grace à l'id 
 	 * de la categorie

@@ -5,9 +5,11 @@ package fabrique;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import domaine.Categorie;
+import domaine.Hotel;
 
 /**
  * @author Lea Vannelle & Benoit Bailleul
@@ -126,5 +128,20 @@ public class FabriqueCategorie {
 		}
 		catch (Exception e){
 		}
+	}
+
+	public ArrayList<Categorie> selectCategorie(int idHotel) {
+		ResultSet rs = BDDConnection.getCategorie(idHotel);
+		ArrayList<Categorie> lesCategories = new ArrayList<Categorie>();
+		try {
+			while (rs.next()){
+				Categorie categorie = getCategorieWithId(rs.getInt(1));
+				lesCategories.add(categorie);
+			}
+		}
+		catch (Exception e){
+			return lesCategories;
+			}
+		return lesCategories;
 	}
 }
