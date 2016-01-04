@@ -5,9 +5,11 @@ package fabrique;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import domaine.Chambre;
+import domaine.Hotel;
 
 /**
  * @author Lea Vannelle & Benoit Bailleul
@@ -28,7 +30,7 @@ public class FabriqueChambre {
 	}
 	
 	
-	public FabriqueChambre getInstance(){
+	public static FabriqueChambre getInstance(){
 		if (INSTANCE==null){
 			INSTANCE = new FabriqueChambre();
 		}
@@ -119,5 +121,21 @@ public class FabriqueChambre {
 		}
 		catch (Exception e){
 		}
+	}
+
+
+	public ArrayList<Chambre> listeChambreParHotel(int idHotel) {
+			ResultSet rs = BDDConnection.getChambre(idHotel);
+			ArrayList<Chambre> lesChambres = new ArrayList<Chambre>();
+			try {
+				while (rs.next()){
+					Chambre chambre = getChambreWithId(rs.getInt(1));
+					lesChambres.add(chambre);
+				}
+			}
+			catch (Exception e){
+				return lesChambres;
+				}
+			return lesChambres;
 	}
 }

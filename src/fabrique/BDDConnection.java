@@ -225,6 +225,21 @@ public class BDDConnection {
 		return ligneChambre;
 	}
 
+	public static ResultSet getChambre(int idHotel) {
+		PreparedStatement stmt;
+		ResultSet ligneChambre = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Chambre where IDHotel= ?);");
+			stmt.setInt(1,idHotel );;			
+			ligneChambre = stmt.executeQuery();
+			ligneChambre.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneChambre;
+	}
+	
 	
 	public static int getChambre(int id_hotel,int id_categorie,int numero){
 		BDDConnection.getInstance();
@@ -1066,6 +1081,6 @@ public class BDDConnection {
 		} catch (SQLException e) {
 		}
 	}
-	
+
 	//FIN RESERVATION
 }
