@@ -1013,6 +1013,23 @@ public class BDDConnection {
 	}
 	
 	
+	public static ResultSet getVol(int idDepart, int idArrivee,String jours) {
+		PreparedStatement stmt;
+		ResultSet VolVol = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? and Jour=?");
+			stmt.setInt(1, idDepart);
+			stmt.setInt(2, idArrivee);
+			stmt.setString(3, jours);
+			VolVol = stmt.executeQuery();
+			VolVol.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return VolVol;
+	}
+	
 	// FIN VOL
 	
 	
@@ -1083,4 +1100,216 @@ public class BDDConnection {
 	}
 
 	//FIN RESERVATION
+	
+	
+	/**
+	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de départ
+	 * @param idVille ville de départ
+	 * @return la ligne de la Ligne sinon null
+	 */
+	public static  ResultSet lesLignesAvecVilleDepartetArrivee(int ID_VilleD, int ID_VilleA ){
+		PreparedStatement stmt;
+		ResultSet ligneLigne = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Ligne where IDVilleDepart=? and IDVilleArrivee=? order by Tarif1Classe desc");
+			stmt.setInt(1, ID_VilleD);
+			stmt.setInt(2, ID_VilleA);
+			ligneLigne = stmt.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneLigne;
+	}
+	
+	/**
+	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de départ
+	 * @param idVille ville de départ
+	 * @return la ligne de la Ligne sinon null
+	 */
+	public static  ResultSet lesLignesAvecVilleDepart(int ID_Ville ){
+		PreparedStatement stmt;
+		ResultSet ligneLigne = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Ligne where IDVilleDepart=?");
+			stmt.setInt(1, ID_Ville);
+			ligneLigne = stmt.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneLigne;
+	}
+
+	/**
+	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de départ
+	 * @param idVille ville de départ
+	 * @return la ligne de la Ligne sinon null
+	 */
+	public static  ResultSet lesLignesAvecVilleArrivee(int ID_Ville ){
+		PreparedStatement stmt;
+		ResultSet ligneLigne = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Ligne where IDVilleArrivee=?");
+			stmt.setInt(1, ID_Ville);
+			ligneLigne = stmt.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneLigne;
+	}
+	
+	
+	public static  ResultSet selectLigne(int ID_Ligne ){
+		PreparedStatement stmt;
+		ResultSet ligneLigne = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Ligne where ID_Ligne=?");
+			stmt.setInt(1, ID_Ligne);
+			ligneLigne = stmt.executeQuery();
+			ligneLigne.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneLigne;
+	}
+	
+	
+	public static  ResultSet selectLigne(){
+		PreparedStatement stmt;
+		ResultSet ligneLigne = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Ligne");
+			ligneLigne = stmt.executeQuery();
+			ligneLigne.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneLigne;
+	}
+	
+	/**
+	 * permet de recuperer id d'une Ligne grace a son nom et son pays
+	 * @param nom
+	 * @param pays
+	 * @return l'id de la Ligne sinon 0
+	 */
+	public static int getLigne(int id_Ligne){
+		int idLigne = 0;
+		try {
+			ResultSet ligneLigne = BDDConnection.selectLigne(id_Ligne);
+			idLigne=ligneLigne.getInt(1);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+		return idLigne;
+	}
+	
+	
+/**	public int getLigneLigne (int id_villeDepart, int id_villeArrivee,
+	String jours, int heure, int min, int heureDuree, int minDuree,
+	int nb1ereClasse, float prix1ereClasse, int nb2emeClasse,
+	float prix2emeClasse, int dureeAnnulation){
+		PreparedStatement stmt;
+		ResultSet ligneLigne = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Ligne where `IDVilleDepart`=? and"
+						+ "`IDVilleArrivee`= `Jour`, `Heure`, `Duree`, `NbPassgr1Classe`, "
+						+ "`Tarif1Classe`, `NbPassr2Classe`, `Tarif2Classe`, `DelaiAnnulation`");
+			stmt.setInt(1, ID_Ligne);
+			ligneLigne = stmt.executeQuery();
+			ligneLigne.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneLigne;
+	}
+	
+	*/
+	
+	
+	
+	/**
+	 * permet d'ajouter une Ligne a la bdd
+	 * @param nom
+	 * @param pays
+	 * @return l'identifiant de la base dans la BDD sinon 0
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("deprecation")
+	public static int addLigne(int id_villeDepart, int id_villeArrivee,
+			String jours, int heure, int min, int heureDuree, int minDuree,
+			int nb1ereClasse, float prix1ereClasse, int nb2emeClasse,
+			float prix2emeClasse, int dureeAnnulation){
+		BDDConnection.getInstance();
+		int idLigne = 0;//BDDConnection.getLigne(nom, pays);
+		if (idLigne==0){ //si le retour du select est vide alors il doit le creer
+			try { 
+				PreparedStatement stmt;
+				stmt = c.prepareStatement("insert into Ligne(`IDVilleDepart`,"
+						+ "`IDVilleArrivee`, `Jour`, `Heure`, `Duree`, `NbPassgr1Classe`, "
+						+ "`Tarif1Classe`, `NbPassr2Classe`, `Tarif2Classe`, `DelaiAnnulation`)"
+						+ " values (?,?,?,?,?,?,?,?,?,?)");
+				stmt.setInt(1, id_villeDepart);
+				stmt.setInt(2, id_villeArrivee);
+				stmt.setString(3, jours);
+				stmt.setTime(4,new Time(heure,min,0));
+				stmt.setTime(5,new Time(heureDuree,minDuree,0));
+				stmt.setInt(6, nb1ereClasse);
+				stmt.setFloat(7, prix1ereClasse);
+				stmt.setInt(8, nb2emeClasse);
+				stmt.setFloat(9, prix2emeClasse);
+				stmt.setInt(10, dureeAnnulation);
+				stmt.execute();
+				//idLigne = BDDConnection.getLigne(nom,pays);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		}
+		return idLigne;
+	}
+	
+	/**
+	 * supprime une Ligne de la base grace à son id
+	 * @param nom
+	 * @param pays
+	 */
+	public static void deleteLigne(int idLigne){
+			try {
+				BDDConnection.getInstance();
+				PreparedStatement stmt = c.prepareStatement("delete from Ligne where ID_Ligne=?");
+				stmt.clearParameters();		
+				stmt.setInt(1, idLigne);
+				stmt.execute();
+			} catch (SQLException e) {
+			}
+	}
+
+	public static ResultSet getLigne(int idDepart, int idArrivee) {
+		PreparedStatement stmt;
+		ResultSet ligneLigne = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Ligne where IDVilleDepart=? and IDVilleArrivee=?");
+			stmt.setInt(1, idDepart);
+			stmt.setInt(2, idArrivee);
+			ligneLigne = stmt.executeQuery();
+			ligneLigne.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneLigne;
+	}
+	
+	
+	// FIN Ligne
+	
+	
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import domaine.Vol;
 
 /**
- * @author Tchioben
+ * @author Benoit Bailleul & Lea Vanelle
  *
  */
 public class FabriqueVol {
@@ -153,6 +153,31 @@ public class FabriqueVol {
 		}
 	}
 	
+	public int getVolAvecVilleDepartEtArriveeEtJours(int idDepart, int idArrivee,String jour){
+		ResultSet VolVol = BDDConnection.getVol(idDepart,idArrivee,jour);
+		try{
+			if (VolVol.next()){
+				int idVol = VolVol.getInt(1);
+				int idVilleDepart = VolVol.getInt(2);
+				int idVilleArrivee = VolVol.getInt(3);
+				String jours = VolVol.getString(4);
+				Time heure = VolVol.getTime(5);
+				Time duree = VolVol.getTime(6);
+				int nb1ereClasse = VolVol.getInt(7);
+				float prix1ere = VolVol.getFloat(8);
+				int nb2emeClasse = VolVol.getInt(9);
+				float prix2eme = VolVol.getFloat(10);
+				int dureeAnnulation = VolVol.getInt(11);
+				Vol vol = this.addVolDansFabrique(idVol,idVilleDepart,idVilleArrivee,jours,heure.getHours(),heure.getMinutes(),
+						duree.getHours(),duree.getMinutes(),nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
+				return vol.getId_vol();
+			}
+		}
+		catch (Exception e){
+			return 0;
+		}
+		return 0;
+	}
 	
 	
 }

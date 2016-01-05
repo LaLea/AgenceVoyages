@@ -53,6 +53,8 @@ public class FabriqueVille {
 		return cat;
 	}
 	
+	
+	
 	/**
 	 * crée la Ville dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
 	 * puis l'ajoute a la BDD et à la fabrique
@@ -168,4 +170,6 @@ public class FabriqueVille {
 		}
 		return lesVilles;
 	}
+
+
 }

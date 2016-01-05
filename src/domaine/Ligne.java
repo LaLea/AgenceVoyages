@@ -7,9 +7,9 @@ package domaine;
  * @author Benoit Bailleul & Vanelle Lea
  *
  */
-public class Vol {
+public class Ligne {
 
-		private int id_vol;
+		private int id_Ligne;
 		
 		private int id_villeDepart;
 		
@@ -36,24 +36,24 @@ public class Vol {
 		private int delaiAnnulation;
 
 		/**
-		 * @param id_vol
+		 * @param id_Ligne
 		 * @param id_villeDepart
 		 * @param id_villeArrivee
 		 * @param jour
 		 * @param heure
-		 * @param dureeVol
+		 * @param dureeLigne
 		 * @param nbPassagersFirstClass
 		 * @param nbPassagersSecondClass
 		 * @param priceFirstClass
 		 * @param priceSecondClass
 		 * @param delaiAnnulation
 		 */
-		public Vol(int id_vol, int id_villeDepart2,
+		public Ligne(int id_Ligne, int id_villeDepart2,
 				int id_villeArrivee2, String jours, int heure2, int min,
 				int heureDuree, int minDuree, int nb1ereClasse,
 				float prix1ereClasse, int nb2emeClasse, float prix2emeClasse,
 				int dureeAnnulation) {
-			this.id_vol = id_vol;
+			this.id_Ligne = id_Ligne;
 			this.id_villeDepart = id_villeDepart2;
 			this.id_villeArrivee = id_villeArrivee2;
 			this.jour = jours;
@@ -70,17 +70,17 @@ public class Vol {
 
 
 		/**
-		 * @return the id_vol
+		 * @return the id_Ligne
 		 */
-		public int getId_vol() {
-			return id_vol;
+		public int getId_Ligne() {
+			return id_Ligne;
 		}
 
 		/**
-		 * @param id_vol the id_vol to set
+		 * @param id_Ligne the id_Ligne to set
 		 */
-		public void setId_vol(int id_vol) {
-			this.id_vol = id_vol;
+		public void setId_Ligne(int id_Ligne) {
+			this.id_Ligne = id_Ligne;
 		}
 
 		/**
@@ -203,11 +203,11 @@ public class Vol {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + id_vol;
+			result = prime * result + id_Ligne;
 			return result;
 		}
 
-		/** looking only id_vol
+		/** looking only id_Ligne
 		 * @see java.lang.Object#equals(java.lang.Object)
 		 */
 		@Override
@@ -218,8 +218,8 @@ public class Vol {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			Vol other = (Vol) obj;
-			if (id_vol != other.id_vol)
+			Ligne other = (Ligne) obj;
+			if (id_Ligne != other.id_Ligne)
 				return false;
 			return true;
 		}
@@ -290,7 +290,7 @@ public class Vol {
 		
 	
 		public String toString(){
-			return this.id_vol+","+this.id_villeDepart+","+this.id_villeArrivee+","+this.heureDepart+","+this.heureDuree;
+			return this.id_Ligne+","+this.id_villeDepart+","+this.id_villeArrivee+","+this.heureDepart+","+this.heureDuree;
 		}
 		
 	

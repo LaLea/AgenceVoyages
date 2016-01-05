@@ -3,7 +3,9 @@ package metier;
 import java.util.ArrayList;
 
 import domaine.Client;
+import domaine.Ville;
 import fabrique.FabriqueClient;
+import fabrique.FabriqueVille;
 
 public class GestionClient {
 
