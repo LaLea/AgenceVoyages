@@ -140,6 +140,10 @@ public class FabriqueVille {
 		return Ville;
 	}
 	
+	/**
+	 * permet de supprimer une ville grace à l'id de la ville
+	 * @param id_Ville l'id de la ville à supprimer
+	 */
 	public void deleteVille(int id_Ville){
 		BDDConnection.deleteVille(id_Ville);
 		try{

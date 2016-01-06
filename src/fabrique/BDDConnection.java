@@ -1035,8 +1035,6 @@ public class BDDConnection {
 	
 	
 	//Reservation
-	
-	
 
 
 	public static void ajouteReservation(int idClient, int idVol, int classe,
@@ -1100,6 +1098,10 @@ public class BDDConnection {
 	}
 
 	//FIN RESERVATION
+	
+	
+	
+	//LIGNE
 	
 	
 	/**

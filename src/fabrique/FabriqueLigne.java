@@ -111,7 +111,10 @@ public class FabriqueLigne {
 		return Ligne;
 	}
 	
-	
+	/**
+	 * permet de supprimer une ligne grace à l'id de la ligne
+	 * @param id_Ligne l'id de la ligne à supprimer
+	 */
 	public void deleteLigne(int id_Ligne){
 		BDDConnection.deleteLigne(id_Ligne);
 		try{
@@ -121,6 +124,12 @@ public class FabriqueLigne {
 		}
 	}
 
+	/**
+	 * permet de recuperer les lignes grace à la ville de départ et la ville d'arrivée
+	 * @param id_ville l'id de la ville de départ
+	 * @param id_ville2 l'id de la ville d'arrivée
+	 * @return la liste des lignes qui correspondent à ces 2 villes
+	 */
 	public ArrayList<Ligne> getLignesAvecVilleDepartEtArrivee(int id_ville,
 			int id_ville2) {
 		ArrayList<Ligne> lesLignes = new ArrayList<Ligne>();
@@ -148,11 +157,16 @@ public class FabriqueLigne {
 				lesLignes.add(Ligne);
 			}
 		}
-		catch (Exception e){
-			
+		catch (Exception e){		
 		}
 	}
 	
+	/**
+	 * permet de recuperer l'id d'une ligne grace à la ville de depart et celle d'arrivee
+	 * @param idDepart l'id de la ville de depart
+	 * @param idArrivee l'id de la ville d'arrivee
+	 * @return l'id de la ligne qui correspond à ces villes
+	 */
 	public int getLigneAvecVilleDepartEtArrivee(int idDepart, int idArrivee){
 		ResultSet ligneLigne = BDDConnection.getLigne(idDepart,idArrivee);
 		try{
@@ -179,6 +193,10 @@ public class FabriqueLigne {
 		return 0;
 	}
 	
+	/**
+	 * permet de recuperer toutes les lignes
+	 * @return la liste des lignes
+	 */
 	public ArrayList<Ligne> getAllLignes() {
 		ArrayList<Ligne> lesLignes = new ArrayList<Ligne>();
 		ResultSet rs = BDDConnection.selectLigne();
