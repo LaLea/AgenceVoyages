@@ -12,7 +12,7 @@ import java.util.HashMap;
 import domaine.Vol;
 
 /**
- * @author Tchioben
+ * @author Benoit Bailleul & Lea Vanelle
  *
  */
 public class FabriqueVol {
@@ -111,7 +111,10 @@ public class FabriqueVol {
 		return vol;
 	}
 	
-	
+	/**
+	 * permet de supprimer un vol
+	 * @param id_Vol l'id du vol à supprimer
+	 */
 	public void deleteVol(int id_Vol){
 		BDDConnection.deleteVol(id_Vol);
 		try{
@@ -121,6 +124,12 @@ public class FabriqueVol {
 		}
 	}
 
+	/**
+	 * permet de recuperer les vols grace aux villes de depart et d'arrivee
+	 * @param id_ville l'id de la ville de depart
+	 * @param id_ville2 l'id de la ville d'arrivee
+	 * @return la liste des vols correspondant à ces parametres
+	 */
 	public ArrayList<Vol> getVolsAvecVilleDepartEtArrivee(int id_ville,
 			int id_ville2) {
 		ArrayList<Vol> lesVols = new ArrayList<Vol>();
@@ -129,6 +138,7 @@ public class FabriqueVol {
 		return lesVols;
 	}
 	
+
 	private void recupereVol(ResultSet ligneVol, ArrayList<Vol> lesVols){
 		try{
 			while (ligneVol.next()){
@@ -153,6 +163,38 @@ public class FabriqueVol {
 		}
 	}
 	
+	/**
+	 * permet de recuperer les vols
+	 * @param idDepart l'id de la ville de depart
+	 * @param idArrivee l'id de la ville d'arrivee
+	 * @param jour le jours du vol
+	 * @return l'id du vol qui part de iDdepart et à destination de idArrivee ce jours là
+	 */
+	public int getVolAvecVilleDepartEtArriveeEtJours(int idDepart, int idArrivee,String jour){
+		ResultSet VolVol = BDDConnection.getVol(idDepart,idArrivee,jour);
+		try{
+			if (VolVol.next()){
+				int idVol = VolVol.getInt(1);
+				int idVilleDepart = VolVol.getInt(2);
+				int idVilleArrivee = VolVol.getInt(3);
+				String jours = VolVol.getString(4);
+				Time heure = VolVol.getTime(5);
+				Time duree = VolVol.getTime(6);
+				int nb1ereClasse = VolVol.getInt(7);
+				float prix1ere = VolVol.getFloat(8);
+				int nb2emeClasse = VolVol.getInt(9);
+				float prix2eme = VolVol.getFloat(10);
+				int dureeAnnulation = VolVol.getInt(11);
+				Vol vol = this.addVolDansFabrique(idVol,idVilleDepart,idVilleArrivee,jours,heure.getHours(),heure.getMinutes(),
+						duree.getHours(),duree.getMinutes(),nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
+				return vol.getId_vol();
+			}
+		}
+		catch (Exception e){
+			return 0;
+		}
+		return 0;
+	}
 	
 	
 }

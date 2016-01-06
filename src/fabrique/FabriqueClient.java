@@ -122,6 +122,10 @@ public class FabriqueClient {
 		return Client;
 	}
 	
+	/**
+	 * permet de supprimer un client
+	 * @param id_Client l'id du client à supprimer
+	 */
 	public void deleteClient(int id_Client){
 		BDDConnection.deleteClient(id_Client);
 		try{
@@ -131,7 +135,11 @@ public class FabriqueClient {
 		}
 	}
 	
-	
+	/**
+	 * permet de cherche un client grace à son nom
+	 * @param nom le nom du client
+	 * @return le liste des clients avec ce nom
+	 */
 	public ArrayList<Client> rechercheClientParNom(String nom){
 		ArrayList<Client> lesClients = new ArrayList<Client>();
 		ResultSet rs = BDDConnection.selectClientsParNom(nom);
@@ -151,7 +159,11 @@ public class FabriqueClient {
 		return lesClients;
 	}
 	
-	
+	/**
+	 * permet de cherche un client grace à son prenom
+	 * @param prenom le prenom du client
+	 * @return le liste des clients avec ce prenom
+	 */
 	public ArrayList<Client> rechercheClientParPrenom(String prenom){
 		ArrayList<Client> lesClients = new ArrayList<Client>();
 		ResultSet rs = BDDConnection.selectClientsParPrenom(prenom);

@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import domaine.Ville;
 import domaine.Vol;
@@ -16,18 +18,18 @@ import domaine.Vol;
 public class TabVol extends JPanel{
 
 	private JTextField tfSearchVilleDep = new JTextField(15);
-	private DefaultListModel<Ville> dlmVillesDep;
-	private JList<Ville> lVillesDep;
+	private DefaultListModel<Ville> dlmVillesDep = new DefaultListModel<Ville>();
+	private JList<Ville> lVillesDep = new JList<Ville>();
 	private JTextField tfSearchVilleArr = new JTextField(15);
-	private JList<Ville> lVillesArr;
-	private DefaultListModel<Ville> dlmVillesArr;
-	private JList<Vol> lVol;
-	private DefaultListModel<Vol> dlmVol;
+	private JList<Ville> lVillesArr = new JList<Ville>();
+	private DefaultListModel<Ville> dlmVillesArr = new DefaultListModel<Ville>();
+	private JList<Vol> lVol = new JList<Vol>();
+	private DefaultListModel<Vol> dlmVol = new DefaultListModel<Vol>();
 	private JTextField tfVilleDep = new JTextField(20);
 	private JTextField tfVilleAr = new JTextField(20);
 	private JTextField tfJour = new JTextField(20);
 	private JTextField tfHHeure = new JTextField(2);
-	private JTextField tMnHeure = new JTextField(2);
+	private JTextField tfMnHeure = new JTextField(2);
 	private JTextField tfHDurVol = new JTextField(2);
 	private JTextField tfMnDurVol = new JTextField(2);
 	private JTextField tfNbPers1Class = new JTextField(2);
@@ -55,22 +57,8 @@ public class TabVol extends JPanel{
 		four.add(InterfaceGraphique.createInputBox("Ville de départ :", tfVilleDep));
 		four.add(InterfaceGraphique.createInputBox("Ville d'arrivée :", tfVilleAr ));
 		four.add(InterfaceGraphique.createInputBox("Jour :", tfJour));
-		JPanel heure = new JPanel();
-		heure.add(new JLabel("Heure :"));
-		heure.add(tfHHeure);
-		heure.add(new JLabel(":"));
-		heure.add(tMnHeure);
-		//heure.add(InterfaceGraphique.createInputBox("Heure : ",tfHHeure));
-		//heure.add(InterfaceGraphique.createInputBox(": ", tMnHeure));
-		four.add(heure);
-		JPanel durVol = new JPanel();
-		durVol.add(new JLabel("Durée de vol :"));
-		durVol.add(tfHDurVol);
-		durVol.add(new JLabel(":"));
-		durVol.add(tfMnDurVol);
-		//durVol.add(InterfaceGraphique.createInputBox("Durée de vol : ", tfHDurVol));
-		//durVol.add(InterfaceGraphique.createInputBox(": ", tfMnDurVol));
-		four.add(durVol);
+		four.add(InterfaceGraphique.createHeureInputBox("Heure : ", tfHHeure, tfMnHeure));
+		four.add(InterfaceGraphique.createHeureInputBox("Durée de vol : ", tfHDurVol, tfMnDurVol));
 		four.add(InterfaceGraphique.createInputBox("Nombre de passagers en 1ère classe : ", tfNbPers1Class));
 		four.add(InterfaceGraphique.createInputBox("Tarif en 1ère classe : ", tfTarif1Class));
 		four.add(InterfaceGraphique.createInputBox("Nombre de passagers en 2ème classe : ", tfNbPers2Class));
@@ -94,7 +82,7 @@ public class TabVol extends JPanel{
 		two.setLayout(new BoxLayout(two,BoxLayout.Y_AXIS));
 		two.add(InterfaceGraphique.createSubTitle("Ville d'arrivée :"));
 		two.add(InterfaceGraphique.createSimpleSearch(tfSearchVilleArr, new SearchVilleArrListener()));
-		two.add(InterfaceGraphique.createListVilles(dlmVillesArr, lVillesArr, 60, 200));
+		two.add(InterfaceGraphique.createListVilles(dlmVillesArr, lVillesArr, 60, 200, new lstVilleArrListener()));
 		two.add(InterfaceGraphique.createButtonsPair(new DeselVilleArrListener(), new AffVilleArrListener()));
 		return two;
 	}
@@ -104,11 +92,13 @@ public class TabVol extends JPanel{
 		one.setLayout(new BoxLayout(one,BoxLayout.Y_AXIS));
 		one.add(InterfaceGraphique.createSubTitle("Ville de départ :"));
 		one.add(InterfaceGraphique.createSimpleSearch(tfSearchVilleDep, new SearchVilleDepListener()));
-		one.add(InterfaceGraphique.createListVilles(dlmVillesDep, lVillesDep, 60, 200));
+		one.add(InterfaceGraphique.createListVilles(dlmVillesDep, lVillesDep, 60, 200, new lstVilleDepListener()));
 		one.add(InterfaceGraphique.createButtonsPair(new DeselVilleDepListener(), new AffVilleDepListener()));
-		//one.add(InterfaceGraphique.createOneButton(new DeselVilleDepListener(), "Déselectionner tout"));
-		//one.add(InterfaceGraphique.createOneButton(new AffVilleDepListener(), "Afficher tout"));
 		return one;
+	}
+	
+	public DefaultListModel<Ville> getDlmVille(){
+		return dlmVillesDep;
 	}
 	
 	private class SearchVilleDepListener implements ActionListener{
@@ -186,6 +176,22 @@ public class TabVol extends JPanel{
 	private class delVolListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class lstVilleDepListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class lstVilleArrListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}

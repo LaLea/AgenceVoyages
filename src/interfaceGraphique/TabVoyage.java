@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -17,11 +18,11 @@ import domaine.Voyage;
 public class TabVoyage extends JPanel{
 
 	private JTextField tfSearchCust= new JTextField(15);
-	private JComboBox<String> cbSearchCust;
-	private JList<Client> lCust;
-	private DefaultListModel<Client> dlmCust;
-	private JList<Voyage> lVoyage;
-	private DefaultListModel<Voyage> dlmVoyage;
+	private JComboBox<String> cbSearchCust = new JComboBox<String>();
+	private JList<Client> lCust = new JList<Client>();
+	private DefaultListModel<Client> dlmCust = new DefaultListModel<Client>();
+	private JList<Voyage> lVoyage = new JList<Voyage>();
+	private DefaultListModel<Voyage> dlmVoyage = new DefaultListModel<Voyage>();
 	private JTextField tfVilleDepVol = new JTextField(20);
 	private JTextField tfVilleArrVol = new JTextField(20);
 	private JTextField tfJourVol = new JTextField(20);
@@ -39,6 +40,8 @@ public class TabVoyage extends JPanel{
 
 	public TabVoyage(){
 		super();
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(InterfaceGraphique.createTitle("Gestion des réservations."));
 		JPanel midPane = new JPanel();
 		add(midPane);
 		midPane.add(createLeftMidPane(),JPanel.BOTTOM_ALIGNMENT);
@@ -61,25 +64,10 @@ public class TabVoyage extends JPanel{
 		rightMidPane.add(InterfaceGraphique.createInputBox("Ville de départ :", tfVilleDepVol));
 		rightMidPane.add(InterfaceGraphique.createInputBox("Ville d'arrivée :", tfVilleArrVol));
 		rightMidPane.add(InterfaceGraphique.createInputBox("Jour :", tfJourVol));
-		JPanel heure = new JPanel();
-		heure.add(new JLabel("Heure :"));
-		heure.add(tfHHeureVol);
-		heure.add(new JLabel(":"));
-		heure.add(tfMnHeureVol);
-		//heure.add(InterfaceGraphique.createInputBox("Heure :", tfHHeureVol));
-		//heure.add(InterfaceGraphique.createInputBox(" : ", tfMnHeureVol));
-		rightMidPane.add(heure);
-		JPanel duree = new JPanel();
-		duree.add(new JLabel("Durée de vol :"));
-		duree.add(tfHDureeVol);
-		duree.add(new JLabel(":"));
-		duree.add(tfMnDureeVol);
-		//duree.add(InterfaceGraphique.createInputBox("Durée :", tfHDureeVol));
-		//duree.add(InterfaceGraphique.createInputBox(" : ", tfMnDureeVol));
-		rightMidPane.add(duree);
+		rightMidPane.add(InterfaceGraphique.createHeureInputBox("Heure : ", tfHHeureVol, tfMnHeureVol));
+		rightMidPane.add(InterfaceGraphique.createHeureInputBox("Durée de vol : ", tfHDureeVol, tfMnDureeVol));
 		rightMidPane.add(InterfaceGraphique.createGroupRadioButton("Classe :", rb1Classe, "1ère classe", rb2Classe, "2ème classe",false));
 		rightMidPane.add(InterfaceGraphique.createInputBox("Tarif :", tfTarifVol));
-		
 		rightMidPane.add(InterfaceGraphique.createSubTitle("L'hébergement :"));
 		rightMidPane.add(InterfaceGraphique.createInputBox("Ville :", tfVilleHotel));
 		rightMidPane.add(InterfaceGraphique.createInputBox("Nom hotel :", tfNomHotel));
@@ -102,26 +90,30 @@ public class TabVoyage extends JPanel{
 		JPanel leftMidPane = new JPanel();
 		leftMidPane.setLayout(new BoxLayout(leftMidPane, BoxLayout.Y_AXIS));
 		leftMidPane.add(InterfaceGraphique.createSubTitle("Rechercher un client :"));
-		leftMidPane.add(InterfaceGraphique.createSearchCust(tfSearchCust, new SearchCustListener(cbSearchCust, tfSearchCust, dlmCust), cbSearchCust));
+		leftMidPane.add(InterfaceGraphique.createSearchCust(tfSearchCust, cbSearchCust, dlmCust, lCust));
 		leftMidPane.add(InterfaceGraphique.createSubTitle("Les clients :"));
-		leftMidPane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 200));
+		leftMidPane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 200, null));
+		//InterfaceGraphique.addAllClientsIntoList(dlmCust);
 		leftMidPane.add(InterfaceGraphique.createButtonsPair(new DeselCustListener(), new AffToutCustListener()));
 		return leftMidPane;
 	}
-		
+	
+	public DefaultListModel<Client> getDlmCust(){
+		return dlmCust;
+	}
+	
 	private class DeselCustListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			lCust.clearSelection();
 		}
 	}
 	
 	private class AffToutCustListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			dlmCust.clear();
+			InterfaceGraphique.addAllClientsIntoOneList(dlmCust);
 		}
 	}
 	

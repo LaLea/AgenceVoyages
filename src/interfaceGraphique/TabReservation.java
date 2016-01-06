@@ -11,6 +11,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -23,10 +25,10 @@ public class TabReservation extends JPanel{
 
 	// Barre de recherche
 	private JTextField tfSearch = new JTextField(15);
-	private JComboBox<String> cbSearch;
+	private JComboBox<String> cbSearch = new JComboBox<String>();
 	// Liste de clients
-	private JList<Client> lCust;
-	private DefaultListModel<Client> dlmCust;
+	private JList<Client> lCust = new JList<Client>();
+	private DefaultListModel<Client> dlmCust = new DefaultListModel<Client>();
 	// Champs a remplir
 	private JComboBox<String> cbVilleDep;
 	private JComboBox<String> cbVilleArr;
@@ -37,16 +39,16 @@ public class TabReservation extends JPanel{
 	private JRadioButton rbPriceOrder;
 	private JRadioButton rbTimeOrder;
 	// Liste de vols
-	private JList<Vol> lVols;
-	private DefaultListModel<Vol> dlmVols;
+	private JList<Vol> lVols = new JList<Vol>();
+	private DefaultListModel<Vol> dlmVols = new DefaultListModel<Vol>();
 	// radio button 1ere et 2eme classe
 	private JRadioButton rb1Classe;
 	private JRadioButton rb2Classe;
 	// les 2 listes hotel + categories de chambres
-	private DefaultListModel<Hotel> dlmHotel;
-	private JList<Hotel> lHotel;
-	private DefaultListModel<Categorie> dlmCat;
-	private JList<Categorie> lCat;
+	private DefaultListModel<Hotel> dlmHotel = new DefaultListModel<Hotel>();
+	private JList<Hotel> lHotel = new JList<Hotel>();
+	private DefaultListModel<Categorie> dlmCat = new DefaultListModel<Categorie>();
+	private JList<Categorie> lCat = new JList<Categorie>();
 	
 	public TabReservation(){
 		super();
@@ -54,7 +56,7 @@ public class TabReservation extends JPanel{
 		JPanel general = new JPanel();
 		add(general);
 		general.setLayout(new BoxLayout(general,BoxLayout.PAGE_AXIS));
-		general.add(InterfaceGraphique.createTitle("Gestion des reservations"));
+		general.add(InterfaceGraphique.createTitle("Enregistrer une reservation."));
 		JPanel middlePane = new JPanel();
 		general.add(middlePane);
 		general.add(InterfaceGraphique.createOneButton(new bSaveBookingListener(),"Enregistrer la réservation."));
@@ -69,10 +71,10 @@ public class TabReservation extends JPanel{
 		leftMiddlePane.setLayout(new BoxLayout(leftMiddlePane,BoxLayout.Y_AXIS));
 		// Barre de recherche
 		leftMiddlePane.add(InterfaceGraphique.createSubTitle("Rechercher un client :"));
-		leftMiddlePane.add(InterfaceGraphique.createSearchCust(tfSearch, new SearchCustListener(cbSearch, tfSearch, dlmCust), cbSearch));
+		leftMiddlePane.add(InterfaceGraphique.createSearchCust(tfSearch, cbSearch, dlmCust, lCust));
 		// Liste des clients
 		leftMiddlePane.add(InterfaceGraphique.createSubTitle("Les clients :"));
-		leftMiddlePane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 150));
+		leftMiddlePane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 150, new lstCustListener()));
 		//InterfaceGraphique.addAllClientsIntoList(dlmCust);
 		// Boutons
 		leftMiddlePane.add(InterfaceGraphique.createButtonsPair(new bDeselCustListener(),new bAffCustListener()));
@@ -111,42 +113,22 @@ public class TabReservation extends JPanel{
 		return rightMiddlePane;
 	}
 	
-	/*private class bSearchReservListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ResultSet rs;
-			FabriqueClient fc = FabriqueClient.getInstance();
-			ArrayList<Client> lClients = new ArrayList<Client>();
-			if (cbSearch.getSelectedItem() == "Prénom"){
-				rs = BDDConnection.selectClientWithPrenom(tfSearch.getText());
-			}
-			else {
-				rs = BDDConnection.selectClientWithNom(tfSearch.getText());
-			}
-			try {
-				while (rs.next()){
-					Client c = fc.createClient(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
-					lClients.add(c);
-				}
-				InterfaceGraphique.addClientIntoList(lClients, dlmCust);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}
-	}*/
+	public DefaultListModel<Client> getDlmCust(){
+		return dlmCust;
+	}
 	
 	private class bDeselCustListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			lCust.clearSelection();
 		}
 	}
 	
 	private class bAffCustListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			dlmCust.clear();
+			InterfaceGraphique.addAllClientsIntoOneList(dlmCust);
 		}
 	}
 	
@@ -154,6 +136,14 @@ public class TabReservation extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+		}
+	}
+	
+	private class lstCustListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

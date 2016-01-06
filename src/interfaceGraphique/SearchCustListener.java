@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.JTextField;
 
 import domaine.Client;
@@ -19,32 +20,30 @@ public class SearchCustListener implements ActionListener {
 	private JComboBox<String> cbSearch;
 	private JTextField tfSearch;
 	private DefaultListModel<Client> dlmCust;
+	private JList<Client> lCust;
 
-	public SearchCustListener(JComboBox<String> cb, JTextField tf, DefaultListModel<Client> dlm) {
+	public SearchCustListener(JComboBox<String> cb, JTextField tf, DefaultListModel<Client> dlm, JList<Client> l) {
 		this.cbSearch = cb;
 		this.tfSearch = tf;
 		this.dlmCust = dlm;
+		this.lCust = l;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		ResultSet rs;
 		FabriqueClient fc = FabriqueClient.getInstance();
 		ArrayList<Client> lClients = new ArrayList<Client>();
+		lCust.clearSelection();
+		dlmCust.clear();
 		if (cbSearch.getSelectedItem() == "Prénom"){
-			rs = BDDConnection.selectClientWithPrenom(tfSearch.getText());
+			lClients = fc.rechercheClientParPrenom(tfSearch.getText());
 		}
 		else {
-			rs = BDDConnection.selectClientWithNom(tfSearch.getText());
+			lClients = fc.rechercheClientParNom(tfSearch.getText());
 		}
-		try {
-			while (rs.next()){
-				Client c = fc.createClient(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
-				lClients.add(c);
-			}
-			InterfaceGraphique.addClientIntoList(lClients, dlmCust);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+		for (Client client : lClients) {
+			dlmCust.addElement(client);
 		}
+		lCust.setSelectedIndex(0);
 	}
 }

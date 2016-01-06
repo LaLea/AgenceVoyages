@@ -23,6 +23,27 @@ public class FabriqueReservation {
 	}
 	
 	
+	/**
+	 * permet d'ajouter une reservation
+	 * @param idClient l'id du client
+	 * @param idVol l'id du vol
+	 * @param classe la classe pour le vol ( 1ere ou 2eme classe)
+	 * @param dateVol la date du vol du type sql.Date
+	 * @param idCategorie l'id de categorie
+	 * @param dateReservationChambre la date de reservation du type sql.Date
+	 * @param nbPersonne le nb de personne
+	 */
+	public void ajouterReservation(int idClient, int idVol, int classe,
+			Date dateVol, int idCategorie, Date dateReservationChambre, int nbPersonne){
+		BDDConnection.ajouteReservation(idClient, idVol, classe, dateVol, idCategorie, dateReservationChambre, nbPersonne);
+	}
+	
+	
+	/**
+	 * permet de recuperer la liste des reservation d'une personne grace à son id
+	 * @param idPers l'id de la personne
+	 * @return la liste des reservation
+	 */
 	public ArrayList<Reservation> getReservationDUnePersonne(int idPers){
 		ArrayList<Reservation> lesReservations = new ArrayList<Reservation>();
 		ResultSet rs = BDDConnection.selectReservation(idPers);
@@ -45,4 +66,5 @@ public class FabriqueReservation {
 			}
 		return lesReservations;
 	}
+
 }

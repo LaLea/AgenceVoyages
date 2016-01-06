@@ -21,12 +21,10 @@ public class FabriqueChambre {
 	private static FabriqueChambre INSTANCE = null;
 	
 	private HashMap<Integer,Chambre> lesChambres; 
-	 //permet de donner un id unique à chaque Chambre
 	
 	
 	private FabriqueChambre(){
-		this.lesChambres = new HashMap<Integer,Chambre>();
-		
+		this.lesChambres = new HashMap<Integer,Chambre>();		
 	}
 	
 	
@@ -114,6 +112,10 @@ public class FabriqueChambre {
 		return Chambre;
 	}
 	
+	/**
+	 * permet de supprimer une chambre
+	 * @param id_Chambre l'id de la chambre à supprimer
+	 */
 	public void deleteChambre(int id_Chambre){
 		BDDConnection.deleteChambre(id_Chambre);
 		try{
@@ -123,7 +125,11 @@ public class FabriqueChambre {
 		}
 	}
 
-
+	/**
+	 * permet de recuperer la liste des chambre pour un hotel
+	 * @param idHotel l'id de l'hotel
+	 * @return la liste des chambre
+	 */
 	public ArrayList<Chambre> listeChambreParHotel(int idHotel) {
 			ResultSet rs = BDDConnection.getChambre(idHotel);
 			ArrayList<Chambre> lesChambres = new ArrayList<Chambre>();

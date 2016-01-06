@@ -109,6 +109,10 @@ public class FabriqueHotel {
 		return Hotel;
 	}
 	
+	/**
+	 * permet de supprimer un hotel
+	 * @param id_Hotel l'id de l'hotel à supprimer
+	 */
 	public void deleteHotel(int id_Hotel){
 		BDDConnection.deleteHotel(id_Hotel);
 		try{

@@ -9,6 +9,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import domaine.Categorie;
 import domaine.Chambre;
@@ -18,14 +20,14 @@ import domaine.Ville;
 public class TabHotel extends JPanel{
 
 	// Listes
-	private DefaultListModel<Ville> dlmVilles;
-	private JList<Ville> lVilles;
-	private DefaultListModel<Hotel> dlmHotels;
-	private JList<Hotel> lHotels;
-	private DefaultListModel<Categorie> dlmCats;
-	private JList<Categorie> lCats;
-	private DefaultListModel<Chambre> dlmChbres;
-	private JList<Chambre> lChbres;
+	private DefaultListModel<Ville> dlmVilles = new DefaultListModel<Ville>();
+	private JList<Ville> lVilles = new JList<Ville>();
+	private DefaultListModel<Hotel> dlmHotels = new DefaultListModel<Hotel>();
+	private JList<Hotel> lHotels = new JList<Hotel>();
+	private DefaultListModel<Categorie> dlmCats = new DefaultListModel<Categorie>();
+	private JList<Categorie> lCats = new JList<Categorie>();
+	private DefaultListModel<Chambre> dlmChbres = new DefaultListModel<Chambre>();
+	private JList<Chambre> lChbres = new JList<Chambre>();
 	// Les champs texte
 	private JTextField tfNomVille = new JTextField(20);
 	private JTextField tfPaysVille = new JTextField(20);
@@ -38,6 +40,8 @@ public class TabHotel extends JPanel{
 	
 	public TabHotel(){
 		super();
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(InterfaceGraphique.createTitle("Gestion des villes, des hotels, des catégories de chambres et des chambres."));
 		// Creation du grand JPanel pour positionner les 2 pane un à gauche, l'autre à droite
 		JPanel general = new JPanel();
 		add(general);
@@ -48,7 +52,6 @@ public class TabHotel extends JPanel{
 	public JPanel createGauchePane(){
 		JPanel gauche = new JPanel();
 		gauche.setLayout(new BoxLayout(gauche,BoxLayout.Y_AXIS));
-		gauche.add(InterfaceGraphique.createTitle("Gestion des villes, des hotels, des catégories de chambres et des chambres."));
 		gauche.add(createGaucheMiddlePane());
 		return gauche;
 	}
@@ -71,7 +74,7 @@ public class TabHotel extends JPanel{
 		pane.add(pChbres);
 		// Panel villes
 		pVilles.add(InterfaceGraphique.createSubTitle("Les villes :"));
-		pVilles.add(InterfaceGraphique.createListVilles(dlmVilles,lVilles,50,300));
+		pVilles.add(InterfaceGraphique.createListVilles(dlmVilles,lVilles,50,300, new lstVilleListener()));
 		pVilles.add(InterfaceGraphique.createOneButton(new DeselAllVille(), "Déselectionner tout"));
 		pHotels.add(InterfaceGraphique.createSubTitle("Les hotels :"));
 		pHotels.add(InterfaceGraphique.createListHotel(dlmHotels, lHotels, 50, 300));
@@ -108,6 +111,10 @@ public class TabHotel extends JPanel{
 		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomChbre));
 		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddChbreListener(), new bDelChbreListener(), new bEditChbreListener()));
 		return droite;
+	}
+	
+	public DefaultListModel<Ville> getDlmVille(){
+		return dlmVilles;
 	}
 	
 	private class DeselAllVille implements ActionListener{
@@ -233,6 +240,14 @@ public class TabHotel extends JPanel{
 	private class bDelChbreListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class lstVilleListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
 			// TODO Auto-generated method stub
 			
 		}

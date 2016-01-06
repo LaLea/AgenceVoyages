@@ -4,7 +4,7 @@
 package domaine;
 
 /**
- * @author Tchioben
+ * @author Benoit Bailleul & Vanelle Lea
  *
  */
 public class Vol {

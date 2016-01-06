@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import domaine.Categorie;
-import domaine.Hotel;
 
 /**
  * @author Lea Vannelle & Benoit Bailleul
@@ -36,9 +35,9 @@ public class FabriqueCategorie {
 	/**
 	 * crée la categorie dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
 	 * puis l'ajoute a la BDD et à la fabrique
-	 * @param capacite
-	 * @param tarif
-	 * @return la categorie
+	 * @param capacite le nombre de lits pour cette categorie
+	 * @param tarif le prix de cette categorie
+	 * @return la categorie 
 	 */
 	public Categorie addCategorie(int id_hotel,String nom,int capacite,float tarif,int delai){
 		int numero_id_categorie = BDDConnection.addCategorie(id_hotel, nom, capacite, tarif,delai);	
@@ -50,8 +49,8 @@ public class FabriqueCategorie {
 	/**
 	 * crée la categorie dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
 	 * puis l'ajoute a la BDD et à la fabrique
-	 * @param capacite
-	 * @param tarif
+	 * @param capacite le nombre de lits pour cette categorie
+	 * @param tarif le prix de cette categorie
 	 * @return la categorie
 	 */
 	public Categorie addCategorieDansFabrique(int idCategorie ,int id_hotel,String nom,int capacite,float tarif,int delai){
@@ -121,6 +120,10 @@ public class FabriqueCategorie {
 		return categorie;
 	}
 	
+	/**
+	 * supprime une categorie grace à l'id de la categorie
+	 * @param id_categorie
+	 */
 	public void deleteCategorie(int id_categorie){
 		BDDConnection.deleteCategorie(id_categorie);
 		try{
@@ -129,7 +132,12 @@ public class FabriqueCategorie {
 		catch (Exception e){
 		}
 	}
-
+	
+	/**
+	 * permet de recuperer toutes les categories d'un hotel 
+	 * @param idHotel l'id de l'hotel
+	 * @return une liste des hotel
+	 */
 	public ArrayList<Categorie> selectCategorie(int idHotel) {
 		ResultSet rs = BDDConnection.getCategorie(idHotel);
 		ArrayList<Categorie> lesCategories = new ArrayList<Categorie>();

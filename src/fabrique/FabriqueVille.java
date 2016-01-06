@@ -53,6 +53,8 @@ public class FabriqueVille {
 		return cat;
 	}
 	
+	
+	
 	/**
 	 * crée la Ville dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
 	 * puis l'ajoute a la BDD et à la fabrique
@@ -138,6 +140,10 @@ public class FabriqueVille {
 		return Ville;
 	}
 	
+	/**
+	 * permet de supprimer une ville grace à l'id de la ville
+	 * @param id_Ville l'id de la ville à supprimer
+	 */
 	public void deleteVille(int id_Ville){
 		BDDConnection.deleteVille(id_Ville);
 		try{
@@ -168,4 +174,6 @@ public class FabriqueVille {
 		}
 		return lesVilles;
 	}
+
+
 }
