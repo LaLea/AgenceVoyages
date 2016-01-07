@@ -21,6 +21,7 @@ import domaine.Client;
 import domaine.Ville;
 import fabrique.FabriqueClient;
 import fabrique.FabriqueVille;
+import metier.GestionClient;
 
 public class TabClient extends JPanel{
 	// Pane de gauche
@@ -103,9 +104,9 @@ public class TabClient extends JPanel{
 			FabriqueVille fv = FabriqueVille.getInstance();
 			Ville v = fv.getVilleBDDWithNomAndHotel(tfVilleCust.getText(), tfPaysCust.getText()); //Récupération de l'id de la ville
 			Date d = dcDteNaissCust.getDate();
-			Client clt = fc.addClient(tfCustNom.getText(), tfPrenomCust.getText(), v.getId_ville(), d.getDate(), d.getMonth(), d.getYear()); //Ajout du client dans la base et dans la fabrique
-			//dlmCust.addElement(clt); // Ajout du client dans liste de l'interface
-			InterfaceGraphique.addClientIntoAllList(clt);
+			//Client clt = fc.addClient(tfCustNom.getText(), tfPrenomCust.getText(), v.getId_ville(), d.getDate(), d.getMonth(), d.getYear()); //Ajout du client dans la base et dans la fabrique
+			//GestionClient.ajoutVoyageur();
+			//InterfaceGraphique.addClientIntoAllList(clt); // Ajout du client dans liste de l'interface
 			// Remise à zéro des champs
 			tfCustNom.setText("");
 			tfPrenomCust.setText("");
@@ -118,10 +119,9 @@ public class TabClient extends JPanel{
 	private class DelCustListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			FabriqueClient fc = FabriqueClient.getInstance();
 			Client c = lClient.getSelectedValue();
 			InterfaceGraphique.delClientIntoAllList(c);
-			fc.deleteClient(c.getId_client());
+			//GestionClient.supprimerClient(c.getId_client);
 		}	
 	}
 	
