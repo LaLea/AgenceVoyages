@@ -121,7 +121,7 @@ public class TabClient extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			Client c = lClient.getSelectedValue();
 			InterfaceGraphique.delClientIntoAllList(c);
-			//GestionClient.supprimerClient(c.getId_client);
+			GestionClient.supprimerClient(c.getId_client());
 		}	
 	}
 	
