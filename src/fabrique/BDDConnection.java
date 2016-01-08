@@ -198,7 +198,7 @@ public class BDDConnection {
 		ResultSet ligneChambre = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Chambre where IDHotel=? and IDCategorie=? and Numero= ?);");
+			stmt = c.prepareStatement("select * from Chambre where IDHotel=? and IDCategorie=? and Numero= ?");
 			stmt.setInt(1,id_hotel );
 			stmt.setInt(2, id_categorie);
 			stmt.setInt(3, numero);			
@@ -210,12 +210,28 @@ public class BDDConnection {
 		return ligneChambre;
 	}
 	
+	public static  ResultSet selectChambreWithCategorie(int id_categorie){
+		PreparedStatement stmt;
+		ResultSet ligneChambre = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Chambre where IDCategorie=?");
+			stmt.setInt(1, id_categorie);		
+			ligneChambre = stmt.executeQuery();
+			ligneChambre.next();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneChambre;
+	}
+	
+	
 	public static  ResultSet ligneChambre(int idChambre){
 		PreparedStatement stmt;
 		ResultSet ligneChambre = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Chambre where ID_Chambre= ?);");
+			stmt = c.prepareStatement("select * from Chambre where ID_Chambre= ?");
 			stmt.setInt(1,idChambre );;			
 			ligneChambre = stmt.executeQuery();
 			ligneChambre.next();
@@ -230,7 +246,7 @@ public class BDDConnection {
 		ResultSet ligneChambre = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Chambre where IDHotel= ?);");
+			stmt = c.prepareStatement("select * from Chambre where IDHotel= ?");
 			stmt.setInt(1,idHotel );;			
 			ligneChambre = stmt.executeQuery();
 			ligneChambre.next();
@@ -473,7 +489,7 @@ public class BDDConnection {
 		PreparedStatement stmt;
 		ResultSet hotel = null;
 		try {
-			stmt = c.prepareStatement("select * from Hotel where IDVille = ? and Nom= ?;");
+			stmt = c.prepareStatement("select * from Hotel where IDVille = ? and Nom= ?");
 			stmt.setInt(1, idVille);
 			stmt.setString(2, nom);
 			hotel = stmt.executeQuery();
@@ -495,7 +511,7 @@ public class BDDConnection {
 		PreparedStatement stmt;
 		ResultSet ligneHotel = null;
 		try {
-			stmt = c.prepareStatement("select * from Hotel where ID_Hotel= ?;");
+			stmt = c.prepareStatement("select * from Hotel where ID_Hotel= ?");
 			stmt.setInt(1, id_hotel);
 			ligneHotel = stmt.executeQuery();
 			ligneHotel.next();

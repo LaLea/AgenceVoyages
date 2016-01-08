@@ -3,8 +3,6 @@ package test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.junit.Test;
-
 import domaine.Client;
 import fabrique.FabriqueClient;
 

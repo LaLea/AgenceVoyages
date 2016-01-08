@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import domaine.Chambre;
-import domaine.Hotel;
 
 /**
  * @author Lea Vannelle & Benoit Bailleul
@@ -132,6 +131,26 @@ public class FabriqueChambre {
 	 */
 	public ArrayList<Chambre> listeChambreParHotel(int idHotel) {
 			ResultSet rs = BDDConnection.getChambre(idHotel);
+			ArrayList<Chambre> lesChambres = new ArrayList<Chambre>();
+			try {
+				while (rs.next()){
+					Chambre chambre = getChambreWithId(rs.getInt(1));
+					lesChambres.add(chambre);
+				}
+			}
+			catch (Exception e){
+				return lesChambres;
+				}
+			return lesChambres;
+	}
+	
+	/**
+	 * permet de recuperer la liste des chambre pour un hotel
+	 * @param idHotel l'id de l'hotel
+	 * @return la liste des chambre
+	 */
+	public ArrayList<Chambre> listeChambreParCategorie(int idCategorie) {
+			ResultSet rs = BDDConnection.selectChambreWithCategorie(idCategorie);
 			ArrayList<Chambre> lesChambres = new ArrayList<Chambre>();
 			try {
 				while (rs.next()){

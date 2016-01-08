@@ -2,10 +2,6 @@ package test;
 
 import java.util.ArrayList;
 
-import metier.volsAvecVilleDepartEtArrivee;
-
-import org.junit.Test;
-
 import domaine.Vol;
 import fabrique.BDDConnection;
 import fabrique.FabriqueVol;

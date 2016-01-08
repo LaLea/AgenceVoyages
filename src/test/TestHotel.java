@@ -1,7 +1,5 @@
 package test;
 
-import org.junit.Test;
-
 import domaine.Hotel;
 import fabrique.FabriqueHotel;
 /**

@@ -22,4 +22,9 @@ public class GestionChambre {
 			FabriqueChambre fc = FabriqueChambre.getInstance();
 			return fc.listeChambreParHotel(idHotel);
 		}
+		
+		public static ArrayList<Chambre> listerChambreAvecCategorie(int idCategorie){
+			FabriqueChambre fc = FabriqueChambre.getInstance();
+			return fc.listeChambreParCategorie(idCategorie);
+		}
 }
