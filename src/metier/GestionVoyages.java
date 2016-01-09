@@ -29,9 +29,11 @@ public class GestionVoyages {
 		while (nbpersonneRestante >0){
 			if (nbpersonneRestante>nbPersonneParCategorie){
 			BDDConnection.ajouteReservation(idClient, idVol, classe, dateVol, idCategorie, dateReservationChambre,nbPersonneParCategorie);
+			BDDConnection.miseAJourNbPlace(nbPersonneParCategorie,classe,idVol);
 		}
 		else {
 			BDDConnection.ajouteReservation(idClient, idVol, classe, dateVol, idCategorie, dateReservationChambre,nbpersonneRestante);
+			BDDConnection.miseAJourNbPlace(nbpersonneRestante,classe,idVol);
 		}
 			nbpersonneRestante -= nbPersonneParCategorie;
 		}
@@ -60,6 +62,12 @@ public class GestionVoyages {
 				BDDConnection.supprimeReservation(res.getId_reservation());
 			}
 		}
+	}
+	
+	public static Reservation recuperationReservation(int idReservation){
+		FabriqueReservation fr = FabriqueReservation.getInstance();
+		Reservation reservation = fr.getReservation(idReservation);
+		return reservation;
 	}
 	
 }

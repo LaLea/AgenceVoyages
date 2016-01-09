@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import domaine.Reservation;
+import domaine.Ville;
 
 public class FabriqueReservation {
 	private static FabriqueReservation INSTANCE = null;
@@ -65,6 +66,33 @@ public class FabriqueReservation {
 				return lesReservations;
 			}
 		return lesReservations;
+	}
+
+	/**
+	 * permet de recuperer la reservation
+	 * @param idReservation l'id de la reservation
+	 * @return la reservation
+	 */
+	public Reservation getReservation(int idReservation) {
+		Reservation reservation = null;
+		if (reservation== null){
+			ResultSet rs = BDDConnection.ligneVille(idReservation);
+			try{
+				int idClient=rs.getInt(2);		
+				int idVol=rs.getInt(3);	
+				int classe=rs.getInt(4);
+				Date dateVol=rs.getDate(5);				
+				int idCategorie=rs.getInt(6);
+				Date dateReservation=rs.getDate(7);
+				int nbPersonne=rs.getInt(8);
+				reservation = new Reservation(idReservation,idClient,idVol,dateVol,classe,idCategorie,dateReservation,nbPersonne);
+			}
+			catch (SQLException e){
+				return null;
+			}
+		}// fin IF
+		return reservation;
+
 	}
 
 }
