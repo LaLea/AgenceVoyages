@@ -21,19 +21,21 @@ import fabrique.FabriqueVol;
 public class GestionVoyages {
 
 	
-	public static void ajouterUnVoyage(int idClient, int nombrePersonne,int idVol, int classe, Date dateVol, int idCategorie, Date dateReservationChambre){
+	public static void ajouterUnVoyage(int idClient, int nombrePersonne,int idVolAller,
+			int classe, Date dateVolAller, int idCategorie, Date dateReservationChambre,
+			int idVolRetour, Date dateVolRetour){
 		FabriqueCategorie fc = FabriqueCategorie.getInstance();
 		Categorie categorie = fc.getCategorieWithIdCategorie(idCategorie);
 		int nbPersonneParCategorie = categorie.getCapacite();
 		int nbpersonneRestante = nombrePersonne;
 		while (nbpersonneRestante >0){
 			if (nbpersonneRestante>nbPersonneParCategorie){
-			BDDConnection.ajouteReservation(idClient, idVol, classe, dateVol, idCategorie, dateReservationChambre,nbPersonneParCategorie);
-			BDDConnection.miseAJourNbPlace(nbPersonneParCategorie,classe,idVol);
+			BDDConnection.ajouteReservation(idClient, idVolAller, classe, dateVolAller, idCategorie, dateReservationChambre,nbPersonneParCategorie,idVolRetour,dateVolRetour);
+			BDDConnection.miseAJourNbPlace(nbPersonneParCategorie,classe,idVolAller);
 		}
 		else {
-			BDDConnection.ajouteReservation(idClient, idVol, classe, dateVol, idCategorie, dateReservationChambre,nbpersonneRestante);
-			BDDConnection.miseAJourNbPlace(nbpersonneRestante,classe,idVol);
+			BDDConnection.ajouteReservation(idClient, idVolAller, classe, dateVolAller, idCategorie, dateReservationChambre,nbpersonneRestante,idVolRetour,dateVolRetour);
+			BDDConnection.miseAJourNbPlace(nbpersonneRestante,classe,idVolAller);
 		}
 			nbpersonneRestante -= nbPersonneParCategorie;
 		}

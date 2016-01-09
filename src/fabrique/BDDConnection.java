@@ -1088,11 +1088,12 @@ public class BDDConnection {
 
 
 	public static void ajouteReservation(int idClient, int idVol, int classe,
-			Date dateVol, int idCategorie, Date dateReservationChambre, int nbPersonne) {
+			Date dateVol, int idCategorie, Date dateReservationChambre, int nbPersonne,
+			int idVolRetour, Date dateVolRetour) {
 		BDDConnection.getInstance(); 
 			try { 
 				PreparedStatement stmt;
-				stmt = c.prepareStatement("insert into Reservation(IDClient,IDVol,Classe,DateVol,IDCategorie,DateReservation,NombrePersonne) values (?,?,?,?,?,?,?)");
+				stmt = c.prepareStatement("insert into Reservation(IDClient,IDVol,Classe,DateVol,IDCategorie,DateReservation,NombrePersonne,IDVolRetour,DateVolRetour) values (?,?,?,?,?,?,?,?,?)");
 				stmt.setInt(1, idClient);
 				stmt.setInt(2, idVol);
 				stmt.setInt(3,classe);
@@ -1100,6 +1101,8 @@ public class BDDConnection {
 				stmt.setInt(5, idCategorie);
 				stmt.setDate(6, dateReservationChambre);
 				stmt.setInt(7,nbPersonne);
+				stmt.setInt(8, idVolRetour);
+				stmt.setDate(9, dateVolRetour);
 				stmt.execute();
 				//idVol = BDDConnection.getVol(nom,pays);
 			} catch (SQLException e) {
