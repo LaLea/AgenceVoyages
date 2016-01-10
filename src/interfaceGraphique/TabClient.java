@@ -59,7 +59,6 @@ public class TabClient extends JPanel{
 		p.add(InterfaceGraphique.createSearchCust(tfSearchCust, cbSearchCust, dlmCust, lClient));
 		p.add(InterfaceGraphique.createSubTitle("Les clients :"));
 		p.add(InterfaceGraphique.createListCust(dlmCust, lClient, 60, 200, new lstCustListener()));
-		//InterfaceGraphique.addAllClientsIntoList(dlmCust);
 		p.add(InterfaceGraphique.createButtonsPair(new DeselCustListener(), new AffToutCustListener()));
 		return p;
 	}
@@ -100,19 +99,10 @@ public class TabClient extends JPanel{
 	private class AddCustListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			FabriqueClient fc = FabriqueClient.getInstance();
-			FabriqueVille fv = FabriqueVille.getInstance();
-			Ville v = fv.getVilleBDDWithNomAndHotel(tfVilleCust.getText(), tfPaysCust.getText()); //Récupération de l'id de la ville
 			Date d = dcDteNaissCust.getDate();
-			//Client clt = fc.addClient(tfCustNom.getText(), tfPrenomCust.getText(), v.getId_ville(), d.getDate(), d.getMonth(), d.getYear()); //Ajout du client dans la base et dans la fabrique
-			//GestionClient.ajoutVoyageur();
-			//InterfaceGraphique.addClientIntoAllList(clt); // Ajout du client dans liste de l'interface
-			// Remise à zéro des champs
-			tfCustNom.setText("");
-			tfPrenomCust.setText("");
-			dcDteNaissCust.setDate(new Date());
-			tfVilleCust.setText("");
-			tfPaysCust.setText("");
+			Client clt = GestionClient.ajoutVoyageur(tfCustNom.getText(), tfPrenomCust.getText(), tfVilleCust.getText(), d.getDate(), d.getMonth(), d.getYear());
+			InterfaceGraphique.addClientIntoAllList(clt); // Ajout du client dans liste de l'interface
+			lClient.setSelectedValue(clt, true); // Selection du client qui vient d'etre créé
 		}
 	}
 	
@@ -122,6 +112,11 @@ public class TabClient extends JPanel{
 			Client c = lClient.getSelectedValue();
 			InterfaceGraphique.delClientIntoAllList(c);
 			GestionClient.supprimerClient(c.getId_client());
+			tfCustNom.setText("");
+			tfPrenomCust.setText("");
+			tfVilleCust.setText("");
+			tfPaysCust.setText("");
+			dcDteNaissCust.setDate(new Date());
 		}	
 	}
 	
