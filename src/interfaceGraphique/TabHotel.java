@@ -3,6 +3,7 @@ package interfaceGraphique;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -16,6 +17,10 @@ import domaine.Categorie;
 import domaine.Chambre;
 import domaine.Hotel;
 import domaine.Ville;
+import fabrique.FabriqueHotel;
+import fabrique.FabriqueVille;
+import metier.GestionHotel;
+import metier.GestionVille;
 
 public class TabHotel extends JPanel{
 
@@ -47,6 +52,7 @@ public class TabHotel extends JPanel{
 		add(general);
 		general.add(createGauchePane());
 		general.add(createDroitePane());
+		
 	}
 	
 	public JPanel createGauchePane(){
@@ -94,7 +100,7 @@ public class TabHotel extends JPanel{
 		droite.add(InterfaceGraphique.createSubTitle("La ville :"));
 		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomVille));
 		droite.add(InterfaceGraphique.createInputBox("Pays :", tfPaysVille));
-		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddVilleListener(), new bDelVilleListener(), new bEditVilleListener()));
+		droite.add(InterfaceGraphique.createButtonAddDel(new bAddVilleListener(), new bDelVilleListener()));
 		
 		droite.add(InterfaceGraphique.createSubTitle("L'hotel :"));
 		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomHotel));
@@ -120,64 +126,66 @@ public class TabHotel extends JPanel{
 	private class DeselAllVille implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			lVilles.clearSelection();
 		}
 	}
 	
 	private class DeselAllHotel implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			lHotels.clearSelection();
 		}
 	}
 	
 	private class DeselAllCat implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			lCats.clearSelection();
 		}
 	}
 	
 	private class DeselAllChbres implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			lChbres.clearSelection();
 		}
 	}
 	
 	private class bAddVilleListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			Ville v = GestionVille.ajouterVille(tfNomVille.getText(), tfPaysVille.getText());
+			InterfaceGraphique.addVilleIntoAllList(v);
+			lVilles.setSelectedValue(v, true);
 		}
 	}
 	
-	private class bEditVilleListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
+//	private class bEditVilleListener implements ActionListener{
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Ville v = lVilles.getSelectedValue();
+//			if (v.getNom() != tfNomVille.getText()
+//					|| v.getPays() != tfPaysVille.getText()){
+//				//GestionVille.modifierVille(tfNomVille.getText(), tfPaysVille.getText());
+//			}
+//		}
+//	}
 	
 	private class bDelVilleListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			Ville v = lVilles.getSelectedValue();
+			InterfaceGraphique.delVilleIntoAllList(v);
+			GestionVille.supprimerVille(v.getId_ville());
 		}
 	}
 	
 	private class bAddHotelListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			FabriqueVille fv = FabriqueVille.getInstance();
+			Ville v = fv.getVilleBDDWithNom(tfVilleHotel.getText());
+			GestionHotel.ajoutHotel(v.getId_ville(), tfNomHotel.getText());	
 		}
 	}
 	
@@ -248,8 +256,31 @@ public class TabHotel extends JPanel{
 	private class lstVilleListener implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent arg0) {
-			// TODO Auto-generated method stub
-			
+			if (!lVilles.isSelectionEmpty()){
+				System.out.println("=== TabHotel / Liste ville listener selection not empty =====");
+				Ville v = lVilles.getSelectedValue();
+				tfNomVille.setText(v.getNom());
+				tfPaysVille.setText(v.getPays());
+				FabriqueVille fv = FabriqueVille.getInstance();
+				fv.addVilleDansFabrique(v.getId_ville(), v.getNom(), v.getPays());
+				ArrayList<Hotel> lh = GestionHotel.listerHotelDUneVille(v.getId_ville());
+				System.out.println(lh);
+				
+				InterfaceGraphique.addHotelsIntoOneList(lh, dlmHotels);
+			}
+			else {
+				tfNomVille.setText("");
+				tfPaysVille.setText("");
+				tfNomHotel.setText("");
+				tfVilleHotel.setText("");
+				tfNomCat.setText("");
+				tfTarifCat.setText("");
+				tfCapCat.setText("");
+				tfNomChbre.setText("");
+				dlmHotels.clear();
+				dlmChbres.clear();
+				dlmCats.clear();
+			}
 		}
 	}
 }

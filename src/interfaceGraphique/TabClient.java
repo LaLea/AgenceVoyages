@@ -80,11 +80,6 @@ public class TabClient extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			lClient.clearSelection();
-			tfCustNom.setText("");
-			tfPrenomCust.setText("");
-			dcDteNaissCust.setDate(new Date());
-			tfVilleCust.setText("");
-			tfPaysCust.setText("");
 		}
 	}
 	
@@ -100,7 +95,7 @@ public class TabClient extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Date d = dcDteNaissCust.getDate();
-			Client clt = GestionClient.ajoutVoyageur(tfCustNom.getText(), tfPrenomCust.getText(), tfVilleCust.getText(), tfPaysCust.getText(), d.getDate(), d.getMonth(), d.getYear());
+			Client clt = GestionClient.ajoutVoyageur(tfCustNom.getText(), tfPrenomCust.getText(), tfVilleCust.getText(), tfPaysCust.getText(), d);
 			InterfaceGraphique.addClientIntoAllList(clt); // Ajout du client dans liste de l'interface
 			lClient.setSelectedValue(clt, true); // Selection du client qui vient d'etre créé
 		}
@@ -112,19 +107,19 @@ public class TabClient extends JPanel{
 			Client c = lClient.getSelectedValue();
 			InterfaceGraphique.delClientIntoAllList(c);
 			GestionClient.supprimerClient(c.getId_client());
-			tfCustNom.setText("");
-			tfPrenomCust.setText("");
-			tfVilleCust.setText("");
-			tfPaysCust.setText("");
-			dcDteNaissCust.setDate(new Date());
 		}	
 	}
 	
 	private class EditCustListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			Client clt = lClient.getSelectedValue();
+			//if(tfCustNom.getText() != clt.getNom()
+				//	|| tfPrenomCust.getText() != clt.getPrenom()
+					//|| dcDteNaissCust.getDate()!= clt.getDateDeNaissance()){
+				GestionClient.modifierClient(tfCustNom.getText(), tfPrenomCust.getText(), tfVilleCust.getText(), tfPaysCust.getText(), dcDteNaissCust.getDate());
+				// Voir si le client est modifié dans toutes les listes
+			//}
 		}
 	}
 	
@@ -137,15 +132,17 @@ public class TabClient extends JPanel{
 				int idVille = c.getId_villeOrigine();
 				tfCustNom.setText(c.getNom());
 				tfPrenomCust.setText(c.getPrenom());
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				try {
-					dcDteNaissCust.setDate(sdf.parse(c.getJour() + "/" + c.getMois() + "/" + c.getAnnee()));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
+				dcDteNaissCust.setDate(c.getDateDeNaissance());
 				Ville v = fv.getVilleWithIdVille(idVille);
 				tfVilleCust.setText(v.getNom());
 				tfPaysCust.setText(v.getPays());
+			}
+			else {
+				tfCustNom.setText("");
+				tfPrenomCust.setText("");
+				tfVilleCust.setText("");
+				tfPaysCust.setText("");
+				dcDteNaissCust.setDate(new Date());
 			}
 		}
 	}
