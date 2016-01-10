@@ -44,13 +44,13 @@ public class GestionVol {
 				if (mot.charAt(i)=='1'){
 					String jours ="";
 					switch (i){
-					case 0 : jours = "Lundi";
-					case 1 : jours = "Mardi";
-					case 2 : jours = "Mercredi";
-					case 3 : jours = "Jeudi";
-					case 4 : jours = "Vendredi";
-					case 5 : jours = "Samedi";
-					case 6 : jours = "Dimanche";
+					case 0 : jours = "Lundi";break;
+					case 1 : jours = "Mardi";break;
+					case 2 : jours = "Mercredi";break;
+					case 3 : jours = "Jeudi";break;
+					case 4 : jours = "Vendredi";break;
+					case 5 : jours = "Samedi";break;
+					case 6 : jours = "Dimanche";break;
 					}
 					fv.addVol(ligne.getId_villeDepart(), ligne.getId_villeArrivee(), jours, ligne.getHeureDepart(), ligne.getMinDepart(), ligne.getHeureDuree(), ligne.getMinDuree(), ligne.getNbPassagersFirstClass(), ligne.getPriceFirstClass(), ligne.getNbPassagersSecondClass(), ligne.getPriceSecondClass(), ligne.getDelaiAnnulation(),ligne.getNbPassagersFirstClass(), ligne.getNbPassagersSecondClass());		
 					}

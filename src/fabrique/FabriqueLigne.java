@@ -157,7 +157,8 @@ public class FabriqueLigne {
 				lesLignes.add(Ligne);
 			}
 		}
-		catch (Exception e){		
+		catch (Exception e){
+			e.printStackTrace();
 		}
 	}
 	

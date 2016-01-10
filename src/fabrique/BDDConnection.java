@@ -424,7 +424,7 @@ public class BDDConnection {
 				stmt.setString(2, nom );
 				stmt.setString(3, prenom);
 				@SuppressWarnings("deprecation")
-				java.sql.Date sqlDate = new java.sql.Date(annee-1900, mois-1, jours);
+				java.sql.Date sqlDate = new java.sql.Date(annee, mois, jours);
 				stmt.setDate(4,sqlDate);
 				//stmt.setDate(4,java.sql.Date.valueOf(date));
 				stmt.execute();
@@ -1239,9 +1239,9 @@ public class BDDConnection {
 			BDDConnection.getInstance();
 			stmt = c.prepareStatement("select * from Ligne");
 			ligneLigne = stmt.executeQuery();
-			ligneLigne.next();
 		} catch (SQLException e) {
-			return null;
+			e.printStackTrace();
+			return ligneLigne;
 		}
 		return ligneLigne;
 	}
