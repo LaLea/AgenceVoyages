@@ -133,7 +133,7 @@ public class FabriqueHotel {
 		ArrayList<Hotel> lesHotels = new ArrayList<Hotel>();
 		try {
 			while (rs.next()){
-				Hotel hotel = getHotelWithId(rs.getInt(1));
+				Hotel hotel = getHotelWithIdHotel(rs.getInt(1));
 				lesHotels.add(hotel);
 			}
 		}
