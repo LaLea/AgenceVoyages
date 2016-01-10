@@ -3,6 +3,8 @@ package domaine;
  * 
  */
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+
 /**
  * @author Léa Vanelle & Benoît Bailleul
  *
@@ -114,7 +116,7 @@ public class Ville {
 	}
 	
 	public String toString(){
-		return "Ville : "+this.nom+", Pays : "+this.getPays();
+		return this.getPays().toUpperCase() + " - " + this.nom;
 	}
 	
 }

@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import domaine.Client;
 import fabrique.BDDConnection;
 import fabrique.FabriqueClient;
+import metier.GestionClient;
 
 public class SearchCustListener implements ActionListener {
 
@@ -36,10 +37,12 @@ public class SearchCustListener implements ActionListener {
 		lCust.clearSelection();
 		dlmCust.clear();
 		if (cbSearch.getSelectedItem() == "Prénom"){
+			//lClients = GestionClient.rechercheClientParPrenom(tfSearch.getText());
 			lClients = fc.rechercheClientParPrenom(tfSearch.getText());
 		}
 		else {
 			lClients = fc.rechercheClientParNom(tfSearch.getText());
+			//lClients = GestionClient.rechercheClientParNom(tfSearch.getText());
 		}
 		for (Client client : lClients) {
 			dlmCust.addElement(client);

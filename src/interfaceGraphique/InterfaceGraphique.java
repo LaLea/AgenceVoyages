@@ -221,6 +221,15 @@ public class InterfaceGraphique extends JFrame {
 		l.setModel(dlm);
 		return sp;
 	}
+	
+	public static void addHotelsIntoOneList(ArrayList<Hotel> lstHotels, DefaultListModel<Hotel> dlm){
+		for (Hotel hotel : lstHotels) {
+			System.out.println(hotel);
+			System.out.println(hotel.getId_ville());
+			System.out.println(hotel.getNom());
+			dlm.addElement(hotel);
+		}
+	}
 
 	// Liste des catégories
 	public static JScrollPane createListCat(DefaultListModel<Categorie> dlm, JList<Categorie> l, int lgr, int htr) {
@@ -336,6 +345,23 @@ public class InterfaceGraphique extends JFrame {
 		bEdit.setBackground(c);
 		bEdit.addActionListener(edit);
 		buttons.add(bEdit);
+		return buttons;
+	}
+	
+	public static JPanel createButtonAddDel(ActionListener add, ActionListener del){
+		Color c = new Color(195, 220, 126);
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
+		//MyButton bAdd = new MyButton("Ajouter");
+		JButton bAdd = new JButton("Ajouter");
+		bAdd.setBackground(c);
+		bAdd.addActionListener(add);
+		buttons.add(bAdd);
+		//MyButton bDel = new MyButton("Supprimer");
+		JButton bDel = new JButton("Supprimer");
+		bDel.setBackground(c);
+		bDel.addActionListener(del);
+		buttons.add(bDel);
 		return buttons;
 	}
 	
