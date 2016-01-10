@@ -100,7 +100,7 @@ public class TabClient extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Date d = dcDteNaissCust.getDate();
-			Client clt = GestionClient.ajoutVoyageur(tfCustNom.getText(), tfPrenomCust.getText(), tfVilleCust.getText(), d.getDate(), d.getMonth(), d.getYear());
+			Client clt = GestionClient.ajoutVoyageur(tfCustNom.getText(), tfPrenomCust.getText(), tfVilleCust.getText(), tfPaysCust.getText(), d.getDate(), d.getMonth(), d.getYear());
 			InterfaceGraphique.addClientIntoAllList(clt); // Ajout du client dans liste de l'interface
 			lClient.setSelectedValue(clt, true); // Selection du client qui vient d'etre créé
 		}
