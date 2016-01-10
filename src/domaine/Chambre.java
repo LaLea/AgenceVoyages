@@ -8,7 +8,7 @@ package domaine;
  *
  */
 public class Chambre {
-
+	
 	private int id_chambre;
 	private int idCategorieChambre;
 	private int idHotel;

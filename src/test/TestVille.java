@@ -1,9 +1,5 @@
 package test;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import domaine.Ville;
 import fabrique.FabriqueVille;
 

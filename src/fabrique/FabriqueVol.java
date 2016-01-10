@@ -41,10 +41,11 @@ public class FabriqueVol {
 	 */
 	public Vol addVol(int id_villeDepart, int id_villeArrivee,String jours,
 			int heure,int min ,int heureDuree,int minDuree,int nb1ereClasse, float prix1ereClasse,
-			int nb2emeClasse, float prix2emeClasse, int dureeAnnulation){
+			int nb2emeClasse, float prix2emeClasse, int dureeAnnulation,
+			int PlaceRestante1ereClasse,int PlaceRestante2emeClasse){
 		int numero_id_Vol = BDDConnection.addVol(id_villeDepart,id_villeArrivee,jours,
 				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
-				nb2emeClasse,prix2emeClasse,dureeAnnulation);	
+				nb2emeClasse,prix2emeClasse,dureeAnnulation,PlaceRestante1ereClasse,PlaceRestante2emeClasse);	
 		Vol vol = new Vol(numero_id_Vol,id_villeDepart,id_villeArrivee,jours,
 				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
 				nb2emeClasse,prix2emeClasse,dureeAnnulation);
@@ -83,8 +84,7 @@ public class FabriqueVol {
 	 * @return Vol sinon null si la Vol n'existe pas en base
 	 */
 	@SuppressWarnings("deprecation")
-	public Vol getVolBDDWithIdVol(int id_vol){
-		int idVol = BDDConnection.getVol(id_vol);
+	public Vol getVolBDDWithIdVol(int idVol){
 		Vol vol = this.getVolWithId(idVol);
 		//si la Vol n'existe pas dans al farbqiue, il faut aller chercher les
 		//infos dans la base pour le creer

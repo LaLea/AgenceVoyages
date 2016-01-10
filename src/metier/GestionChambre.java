@@ -3,7 +3,9 @@ package metier;
 import java.util.ArrayList;
 
 import domaine.Chambre;
+import domaine.Reservation;
 import fabrique.FabriqueChambre;
+import fabrique.FabriqueReservation;
 
 public class GestionChambre {
 
@@ -22,4 +24,16 @@ public class GestionChambre {
 			FabriqueChambre fc = FabriqueChambre.getInstance();
 			return fc.listeChambreParHotel(idHotel);
 		}
+		
+		public static ArrayList<Chambre> listerChambreAvecCategorie(int idCategorie){
+			FabriqueChambre fc = FabriqueChambre.getInstance();
+			return fc.listeChambreParCategorie(idCategorie);
+		}
+		
+	//	public static Chambre recupererChambreReserve(int idReservation){
+		//	FabriqueReservation fres = FabriqueReservation.getInstance();
+		//	Reservation reserv = fres.getReservation(idReservation);
+		//	FabriqueChambre fc = FabriqueChambre.getInstance();
+		//	return fc.getChambreWithIdChambre(reserv.getIdChambre());
+		//	}
 }

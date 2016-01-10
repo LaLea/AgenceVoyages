@@ -28,4 +28,5 @@ public class GestionVille {
 		FabriqueVille fv = FabriqueVille.getInstance();
 		return fv.allVilles();
 	}
+	
 }

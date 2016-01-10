@@ -6,16 +6,18 @@ import domaine.Ligne;
 import domaine.Ville;
 import domaine.Vol;
 import fabrique.FabriqueLigne;
+import fabrique.FabriqueReservation;
 import fabrique.FabriqueVille;
 import fabrique.FabriqueVol;
 
 public class GestionVol {
 
 	public static Vol ajouterVol(int id_villeDepart,int  id_villeArrivee,String jours,int heure,int min,int heureDuree,
-			 int minDuree,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation){
+			 int minDuree,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
+			 int PlaceRestante1ereClasse,int PlaceRestante2emeClasse){
 		FabriqueVol fv = FabriqueVol.getInstance();
 		Vol Vol = fv.addVol(id_villeDepart, id_villeArrivee, jours, heure, min, heureDuree,
-				minDuree, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation);
+				minDuree, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation, PlaceRestante1ereClasse, PlaceRestante2emeClasse);
 		return Vol;
 	}
 	
@@ -25,10 +27,11 @@ public class GestionVol {
 	}
 	
 	public static Vol modifierVol(int id_villeDepart,int  id_villeArrivee,String jours,int heure,int min,int heureDuree,
-			 int minDuree,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation){
+			 int minDuree,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
+			 int PlaceRestante1ereClasse,int PlaceRestante2emeClasse){
 		FabriqueVol fv = FabriqueVol.getInstance();
 		fv.deleteVol(fv.getVolAvecVilleDepartEtArriveeEtJours(id_villeDepart, id_villeArrivee,jours));
-		return fv.addVol(id_villeDepart, id_villeArrivee, jours, heure, min, heureDuree, minDuree, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation);
+		return fv.addVol(id_villeDepart, id_villeArrivee, jours, heure, min, heureDuree, minDuree, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation, PlaceRestante1ereClasse,PlaceRestante2emeClasse);
 	}
 	
 	public static void genererLesVolsDeLaSemaine(){
@@ -49,7 +52,7 @@ public class GestionVol {
 					case 5 : jours = "Samedi";
 					case 6 : jours = "Dimanche";
 					}
-					fv.addVol(ligne.getId_villeDepart(), ligne.getId_villeArrivee(), jours, ligne.getHeureDepart(), ligne.getMinDepart(), ligne.getHeureDuree(), ligne.getMinDuree(), ligne.getNbPassagersFirstClass(), ligne.getPriceFirstClass(), ligne.getNbPassagersSecondClass(), ligne.getPriceSecondClass(), ligne.getDelaiAnnulation());		
+					fv.addVol(ligne.getId_villeDepart(), ligne.getId_villeArrivee(), jours, ligne.getHeureDepart(), ligne.getMinDepart(), ligne.getHeureDuree(), ligne.getMinDuree(), ligne.getNbPassagersFirstClass(), ligne.getPriceFirstClass(), ligne.getNbPassagersSecondClass(), ligne.getPriceSecondClass(), ligne.getDelaiAnnulation(),ligne.getNbPassagersFirstClass(), ligne.getNbPassagersSecondClass());		
 					}
 				}
 			}
@@ -70,6 +73,14 @@ public class GestionVol {
 		ArrayList<Vol> lesVols = new ArrayList<Vol>();
 		lesVols = fvol.getVolsAvecVilleDepartEtArrivee(depart,arrivee);
 		return lesVols;
+	}
+	
+	public static Vol getVolWithIdReservation(int idReservation){
+		FabriqueVol fvol = FabriqueVol.getInstance();
+		FabriqueReservation fres = FabriqueReservation.getInstance();
+		int idVol = fres.getReservation(idReservation).getIdVol();
+		Vol vol = fvol.getVolBDDWithIdVol(idVol);
+		return vol;
 	}
 	
 	

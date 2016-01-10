@@ -4,8 +4,6 @@ import java.sql.Date;
 
 import metier.GestionVoyages;
 
-import org.junit.Test;
-
 
 public class TestGestionVoyage {
 

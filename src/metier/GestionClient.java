@@ -9,17 +9,19 @@ import fabrique.FabriqueVille;
 
 public class GestionClient {
 
-	public static Client ajoutVoyageur(String nom, String prenom, int idVille,int jours, int mois,int annee){
+	public static Client ajoutVoyageur(String nom, String prenom, String ville,int jours, int mois,int annee){
+		FabriqueVille fv = FabriqueVille.getInstance();
+		Ville ville2 = fv.addVille(prenom, "");
 		FabriqueClient fc = FabriqueClient.getInstance();
-		Client client = fc.addClient(nom, prenom, idVille, jours, mois, annee);
+		Client client = fc.addClient(nom, prenom, ville2.getId_ville(), jours, mois, annee);
 		return client;
 	}
 	
-	public static Client modifierClient(String nom, String prenom, int idVille,int jours, int mois,int annee){
+	public static Client modifierClient(String nom, String prenom, String ville,int jours, int mois,int annee){
 		FabriqueClient fc = FabriqueClient.getInstance();
 		Client client = fc.getClientBDDWithNomAndPrenom(nom, prenom);
 		fc.deleteClient(client.getId_client());
-		client= ajoutVoyageur(nom, prenom, idVille, jours, mois, annee);
+		client= ajoutVoyageur(nom, prenom, ville, jours, mois, annee);
 		return client;
 	}
 	
@@ -39,4 +41,15 @@ public class GestionClient {
 		return fc.allClients();
 	}
 	
+	public ArrayList<Client> rechercheClientParNom(String nom){
+		FabriqueClient fc = FabriqueClient.getInstance();
+		return fc.rechercheClientParNom(nom);
+	}
+	
+	public ArrayList<Client> rechercheClientParPrenom(String prenom){
+		FabriqueClient fc = FabriqueClient.getInstance();
+		return fc.rechercheClientParNom(prenom);
+	}
+	
 }
+

@@ -18,21 +18,29 @@ public class Reservation {
 	private Date dateReservation;
 	
 	private int nbPersonne;
+	
+	private int idVolRetour ;
+	
+	private Date dateVolRetour;
 
 
 
 
 	/**
+	 * 
 	 * @param id_reservation
 	 * @param idClient
 	 * @param idVol
+	 * @param dateVol
 	 * @param classe
 	 * @param idCategorie
 	 * @param dateReservation
 	 * @param nbPersonne
+	 * @param idVolRetour
+	 * @param dateVolRetour
 	 */
 	public Reservation(int id_reservation, int idClient, int idVol,Date dateVol, int classe,
-			int idCategorie, Date dateReservation, int nbPersonne) {
+			int idCategorie, Date dateReservation, int nbPersonne,int idVolRetour, Date dateVolRetour) {
 		this.id_reservation = id_reservation;
 		this.idClient = idClient;
 		this.idVol = idVol;
@@ -41,6 +49,8 @@ public class Reservation {
 		this.idCategorie = idCategorie;
 		this.dateReservation = dateReservation;
 		this.nbPersonne = nbPersonne;
+		this.idVolRetour = idVolRetour;
+		this.dateVolRetour = dateVolRetour;
 	}
 
 	/**
@@ -153,6 +163,34 @@ public class Reservation {
 	 */
 	public void setDateVol(Date dateVol) {
 		this.dateVol = dateVol;
+	}
+
+	/**
+	 * @return the idVolRetour
+	 */
+	public int getIdVolRetour() {
+		return idVolRetour;
+	}
+
+	/**
+	 * @param idVolRetour the idVolRetour to set
+	 */
+	public void setIdVolRetour(int idVolRetour) {
+		this.idVolRetour = idVolRetour;
+	}
+
+	/**
+	 * @return the dateVolRetour
+	 */
+	public Date getDateVolRetour() {
+		return dateVolRetour;
+	}
+
+	/**
+	 * @param dateVolRetour the dateVolRetour to set
+	 */
+	public void setDateVolRetour(Date dateVolRetour) {
+		this.dateVolRetour = dateVolRetour;
 	}
 
 	
