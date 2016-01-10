@@ -19,6 +19,7 @@ public class testClient {
 		FabriqueClient fc = FabriqueClient.getInstance();
 		JDateChooser date = new JDateChooser();
 		java.util.Date d1 = new java.util.Date();
+		d1.
 		BDDConnection.addClient("bailleul", "benoit22!",1,d1);
 	}
 /**	
