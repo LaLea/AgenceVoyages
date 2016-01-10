@@ -1,6 +1,7 @@
 package metier;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import domaine.Client;
 import domaine.Ville;
@@ -9,19 +10,19 @@ import fabrique.FabriqueVille;
 
 public class GestionClient {
 
-	public static Client ajoutVoyageur(String nom, String prenom, String ville,String pays,int jours, int mois,int annee){
+	public static Client ajoutVoyageur(String nom, String prenom, String ville,String pays,Date date){
 		FabriqueVille fv = FabriqueVille.getInstance();
 		Ville ville2 = fv.addVille(ville,pays);
 		FabriqueClient fc = FabriqueClient.getInstance();
-		Client client = fc.addClient(nom, prenom, ville2.getId_ville(), jours, mois, annee);
+		Client client = fc.addClient(nom, prenom, ville2.getId_ville(), date);
 		return client;
 	}
 	
-	public static Client modifierClient(String nom, String prenom, String ville,String pays,int jours, int mois,int annee){
+	public static Client modifierClient(String nom, String prenom, String ville,String pays,Date date){
 		FabriqueClient fc = FabriqueClient.getInstance();
 		Client client = fc.getClientBDDWithNomAndPrenom(nom, prenom);
 		fc.deleteClient(client.getId_client());
-		client= ajoutVoyageur(nom, prenom, ville,pays, jours, mois, annee);
+		client= ajoutVoyageur(nom, prenom, ville,pays, date);
 		return client;
 	}
 	

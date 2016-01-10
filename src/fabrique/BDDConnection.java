@@ -13,7 +13,6 @@ import java.sql.Time;
 
 /**
  * @author Lea Vannelle & Benoit Bailleul
- * CLIENT,CATEGORIE,CHAMBRE,HOTEL,VILLE => OK
  */
 public class BDDConnection {
 
@@ -413,7 +412,7 @@ public class BDDConnection {
 	 * @return 0 if he have a problem
 	 * @throws SQLException 
 	 */
-	public static int addClient( String nom, String prenom, int id_ville, int jours, int mois, int annee) {
+	public static int addClient( String nom, String prenom, int id_ville, java.util.Date date) {
 		BDDConnection.getInstance();
 		int idClient= BDDConnection.getClient(nom, prenom);
 		if(idClient==0){
@@ -423,9 +422,32 @@ public class BDDConnection {
 				stmt.setInt(1, id_ville);
 				stmt.setString(2, nom );
 				stmt.setString(3, prenom);
-				@SuppressWarnings("deprecation")
-				java.sql.Date sqlDate = new java.sql.Date(annee, mois, jours);
+				java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 				stmt.setDate(4,sqlDate);
+				//stmt.setDate(4,java.sql.Date.valueOf(date));
+				stmt.execute();
+				idClient= BDDConnection.getClient(nom, prenom);
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+				return 0;
+			}
+		}
+		return idClient;
+	}	
+	
+	
+	public static int addClient2( String nom, String prenom, int id_ville, Date date) {
+		BDDConnection.getInstance();
+		int idClient= BDDConnection.getClient(nom, prenom);
+		if(idClient==0){
+			try{
+				PreparedStatement stmt;
+				stmt= c.prepareStatement("insert into Client(IDVilleOrigine,Nom,Prenom,DateNaissance) values (?,?,?,?)");
+				stmt.setInt(1, id_ville);
+				stmt.setString(2, nom );
+				stmt.setString(3, prenom);
+				stmt.setDate(4,date);
 				//stmt.setDate(4,java.sql.Date.valueOf(date));
 				stmt.execute();
 				idClient= BDDConnection.getClient(nom, prenom);

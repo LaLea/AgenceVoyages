@@ -3,7 +3,7 @@
  */
 package fabrique;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,12 +42,13 @@ public class FabriqueClient {
 	 * @param tarif
 	 * @return la Client
 	 */
-	public Client addClient(String nom, String prenom, int idVille,int jours , int mois, int annee){
-		int numero_id_Client = BDDConnection.addClient(nom, prenom, idVille,  jours , mois,annee);	
-		Client client = new Client(numero_id_Client,nom,prenom, jours , mois,annee,idVille);
+	public Client addClient(String nom, String prenom, int idVille,Date date){
+		int numero_id_Client = BDDConnection.addClient(nom, prenom, idVille, date);	
+		Client client = new Client(numero_id_Client,nom,prenom, date,idVille);
 		this.lesClients.put(numero_id_Client, client);
 		return client;
 	}
+	
 	
 	/**
 	 * crée la Client dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
@@ -56,8 +57,8 @@ public class FabriqueClient {
 	 * @param tarif
 	 * @return la Client
 	 */
-	public Client addClientDansFabrique(int idClient ,String nom, String prenom, int idVille,int jours , int mois, int annee){
-		Client Client = new Client(idClient,nom,prenom, jours , mois,annee,idVille);
+	public Client addClientDansFabrique(int idClient ,String nom, String prenom, int idVille,Date date){
+		Client Client = new Client(idClient,nom,prenom, date,idVille);
 		this.lesClients.put(idClient,Client);
 		return Client;
 	}
@@ -86,8 +87,8 @@ public class FabriqueClient {
 			ResultSet rs = BDDConnection.ligneClient(idClient);
 			try {
 				int id_ville = rs.getInt(4);
-				Date date = rs.getDate(5);
-				Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, date.getDay() , date.getMonth(),date.getYear());
+				Date date = rs.getDate(5);				
+				Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, date);
 			}
 			catch (SQLException e){
 				return null;
@@ -113,7 +114,7 @@ public class FabriqueClient {
 				String prenom = ligneClient.getString(4); 
 				int id_ville = ligneClient.getInt(2);
 				Date date = ligneClient.getDate(5);
-				Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, date.getDay() , date.getMonth(),date.getYear());
+				Client = this.addClientDansFabrique(idClient,nom,prenom,id_ville, date);
 			}
 			catch (SQLException e){
 				return null;
@@ -149,7 +150,8 @@ public class FabriqueClient {
 				int n2 = rs.getInt(2);
 				String nom1= rs.getString(3);
 				String prenom1 =  rs.getString(4);
-				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
+				Date date = rs.getDate(5);
+				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2,date);
 				lesClients.add(client);	
 			}
 		}
@@ -173,7 +175,8 @@ public class FabriqueClient {
 				int n2 = rs.getInt(2);
 				String nom1= rs.getString(3);
 				String prenom1 =  rs.getString(4);
-				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
+				Date date = rs.getDate(5);
+				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, date);
 				lesClients.add(client);	
 			}
 		}
@@ -196,7 +199,8 @@ public class FabriqueClient {
 				int n2 = rs.getInt(2);
 				String nom1= rs.getString(3);
 				String prenom1 =  rs.getString(4);
-				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, 0, 0, 0);
+				Date date = rs.getDate(5);
+				Client client= this.addClientDansFabrique(n, nom1, prenom1, n2, date);
 				lesClients.add(client);	
 			}
 		}

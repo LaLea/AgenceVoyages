@@ -3,6 +3,8 @@
  */
 package domaine;
 
+import java.util.Date;
+
 /**
  * @author Tchioben
  *
@@ -14,11 +16,7 @@ public class Client {
 	
 	private String prenom;
 	
-	private int jour;
-	
-	private int mois;
-	
-	private int annee;
+	private Date dateDeNaissance;
 	
 	private int id_villeOrigine;
 
@@ -32,13 +30,11 @@ public class Client {
 	 * @param dateNaissance
 	 * @param id_villeOrigine refer to the class Ville
 	 */
-	public Client(int id_client, String nom, String prenom,int jour, int mois, int annee, int id_villeOrigine) {
+	public Client(int id_client, String nom, String prenom,Date dateDeNaissance, int id_villeOrigine) {
 		this.id_client = id_client;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.jour = jour;
-		this.mois = mois;
-		this.annee = annee;
+		this.setDateDeNaissance(dateDeNaissance);
 		this.id_villeOrigine = id_villeOrigine;
 	}
 
@@ -119,46 +115,20 @@ public class Client {
 	}
 
 	/**
-	 * @return the mois
+	 * @return the dateDeNaissance
 	 */
-	public int getMois() {
-		return mois;
+	public Date getDateDeNaissance() {
+		return dateDeNaissance;
 	}
 
 	/**
-	 * @param mois the mois to set
+	 * @param dateDeNaissance the dateDeNaissance to set
 	 */
-	public void setMois(int mois) {
-		this.mois = mois;
+	public void setDateDeNaissance(Date dateDeNaissance) {
+		this.dateDeNaissance = dateDeNaissance;
 	}
 
-	/**
-	 * @return the annee
-	 */
-	public int getAnnee() {
-		return annee;
-	}
 
-	/**
-	 * @param annee the annee to set
-	 */
-	public void setAnnee(int annee) {
-		this.annee = annee;
-	}
-
-	/**
-	 * @return the jour
-	 */
-	public int getJour() {
-		return jour;
-	}
-
-	/**
-	 * @param jour the jour to set
-	 */
-	public void setJour(int jour) {
-		this.jour = jour;
-	}
 
 	
 }
