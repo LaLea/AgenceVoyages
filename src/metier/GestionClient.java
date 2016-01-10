@@ -9,19 +9,19 @@ import fabrique.FabriqueVille;
 
 public class GestionClient {
 
-	public static Client ajoutVoyageur(String nom, String prenom, String ville,int jours, int mois,int annee){
+	public static Client ajoutVoyageur(String nom, String prenom, String ville,String pays,int jours, int mois,int annee){
 		FabriqueVille fv = FabriqueVille.getInstance();
-		Ville ville2 = fv.addVille(prenom, "");
+		Ville ville2 = fv.addVille(ville,pays);
 		FabriqueClient fc = FabriqueClient.getInstance();
 		Client client = fc.addClient(nom, prenom, ville2.getId_ville(), jours, mois, annee);
 		return client;
 	}
 	
-	public static Client modifierClient(String nom, String prenom, String ville,int jours, int mois,int annee){
+	public static Client modifierClient(String nom, String prenom, String ville,String pays,int jours, int mois,int annee){
 		FabriqueClient fc = FabriqueClient.getInstance();
 		Client client = fc.getClientBDDWithNomAndPrenom(nom, prenom);
 		fc.deleteClient(client.getId_client());
-		client= ajoutVoyageur(nom, prenom, ville, jours, mois, annee);
+		client= ajoutVoyageur(nom, prenom, ville,pays, jours, mois, annee);
 		return client;
 	}
 	
