@@ -213,20 +213,18 @@ public class InterfaceGraphique extends JFrame {
 	}
 	
 	// Liste des hotels
-	public static JScrollPane createListHotel(DefaultListModel<Hotel> dlm, JList<Hotel> l, int lgr, int htr) {
+	public static JScrollPane createListHotel(DefaultListModel<Hotel> dlm, JList<Hotel> l, int lgr, int htr, ListSelectionListener lstListener) {
 		//l = new JList<Hotel>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
 		//dlm = new DefaultListModel<Hotel>();
 		l.setModel(dlm);
+		l.addListSelectionListener(lstListener);
 		return sp;
 	}
 	
 	public static void addHotelsIntoOneList(ArrayList<Hotel> lstHotels, DefaultListModel<Hotel> dlm){
 		for (Hotel hotel : lstHotels) {
-			System.out.println(hotel);
-			System.out.println(hotel.getId_ville());
-			System.out.println(hotel.getNom());
 			dlm.addElement(hotel);
 		}
 	}
@@ -419,5 +417,7 @@ public class InterfaceGraphique extends JFrame {
 		InterfaceGraphique ig = new InterfaceGraphique();
 		addAllClientsIntoAllList();
 		addAllVillesIntoAllList();
-	}	
+	}
+
+	
 }

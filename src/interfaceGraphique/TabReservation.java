@@ -3,6 +3,7 @@ package interfaceGraphique;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -74,7 +75,7 @@ public class TabReservation extends JPanel{
 		leftMiddlePane.add(InterfaceGraphique.createSearchCust(tfSearch, cbSearch, dlmCust, lCust));
 		// Liste des clients
 		leftMiddlePane.add(InterfaceGraphique.createSubTitle("Les clients :"));
-		leftMiddlePane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 150, new lstCustListener()));
+		leftMiddlePane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 150, new LstCustListener()));
 		//InterfaceGraphique.addAllClientsIntoList(dlmCust);
 		// Boutons
 		leftMiddlePane.add(InterfaceGraphique.createButtonsPair(new bDeselCustListener(),new bAffCustListener()));
@@ -108,7 +109,7 @@ public class TabReservation extends JPanel{
 		rightTwoListPane.setLayout(new BoxLayout(rightTwoListPane, BoxLayout.Y_AXIS));
 		twoListPane.add(leftTwoListPane);
 		twoListPane.add(rightTwoListPane);
-		leftTwoListPane.add(InterfaceGraphique.createListHotel(dlmHotel, lHotel, 30, 150));
+		leftTwoListPane.add(InterfaceGraphique.createListHotel(dlmHotel, lHotel, 30, 150, new LstHotelListener()));
 		rightTwoListPane.add(InterfaceGraphique.createListCat(dlmCat, lCat, 30, 150));
 		return rightMiddlePane;
 	}
@@ -139,9 +140,17 @@ public class TabReservation extends JPanel{
 		}
 	}
 	
-	private class lstCustListener implements ListSelectionListener {
+	private class LstCustListener implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class LstHotelListener implements ListSelectionListener{
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
 			// TODO Auto-generated method stub
 			
 		}

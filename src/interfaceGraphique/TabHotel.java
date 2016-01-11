@@ -19,6 +19,7 @@ import domaine.Hotel;
 import domaine.Ville;
 import fabrique.FabriqueHotel;
 import fabrique.FabriqueVille;
+import metier.GestionCategorie;
 import metier.GestionHotel;
 import metier.GestionVille;
 
@@ -42,6 +43,7 @@ public class TabHotel extends JPanel{
 	private JTextField tfCapCat = new JTextField(20);
 	private JTextField tfTarifCat = new JTextField(20);
 	private JTextField tfNomChbre = new JTextField(20);
+	private JTextField tfDelaiCat = new JTextField(20);
 	
 	public TabHotel(){
 		super();
@@ -83,7 +85,7 @@ public class TabHotel extends JPanel{
 		pVilles.add(InterfaceGraphique.createListVilles(dlmVilles,lVilles,50,300, new lstVilleListener()));
 		pVilles.add(InterfaceGraphique.createOneButton(new DeselAllVille(), "Déselectionner tout"));
 		pHotels.add(InterfaceGraphique.createSubTitle("Les hotels :"));
-		pHotels.add(InterfaceGraphique.createListHotel(dlmHotels, lHotels, 50, 300));
+		pHotels.add(InterfaceGraphique.createListHotel(dlmHotels, lHotels, 50, 300, new lstHotelListener()));
 		pHotels.add(InterfaceGraphique.createOneButton(new DeselAllHotel(), "Déselectionner tout"));
 		pCat.add(InterfaceGraphique.createSubTitle("Les categories :"));
 		pCat.add(InterfaceGraphique.createListCat(dlmCats, lCats, 50, 300));
@@ -105,12 +107,13 @@ public class TabHotel extends JPanel{
 		droite.add(InterfaceGraphique.createSubTitle("L'hotel :"));
 		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomHotel));
 		droite.add(InterfaceGraphique.createInputBox("Ville :", tfVilleHotel));
-		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddHotelListener(), new bDelHotelListener(), new bEditHotelListener()));
+		droite.add(InterfaceGraphique.createButtonAddDel(new bAddHotelListener(), new bDelHotelListener()));
 		
 		droite.add(InterfaceGraphique.createSubTitle("La catégorie :"));
 		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomCat));
 		droite.add(InterfaceGraphique.createInputBox("Capacité :", tfCapCat));
 		droite.add(InterfaceGraphique.createInputBox("Tarif :", tfTarifCat));
+		droite.add(InterfaceGraphique.createInputBox("Delai Annulation :", tfDelaiCat ));
 		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddCatListener(), new bDelCatListener(), new bEditCatListener()));
 		
 		droite.add(InterfaceGraphique.createSubTitle("La chambre :"));
@@ -185,31 +188,41 @@ public class TabHotel extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			FabriqueVille fv = FabriqueVille.getInstance();
 			Ville v = fv.getVilleBDDWithNom(tfVilleHotel.getText());
-			GestionHotel.ajoutHotel(v.getId_ville(), tfNomHotel.getText());	
+			Hotel h = GestionHotel.ajoutHotel(v.getId_ville(), tfNomHotel.getText());	
+			dlmHotels.addElement(h);
+			lVilles.setSelectedValue(v, true);
+			lHotels.setSelectedValue(h,true);
 		}
 	}
 	
-	private class bEditHotelListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
+//	private class bEditHotelListener implements ActionListener{
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			if(tfNomHotel){
+//				
+//			}
+//			
+//		}
+//	}
 	
 	private class bDelHotelListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			Hotel h = lHotels.getSelectedValue();
+			GestionHotel.supprimerHotel(h.getId_hotel());
+			dlmHotels.removeElement(h);
 		}
 	}
 	
 	private class bAddCatListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			Hotel h = lHotels.getSelectedValue();
+			int cap = Integer.parseInt(tfCapCat.getText());
+			float tarif = Float.parseFloat(tfTarifCat.getText());
+			int del = Integer.parseInt(tfDelaiCat.getText());
+			Categorie c = GestionCategorie.ajouterCategorie(h.getId_hotel(), tfNomCat.getText(), cap, tarif, del);
+			dlmCats.addElement(c);
 		}
 	}
 	
@@ -257,15 +270,11 @@ public class TabHotel extends JPanel{
 		@Override
 		public void valueChanged(ListSelectionEvent arg0) {
 			if (!lVilles.isSelectionEmpty()){
-				System.out.println("=== TabHotel / Liste ville listener selection not empty =====");
 				Ville v = lVilles.getSelectedValue();
 				tfNomVille.setText(v.getNom());
 				tfPaysVille.setText(v.getPays());
-				FabriqueVille fv = FabriqueVille.getInstance();
-				fv.addVilleDansFabrique(v.getId_ville(), v.getNom(), v.getPays());
-				ArrayList<Hotel> lh = GestionHotel.listerHotelDUneVille(v.getId_ville());
-				System.out.println(lh);
-				
+				dlmHotels.clear();
+				ArrayList<Hotel> lh = GestionHotel.listerHotelDUneVille(v.getId_ville());				
 				InterfaceGraphique.addHotelsIntoOneList(lh, dlmHotels);
 			}
 			else {
@@ -278,6 +287,28 @@ public class TabHotel extends JPanel{
 				tfCapCat.setText("");
 				tfNomChbre.setText("");
 				dlmHotels.clear();
+			}
+		}
+	}
+	
+	private class lstHotelListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			if (!lHotels.isSelectionEmpty()){
+				Hotel h = lHotels.getSelectedValue();
+				tfNomHotel.setText(h.getNom());
+				//System.out.println("nom hotel :" + h.getNom());
+				FabriqueVille fv = FabriqueVille.getInstance();
+				Ville v = fv.getVilleWithIdVille(h.getId_ville());
+				tfVilleHotel.setText(v.getNom());
+				//System.out.println("nom ville :" + v.getNom());
+				GestionCategorie.listerCategorieHotel(h.getId_hotel());
+			}
+			else {
+				tfNomHotel.setText("");
+				tfVilleHotel.setText("");
+				tfNomCat.setText("");
+				tfTarifCat.setText("");
 				dlmChbres.clear();
 				dlmCats.clear();
 			}
