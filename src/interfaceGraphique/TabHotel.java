@@ -302,7 +302,9 @@ public class TabHotel extends JPanel{
 				Ville v = fv.getVilleWithIdVille(h.getId_ville());
 				tfVilleHotel.setText(v.getNom());
 				//System.out.println("nom ville :" + v.getNom());
-				GestionCategorie.listerCategorieHotel(h.getId_hotel());
+				ArrayList<Categorie> cats = GestionCategorie.listerCategorieHotel(h.getId_hotel());
+				System.out.println(cats);
+				InterfaceGraphique.addCatsIntoOneList(dlmCats,cats);
 			}
 			else {
 				tfNomHotel.setText("");

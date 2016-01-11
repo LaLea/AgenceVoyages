@@ -141,7 +141,7 @@ public class BDDConnection {
 			stmt = c.prepareStatement("select * from Categorie where IDHotel = ?");
 			stmt.setInt(1, idHotel);
 			categorie = stmt.executeQuery();
-			categorie.next();
+			//categorie.next();
 		} catch (SQLException e) {
 			return null;
 		}

@@ -239,6 +239,12 @@ public class InterfaceGraphique extends JFrame {
 		return sp;
 	}
 	
+	public static void addCatsIntoOneList(DefaultListModel<Categorie> dlm, ArrayList<Categorie> lCat){
+		for (Categorie cat : lCat) {
+			dlm.addElement(cat);
+		}
+	}
+	
 	// Liste des villes
 	public static JScrollPane createListVilles(DefaultListModel<Ville> dlm, JList<Ville> l, int lgr, int htr, ListSelectionListener lsl) {
 		//l = new JList<Ville>();
