@@ -51,7 +51,6 @@ public class BDDConnection {
 			stmt = c.prepareStatement("select * from "+table);
 			laTable = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return laTable;
 	}
@@ -105,7 +104,6 @@ public class BDDConnection {
 				stmt.executeUpdate();
 				idCategorie = BDDConnection.getCategorie(id_hotel, nom);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				return 0;
 			}
 		}
@@ -127,7 +125,6 @@ public class BDDConnection {
 			return idCategorie.getInt(1);
 		}
 		catch (Exception e){
-			e.printStackTrace();
 			return 0;
 		}
 	}
@@ -181,7 +178,6 @@ public class BDDConnection {
 				stmt.setInt(1,id_categorie);
 				stmt.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 	}
 
@@ -333,7 +329,6 @@ public class BDDConnection {
 			stmt.setString(2, prenom);
 			client = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return client;
 	}
@@ -355,7 +350,6 @@ public class BDDConnection {
 			stmt.setString(1,nom);
 			client = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return client;
 	}
@@ -376,7 +370,6 @@ public class BDDConnection {
 			stmt.setString(1,prenom);
 			client = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return client;
 	}
@@ -429,7 +422,6 @@ public class BDDConnection {
 				idClient= BDDConnection.getClient(nom, prenom);
 			}
 			catch(SQLException e){
-				e.printStackTrace();
 				return 0;
 			}
 		}
@@ -453,7 +445,6 @@ public class BDDConnection {
 				idClient= BDDConnection.getClient(nom, prenom);
 			}
 			catch(SQLException e){
-				e.printStackTrace();
 				return 0;
 			}
 		}
@@ -491,7 +482,6 @@ public class BDDConnection {
 				stmt.setInt(1,id_client);
 				stmt.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 	}
 	
@@ -557,7 +547,6 @@ public class BDDConnection {
 			return idHotel;
 		}
 		catch ( Exception e){
-			e.printStackTrace();
 			return 0;
 		}
 	}
@@ -580,7 +569,6 @@ public class BDDConnection {
 				stmt.execute();
 				idHotel = BDDConnection.getHotel(id_ville, nom);				
 			} catch (SQLException e) {
-				e.printStackTrace();
 				return 0;
 			}
 		}
@@ -599,7 +587,6 @@ public class BDDConnection {
 				stmt.setInt(1,id_hotel);
 				stmt.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 	}
 	
@@ -704,7 +691,6 @@ public class BDDConnection {
 			idVille=ligneVille.getInt(1);
 		}
 		catch(Exception e){
-			e.printStackTrace();
 			return 0;
 		}
 		return idVille;
@@ -729,7 +715,6 @@ public class BDDConnection {
 				stmt.execute();
 				idVille = BDDConnection.getVille(nom,pays);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				return 0;
 			}
 		}
@@ -770,7 +755,6 @@ public class BDDConnection {
 			stmt.setInt(2, id_chambre);
 			categorie = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return categorie;
 	}
@@ -790,7 +774,7 @@ public class BDDConnection {
 				resultat = BDDConnection.selectReserversationChambre(id_chambre);
 				resultat.next();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 		}
 		return resultat.findColumn("ID_ReservationChambre");
@@ -805,7 +789,7 @@ public class BDDConnection {
 				stmt.setInt(1,id_chambre);
 				stmt.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 	}
 	
@@ -826,7 +810,7 @@ public class BDDConnection {
 			stmt.setInt(3, id_client);
 			categorie = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 		return categorie;
 	}
@@ -850,7 +834,7 @@ public class BDDConnection {
 				}
 			return resultat.findColumn("ID_Voyage");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 		return 0;
 	}
@@ -866,7 +850,7 @@ public class BDDConnection {
 				stmt.setInt(3, id_client);
 				stmt.execute();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				
 			}
 	}
 
@@ -1031,7 +1015,6 @@ public class BDDConnection {
 				stmt.execute();
 				//idVol = BDDConnection.getVol(nom,pays);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				return 0;
 			}
 		}
@@ -1148,7 +1131,6 @@ public class BDDConnection {
 				stmt.execute();
 				//idVol = BDDConnection.getVol(nom,pays);
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		
 	}
@@ -1282,7 +1264,6 @@ public class BDDConnection {
 			stmt = c.prepareStatement("select * from Ligne");
 			ligneLigne = stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return ligneLigne;
 		}
 		return ligneLigne;
@@ -1301,7 +1282,6 @@ public class BDDConnection {
 			idLigne=ligneLigne.getInt(1);
 		}
 		catch(Exception e){
-			e.printStackTrace();
 			return 0;
 		}
 		return idLigne;
@@ -1366,7 +1346,6 @@ public class BDDConnection {
 				stmt.execute();
 				//idLigne = BDDConnection.getLigne(nom,pays);
 			} catch (SQLException e) {
-				e.printStackTrace();
 				return 0;
 			}
 		}
