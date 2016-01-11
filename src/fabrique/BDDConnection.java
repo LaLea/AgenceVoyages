@@ -879,12 +879,32 @@ public class BDDConnection {
 	 * @param idVille ville de départ
 	 * @return la ligne de la Vol sinon null
 	 */
-	public static  ResultSet lesVolsAvecVilleDepartetArrivee(int ID_VilleD, int ID_VilleA ){
+	public static  ResultSet lesVolsAvecVilleDepartetArriveeParPrix(int ID_VilleD, int ID_VilleA ){
 		PreparedStatement stmt;
 		ResultSet ligneVol = null;
 		try {
 			BDDConnection.getInstance();
 			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? order by Tarif1Classe desc");
+			stmt.setInt(1, ID_VilleD);
+			stmt.setInt(2, ID_VilleA);
+			ligneVol = stmt.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+		return ligneVol;
+	}
+	
+	/**
+	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de départ
+	 * @param idVille ville de départ
+	 * @return la ligne de la Vol sinon null
+	 */
+	public static  ResultSet lesVolsAvecVilleDepartetArriveeParTemps(int ID_VilleD, int ID_VilleA ){
+		PreparedStatement stmt;
+		ResultSet ligneVol = null;
+		try {
+			BDDConnection.getInstance();
+			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? order by Duree desc");
 			stmt.setInt(1, ID_VilleD);
 			stmt.setInt(2, ID_VilleA);
 			ligneVol = stmt.executeQuery();

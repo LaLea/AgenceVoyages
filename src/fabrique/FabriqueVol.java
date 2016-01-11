@@ -130,10 +130,24 @@ public class FabriqueVol {
 	 * @param id_ville2 l'id de la ville d'arrivee
 	 * @return la liste des vols correspondant à ces parametres
 	 */
-	public ArrayList<Vol> getVolsAvecVilleDepartEtArrivee(int id_ville,
+	public ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParPrix(int id_ville,
 			int id_ville2) {
 		ArrayList<Vol> lesVols = new ArrayList<Vol>();
-		ResultSet rs = BDDConnection.lesVolsAvecVilleDepartetArrivee(id_ville,id_ville2);
+		ResultSet rs = BDDConnection.lesVolsAvecVilleDepartetArriveeParPrix(id_ville,id_ville2);
+		recupereVol(rs, lesVols);
+		return lesVols;
+	}
+	
+	/**
+	 * permet de recuperer les vols grace aux villes de depart et d'arrivee
+	 * @param id_ville l'id de la ville de depart
+	 * @param id_ville2 l'id de la ville d'arrivee
+	 * @return la liste des vols correspondant à ces parametres
+	 */
+	public ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParDuree(int id_ville,
+			int id_ville2) {
+		ArrayList<Vol> lesVols = new ArrayList<Vol>();
+		ResultSet rs = BDDConnection.lesVolsAvecVilleDepartetArriveeParTemps(id_ville,id_ville2);
 		recupereVol(rs, lesVols);
 		return lesVols;
 	}

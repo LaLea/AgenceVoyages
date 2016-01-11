@@ -58,20 +58,37 @@ public class GestionVol {
 			}
 		}
 	
-	public static ArrayList<Vol> getVolsAvecVilleDepartEtArrivee(String depart,String arrivee){
+	public static ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParPrix(String depart,String arrivee){
 		FabriqueVol fvol = FabriqueVol.getInstance();
 		FabriqueVille fville = FabriqueVille.getInstance();
 		ArrayList<Vol> lesVols = new ArrayList<Vol>();
 		Ville dep = fville.getVilleBDDWithNom(depart);
 		Ville arr = fville.getVilleBDDWithNom(arrivee);
-		lesVols = fvol.getVolsAvecVilleDepartEtArrivee(dep.getId_ville(),arr.getId_ville());
+		lesVols = fvol.getVolsAvecVilleDepartEtArriveeParPrix(dep.getId_ville(),arr.getId_ville());
 		return lesVols;
 	}
 	
-	public static ArrayList<Vol> getVolsAvecVilleDepartEtArrivee(int depart,int arrivee){
+	public static ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParPrix(int depart,int arrivee){
 		FabriqueVol fvol = FabriqueVol.getInstance();
 		ArrayList<Vol> lesVols = new ArrayList<Vol>();
-		lesVols = fvol.getVolsAvecVilleDepartEtArrivee(depart,arrivee);
+		lesVols = fvol.getVolsAvecVilleDepartEtArriveeParPrix(depart,arrivee);
+		return lesVols;
+	}
+	
+	public static ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParTemps(String depart,String arrivee){
+		FabriqueVol fvol = FabriqueVol.getInstance();
+		FabriqueVille fville = FabriqueVille.getInstance();
+		ArrayList<Vol> lesVols = new ArrayList<Vol>();
+		Ville dep = fville.getVilleBDDWithNom(depart);
+		Ville arr = fville.getVilleBDDWithNom(arrivee);
+		lesVols = fvol.getVolsAvecVilleDepartEtArriveeParPrix(dep.getId_ville(),arr.getId_ville());
+		return lesVols;
+	}
+	
+	public static ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParTemps(int depart,int arrivee){
+		FabriqueVol fvol = FabriqueVol.getInstance();
+		ArrayList<Vol> lesVols = new ArrayList<Vol>();
+		lesVols = fvol.getVolsAvecVilleDepartEtArriveeParPrix(depart,arrivee);
 		return lesVols;
 	}
 	
@@ -83,5 +100,5 @@ public class GestionVol {
 		return vol;
 	}
 	
-	
+
 }

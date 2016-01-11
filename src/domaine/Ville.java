@@ -3,8 +3,6 @@ package domaine;
  * 
  */
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-
 /**
  * @author Léa Vanelle & Benoît Bailleul
  *
