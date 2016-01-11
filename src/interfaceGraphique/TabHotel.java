@@ -230,42 +230,56 @@ public class TabHotel extends JPanel{
 	private class bDelCatListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			Categorie c = lCats.getSelectedValue();
+			GestionCategorie.supprimerCategorie(c.getId_categorie());
+			dlmCats.removeElement(c);
+			tfNomCat.setText("");
+			tfDelaiCat.setText("");
+			tfCapCat.setText("");
+			tfTarifCat.setText("");
 		}
 	}
 	
 	private class bEditCatListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			Categorie c = lCats.getSelectedValue();
+			Hotel h = lHotels.getSelectedValue();
+			if (c.getNom()!= tfNomCat.getText() 
+					|| c.getCapacite() != Integer.parseInt(tfCapCat.getText())
+					|| c.getDelai() != Integer.parseInt(tfDelaiCat.getText())
+					|| c.getTarif() != Float.parseFloat(tfTarifCat.getText())){
+				GestionCategorie.modifierCategorie(h.getId_hotel(), tfNomCat.getText(), Integer.parseInt(tfCapCat.getText()), Float.parseFloat(tfTarifCat.getText()), Integer.parseInt(tfDelaiCat.getText()));
+				dlmCats.removeElement(c);
+				dlmCats.addElement(c);
+			}
 			
 		}
 	}
 	
-	private class bAddChbreListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-	
-	private class bEditChbreListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-	
-	private class bDelChbreListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
+//	private class bAddChbreListener implements ActionListener{
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//	}
+//	
+//	private class bEditChbreListener implements ActionListener{
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//	}
+//	
+//	private class bDelChbreListener implements ActionListener{
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//	}
 	
 	private class lstVilleListener implements ListSelectionListener {
 		@Override
@@ -287,7 +301,6 @@ public class TabHotel extends JPanel{
 				tfTarifCat.setText("");
 				tfCapCat.setText("");
 				tfDelaiCat.setText("");
-				tfNomChbre.setText("");
 				dlmHotels.clear();
 			}
 		}
@@ -297,15 +310,13 @@ public class TabHotel extends JPanel{
 		@Override
 		public void valueChanged(ListSelectionEvent arg0) {
 			if (!lHotels.isSelectionEmpty()){
+				dlmCats.clear();
 				Hotel h = lHotels.getSelectedValue();
 				tfNomHotel.setText(h.getNom());
-				//System.out.println("nom hotel :" + h.getNom());
 				FabriqueVille fv = FabriqueVille.getInstance();
 				Ville v = fv.getVilleWithIdVille(h.getId_ville());
 				tfVilleHotel.setText(v.getNom());
-				//System.out.println("nom ville :" + v.getNom());
 				ArrayList<Categorie> cats = GestionCategorie.listerCategorieHotel(h.getId_hotel());
-				System.out.println(cats);
 				InterfaceGraphique.addCatsIntoOneList(dlmCats,cats);
 			}
 			else {
@@ -315,7 +326,6 @@ public class TabHotel extends JPanel{
 				tfCapCat.setText("");
 				tfTarifCat.setText("");
 				tfDelaiCat.setText("");
-				dlmChbres.clear();
 				dlmCats.clear();
 			}
 		}
