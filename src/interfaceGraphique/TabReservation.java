@@ -1,5 +1,6 @@
 package interfaceGraphique;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +21,7 @@ import com.toedter.calendar.JDateChooser;
 import domaine.Categorie;
 import domaine.Client;
 import domaine.Hotel;
+import domaine.Ville;
 import domaine.Vol;
 
 public class TabReservation extends JPanel{
@@ -31,8 +33,8 @@ public class TabReservation extends JPanel{
 	private JList<Client> lCust = new JList<Client>();
 	private DefaultListModel<Client> dlmCust = new DefaultListModel<Client>();
 	// Champs a remplir
-	private JComboBox<String> cbVilleDep;
-	private JComboBox<String> cbVilleArr;
+	private JComboBox<Ville> cbVilleDep;
+	private JComboBox<Ville> cbVilleArr;
 	private JDateChooser dcDteAller = new JDateChooser();
 	private JDateChooser dcDteRetr = new JDateChooser();
 	private JTextField tfNbPersAcc = new JTextField(2);
@@ -75,7 +77,7 @@ public class TabReservation extends JPanel{
 		leftMiddlePane.add(InterfaceGraphique.createSearchCust(tfSearch, cbSearch, dlmCust, lCust));
 		// Liste des clients
 		leftMiddlePane.add(InterfaceGraphique.createSubTitle("Les clients :"));
-		leftMiddlePane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 150, new LstCustListener()));
+		leftMiddlePane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 50, 200, new LstCustListener()));
 		//InterfaceGraphique.addAllClientsIntoList(dlmCust);
 		// Boutons
 		leftMiddlePane.add(InterfaceGraphique.createButtonsPair(new bDeselCustListener(),new bAffCustListener()));
@@ -95,7 +97,7 @@ public class TabReservation extends JPanel{
 		//En tete de liste
 		rightMiddlePane.add(InterfaceGraphique.createGroupRadioButton("Les vols possibles : ",rbPriceOrder, "Tier par prix", rbTimeOrder, "Trier par temps de voyage",true));
 		// La liste
-		rightMiddlePane.add(InterfaceGraphique.createListVol(dlmVols, lVols, 60, 150));
+		rightMiddlePane.add(InterfaceGraphique.createListVol(dlmVols, lVols, 2, 200));
 		// A voir pour l'ajout du bouton deselectionner tout si nécessaire
 		rightMiddlePane.add(InterfaceGraphique.createGroupRadioButton("Classe :", rb1Classe, "1ère classe", rb2Classe, "2ème classe",true));
 		rightMiddlePane.add(InterfaceGraphique.createSubTitle("Les hébergements possibles :"));
@@ -109,8 +111,8 @@ public class TabReservation extends JPanel{
 		rightTwoListPane.setLayout(new BoxLayout(rightTwoListPane, BoxLayout.Y_AXIS));
 		twoListPane.add(leftTwoListPane);
 		twoListPane.add(rightTwoListPane);
-		leftTwoListPane.add(InterfaceGraphique.createListHotel(dlmHotel, lHotel, 30, 150, new LstHotelListener()));
-		rightTwoListPane.add(InterfaceGraphique.createListCat(dlmCat, lCat, 30, 150));
+		leftTwoListPane.add(InterfaceGraphique.createListHotel(dlmHotel, lHotel, 200, 200, new LstHotelListener()));
+		rightTwoListPane.add(InterfaceGraphique.createListCat(dlmCat, lCat, 300, 200));
 		return rightMiddlePane;
 	}
 	

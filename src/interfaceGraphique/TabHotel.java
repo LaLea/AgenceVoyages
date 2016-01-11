@@ -74,25 +74,26 @@ public class TabHotel extends JPanel{
 		pHotels.setLayout(new BoxLayout(pHotels,BoxLayout.Y_AXIS));
 		JPanel pCat = new JPanel();
 		pCat.setLayout(new BoxLayout(pCat,BoxLayout.Y_AXIS));
-		JPanel pChbres = new JPanel();
-		pChbres.setLayout(new BoxLayout(pChbres,BoxLayout.Y_AXIS));
+		//JPanel pChbres = new JPanel();
+		//pChbres.setLayout(new BoxLayout(pChbres,BoxLayout.Y_AXIS));
 		pane.add(pVilles);
 		pane.add(pHotels);
 		pane.add(pCat);
-		pane.add(pChbres);
+		//pane.add(pChbres);
 		// Panel villes
 		pVilles.add(InterfaceGraphique.createSubTitle("Les villes :"));
-		pVilles.add(InterfaceGraphique.createListVilles(dlmVilles,lVilles,50,300, new lstVilleListener()));
+		pVilles.add(InterfaceGraphique.createListVilles(dlmVilles,lVilles,210, 400, new lstVilleListener()));
 		pVilles.add(InterfaceGraphique.createOneButton(new DeselAllVille(), "Déselectionner tout"));
 		pHotels.add(InterfaceGraphique.createSubTitle("Les hotels :"));
-		pHotels.add(InterfaceGraphique.createListHotel(dlmHotels, lHotels, 50, 300, new lstHotelListener()));
+		pHotels.add(InterfaceGraphique.createListHotel(dlmHotels, lHotels, 210, 400, new lstHotelListener()));
 		pHotels.add(InterfaceGraphique.createOneButton(new DeselAllHotel(), "Déselectionner tout"));
 		pCat.add(InterfaceGraphique.createSubTitle("Les categories :"));
-		pCat.add(InterfaceGraphique.createListCat(dlmCats, lCats, 50, 300));
+		pCat.add(InterfaceGraphique.createListCat(dlmCats, lCats, 210, 400));
+		lCats.addListSelectionListener(new lstCatListener());
 		pCat.add(InterfaceGraphique.createOneButton(new DeselAllCat(), "Déselectioner tout"));
-		pChbres.add(InterfaceGraphique.createSubTitle("Les chambres :"));
-		pChbres.add(InterfaceGraphique.createListChbres(dlmChbres, lChbres, 50, 300));
-		pChbres.add(InterfaceGraphique.createOneButton(new DeselAllChbres(), "Déselectionner tout"));
+		//pChbres.add(InterfaceGraphique.createSubTitle("Les chambres :"));
+		//pChbres.add(InterfaceGraphique.createListChbres(dlmChbres, lChbres, 50, 300));
+		//pChbres.add(InterfaceGraphique.createOneButton(new DeselAllChbres(), "Déselectionner tout"));
 		return pane;
 	}
 
@@ -116,9 +117,9 @@ public class TabHotel extends JPanel{
 		droite.add(InterfaceGraphique.createInputBox("Delai Annulation :", tfDelaiCat ));
 		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddCatListener(), new bDelCatListener(), new bEditCatListener()));
 		
-		droite.add(InterfaceGraphique.createSubTitle("La chambre :"));
-		droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomChbre));
-		droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddChbreListener(), new bDelChbreListener(), new bEditChbreListener()));
+		//droite.add(InterfaceGraphique.createSubTitle("La chambre :"));
+		//droite.add(InterfaceGraphique.createInputBox("Nom :", tfNomChbre));
+		//droite.add(InterfaceGraphique.createButtonAddDelEd(new bAddChbreListener(), new bDelChbreListener(), new bEditChbreListener()));
 		return droite;
 	}
 	
@@ -285,6 +286,7 @@ public class TabHotel extends JPanel{
 				tfNomCat.setText("");
 				tfTarifCat.setText("");
 				tfCapCat.setText("");
+				tfDelaiCat.setText("");
 				tfNomChbre.setText("");
 				dlmHotels.clear();
 			}
@@ -310,8 +312,30 @@ public class TabHotel extends JPanel{
 				tfNomHotel.setText("");
 				tfVilleHotel.setText("");
 				tfNomCat.setText("");
+				tfCapCat.setText("");
 				tfTarifCat.setText("");
+				tfDelaiCat.setText("");
 				dlmChbres.clear();
+				dlmCats.clear();
+			}
+		}
+	}
+	
+	private class lstCatListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			if (!lCats.isSelectionEmpty()){
+				Categorie c = lCats.getSelectedValue();
+				tfNomCat.setText(c.getNom());
+				tfCapCat.setText(String.valueOf(c.getCapacite()));
+				tfDelaiCat.setText(String.valueOf(c.getDelai()));
+				tfTarifCat.setText(String.valueOf(c.getTarif()));
+			}
+			else {
+				tfNomCat.setText("");
+				tfCapCat.setText("");
+				tfTarifCat.setText("");
+				tfDelaiCat.setText("");
 				dlmCats.clear();
 			}
 		}

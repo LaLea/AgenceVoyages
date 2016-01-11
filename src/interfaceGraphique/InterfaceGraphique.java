@@ -35,6 +35,7 @@ import domaine.Vol;
 import domaine.Voyage;
 import fabrique.FabriqueClient;
 import fabrique.FabriqueVille;
+import metier.GestionVille;
 
 /**
  *
@@ -140,6 +141,7 @@ public class InterfaceGraphique extends JFrame {
 	public static JPanel createSearchCust(JTextField tf,  JComboBox<String> cb, DefaultListModel<Client> dlm, JList<Client> l){
 		Color c = new Color(195, 220, 126);
 		JPanel search = new JPanel();
+		search.setLayout(new FlowLayout(FlowLayout.LEFT));
 		search.add(tf);
 		cb.addItem("Prénom");
 		cb.addItem("Nom");
@@ -180,6 +182,8 @@ public class InterfaceGraphique extends JFrame {
 		//sp.setFont(new Font("Calibri", Font.PLAIN, 14));
 		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		sp.setPreferredSize(new Dimension(lgr, htr));
+		//sp.setSize(lgr, htr);
+		//l.setPreferredSize(new Dimension(lgr, htr));
 		l.setModel(dlm);
 		return sp;
 	}
@@ -382,15 +386,20 @@ public class InterfaceGraphique extends JFrame {
 		return chooseDate;
 	}
 	
-	public static JPanel createCBVille(String label, JComboBox<String> cb){
+	public static JPanel createCBVille(String label, JComboBox<Ville> cb){
 		JPanel CBVille = new JPanel();
 		JLabel txt = new JLabel(label);
 		Font f = new Font("Calibri", Font.PLAIN, 14);
 		txt.setFont(f);
 		txt.setForeground(new Color(95, 73, 122));
 		CBVille.add(txt);
-		String [] vs = {"","France - Lesquin","France - Paris","Belgique - Bruxelles", "R-U - Londres"};
-		cb = new JComboBox<String>(vs);
+		ArrayList<Ville> villes = GestionVille.consulterVille();
+		cb = new JComboBox<Ville>();
+		int i = 0;
+		for (Ville v : villes) {
+			cb.insertItemAt(v, i);
+			i++;
+		}
 		cb.setFont(new Font("Calibri",Font.PLAIN,12));
 		cb.setPreferredSize(new Dimension(145,20));
 		//cb.setBackground(new Color(195, 220, 126));

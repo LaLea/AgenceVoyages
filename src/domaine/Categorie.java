@@ -139,6 +139,9 @@ public class Categorie {
 		this.delai = delai;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.getNom() + " - " + this.getCapacite() + " pers - " + this.getTarif() + "€";
+	}
 	
 }
