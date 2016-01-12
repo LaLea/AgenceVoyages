@@ -224,6 +224,7 @@ public class TabHotel extends JPanel{
 			int del = Integer.parseInt(tfDelaiCat.getText());
 			Categorie c = GestionCategorie.ajouterCategorie(h.getId_hotel(), tfNomCat.getText(), cap, tarif, del);
 			dlmCats.addElement(c);
+			lCats.setSelectedValue(c, true);
 		}
 	}
 	
@@ -249,9 +250,10 @@ public class TabHotel extends JPanel{
 					|| c.getCapacite() != Integer.parseInt(tfCapCat.getText())
 					|| c.getDelai() != Integer.parseInt(tfDelaiCat.getText())
 					|| c.getTarif() != Float.parseFloat(tfTarifCat.getText())){
-				GestionCategorie.modifierCategorie(h.getId_hotel(), tfNomCat.getText(), Integer.parseInt(tfCapCat.getText()), Float.parseFloat(tfTarifCat.getText()), Integer.parseInt(tfDelaiCat.getText()));
+				c = GestionCategorie.modifierCategorie(h.getId_hotel(), tfNomCat.getText(), Integer.parseInt(tfCapCat.getText()), Float.parseFloat(tfTarifCat.getText()), Integer.parseInt(tfDelaiCat.getText()));
 				dlmCats.removeElement(c);
 				dlmCats.addElement(c);
+				lCats.setSelectedValue(c, true);
 			}
 			
 		}
