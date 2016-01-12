@@ -10,11 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  * @author Lea Vannelle & Benoit Bailleul
  */
 public class BDDConnection {
+
+	private static final int PlaceRestante2emeClasse = 0;
 
 	private static BDDConnection INSTANCE = null;
 	
@@ -1021,6 +1024,84 @@ public class BDDConnection {
 		return idVol;
 	}
 	
+	public static int addVol(int id_villeDepart, int id_villeArrivee,
+			java.util.Date jours, Time heureDepart, Time heureArrivee,
+			int nb1ereClasse, float prix1ereClasse, int nb2emeClasse,
+			float prix2emeClasse, int dureeAnnulation,
+			int placeRestante1ereClasse, int placeRestante2emeClasse) {
+		BDDConnection.getInstance();
+		int idVol = 0;//BDDConnection.getVol(nom, pays);
+		if (idVol==0){ //si le retour du select est vide alors il doit le creer
+			try { 
+				PreparedStatement stmt;
+				stmt = c.prepareStatement("insert into Vol(`IDVilleDepart`,"
+						+ "`IDVilleArrivee`, `Jour`, `Heure`, `Duree`, `NbPassgr1Classe`, "
+						+ "`Tarif1Classe`, `NbPassr2Classe`, `Tarif2Classe`, `DelaiAnnulation`, PlaceRestante1ereClasse, PlaceRestante2emeClasse)"
+						+ " values (?,?,?,?,?,?,?,?,?,?,?,?)");
+				stmt.setInt(1, id_villeDepart);
+				stmt.setInt(2, id_villeArrivee);
+				stmt.setDate(3, (Date) jours);
+				stmt.setTime(4,heureDepart);
+				stmt.setTime(5,heureArrivee);
+				stmt.setInt(6, nb1ereClasse);
+				stmt.setFloat(7, prix1ereClasse);
+				stmt.setInt(8, nb2emeClasse);
+				stmt.setFloat(9, prix2emeClasse);
+				stmt.setInt(10, dureeAnnulation);
+				stmt.setInt(11, placeRestante1ereClasse);
+				stmt.setInt(12, PlaceRestante2emeClasse);
+				stmt.execute();
+				//idVol = BDDConnection.getVol(nom,pays);
+			} catch (SQLException e) {
+				return 0;
+			}
+		}
+		return idVol;
+	}	public static int addVol(int id_villeDepart, int id_villeArrivee,
+			java.util.Date depart, java.util.Date arrivee, int nb1ereClasse,
+			float prix1ereClasse, int nb2emeClasse, float prix2emeClasse,
+			int dureeAnnulation, int placeRestante1ereClasse,
+			int placeRestante2emeClasse2){
+		// TODO Auto-generated method stub
+		BDDConnection.getInstance();
+		int idVol = 0;//BDDConnection.getVol(nom, pays);
+		if (idVol==0){ //si le retour du select est vide alors il doit le creer
+			try { 
+				System.out.println(arrivee);
+				PreparedStatement stmt;
+				stmt = c.prepareStatement("insert into Vol (`IDVilleDepart`, `IDVilleArrivee`, `Depart`, `Arrivee`,"
+						+ " `NbPassgr1Classe`, `Tarif1Classe`, `NbPassr2Classe`,"
+						+ " `Tarif2Classe`, `DelaiAnnulation`, `PlaceRestante1ereClasse`, `PlaceRestante2emeClasse`)"
+						+ " values (?,?,?,?,?,?,?,?,?,?,?)");
+				stmt.setInt(1, id_villeDepart);
+				stmt.setInt(2, id_villeArrivee);
+				stmt.setTimestamp(3, new Timestamp(depart.getTime()));
+				stmt.setTimestamp(4 , new Timestamp(arrivee.getTime()));
+				stmt.setInt(5, nb1ereClasse);
+				stmt.setFloat(6, prix1ereClasse);
+				stmt.setInt(7, nb2emeClasse);
+				stmt.setFloat(8, prix2emeClasse);
+				stmt.setInt(9, dureeAnnulation);
+				stmt.setInt(10, placeRestante1ereClasse);
+				stmt.setInt(11, placeRestante2emeClasse2);
+				stmt.execute();
+				//idVol = BDDConnection.getVol(nom,pays);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		}
+		try {
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idVol;
+	}
+
+	
+	
 	/**
 	 * supprime une Vol de la base grace à son id
 	 * @param nom
@@ -1383,6 +1464,7 @@ public class BDDConnection {
 		}
 		return ligneLigne;
 	}
+
 
 	
 	

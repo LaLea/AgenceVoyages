@@ -3,27 +3,25 @@
  */
 package domaine;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * @author Benoit Bailleul & Vanelle Lea
  *
  */
 public class Vol {
 
-		private int id_vol;
+		private ArrayList<Integer> idsVol;
 		
 		private int id_villeDepart;
 		
 		private int id_villeArrivee;
 		
-		private String jour;
+		private Date depart;
 		
-		private int heureDepart;
-		
-		private int minDepart;
-		
-		private int heureDuree;
-		
-		private int minDuree;
+		private Date arrivee;
 		
 		private int nbPassagersFirstClass;
 		
@@ -34,54 +32,62 @@ public class Vol {
 		private float priceSecondClass;
 		
 		private int delaiAnnulation;
+		
 
+		
+	
+		
+		
+	
 		/**
-		 * @param id_vol
+		 * @param idsVol
 		 * @param id_villeDepart
 		 * @param id_villeArrivee
-		 * @param jour
-		 * @param heure
-		 * @param dureeVol
+		 * @param depart
+		 * @param arrivee
 		 * @param nbPassagersFirstClass
 		 * @param nbPassagersSecondClass
 		 * @param priceFirstClass
 		 * @param priceSecondClass
 		 * @param delaiAnnulation
 		 */
-		public Vol(int id_vol, int id_villeDepart2,
-				int id_villeArrivee2, String jours, int heure2, int min,
-				int heureDuree, int minDuree, int nb1ereClasse,
-				float prix1ereClasse, int nb2emeClasse, float prix2emeClasse,
-				int dureeAnnulation) {
-			this.id_vol = id_vol;
-			this.id_villeDepart = id_villeDepart2;
-			this.id_villeArrivee = id_villeArrivee2;
-			this.jour = jours;
-			this.heureDepart = heure2;
-			this.minDepart = min;
-			this.heureDuree = heureDuree;
-			this.minDuree = minDuree;
-			this.nbPassagersFirstClass = nb1ereClasse;
-			this.nbPassagersSecondClass = nb2emeClasse;
-			this.priceFirstClass = prix1ereClasse;
-			this.priceSecondClass = prix2emeClasse;
-			this.delaiAnnulation = dureeAnnulation;
+		public Vol(ArrayList<Integer> idsVol, int id_villeDepart,
+				int id_villeArrivee, Date depart, Date arrivee,
+				int nbPassagersFirstClass,
+				int nbPassagersSecondClass, float priceFirstClass,
+				float priceSecondClass, int delaiAnnulation) {
+			this.idsVol = idsVol;
+			this.id_villeDepart = id_villeDepart;
+			this.id_villeArrivee = id_villeArrivee;
+			this.depart = depart;
+			this.arrivee = arrivee;
+			this.nbPassagersFirstClass = nbPassagersFirstClass;
+			this.nbPassagersSecondClass = nbPassagersSecondClass;
+			this.priceFirstClass = priceFirstClass;
+			this.priceSecondClass = priceSecondClass;
+			this.delaiAnnulation = delaiAnnulation;
 		}
 
 
-		/**
-		 * @return the id_vol
-		 */
-		public int getId_vol() {
-			return id_vol;
+
+		public String toString(){
+			return this.id_villeDepart+","+this.id_villeArrivee+","+this.depart+","+this.arrivee;
 		}
 
 		/**
-		 * @param id_vol the id_vol to set
+		 * @return the idsVol
 		 */
-		public void setId_vol(int id_vol) {
-			this.id_vol = id_vol;
+		public ArrayList<Integer> getIdsVol() {
+			return idsVol;
 		}
+
+		/**
+		 * @param idsVol the idsVol to set
+		 */
+		public void setIdsVol(ArrayList<Integer> idsVol) {
+			this.idsVol = idsVol;
+		}
+
 
 		/**
 		 * @return the id_villeDepart
@@ -90,12 +96,14 @@ public class Vol {
 			return id_villeDepart;
 		}
 
+
 		/**
 		 * @param id_villeDepart the id_villeDepart to set
 		 */
 		public void setId_villeDepart(int id_villeDepart) {
 			this.id_villeDepart = id_villeDepart;
 		}
+
 
 		/**
 		 * @return the id_villeArrivee
@@ -104,6 +112,7 @@ public class Vol {
 			return id_villeArrivee;
 		}
 
+
 		/**
 		 * @param id_villeArrivee the id_villeArrivee to set
 		 */
@@ -111,18 +120,35 @@ public class Vol {
 			this.id_villeArrivee = id_villeArrivee;
 		}
 
+
 		/**
-		 * @return the jour
+		 * @return the depart
 		 */
-		public String getJour() {
-			return jour;
+		public Date getDepart() {
+			return depart;
 		}
 
 		/**
-		 * @param jour the jour to set
+		 * @param depart the depart to set
 		 */
-		public void setJour(String jour) {
-			this.jour = jour;
+		public void setDepart(Date depart) {
+			this.depart = depart;
+		}
+
+		/**
+		 * @return the arrivee
+		 */
+		public Date getArrivee() {
+			return arrivee;
+		}
+
+
+
+		/**
+		 * @param arrivee the arrivee to set
+		 */
+		public void setArrivee(Date arrivee) {
+			this.arrivee = arrivee;
 		}
 
 
@@ -133,6 +159,7 @@ public class Vol {
 			return nbPassagersFirstClass;
 		}
 
+
 		/**
 		 * @param nbPassagersFirstClass the nbPassagersFirstClass to set
 		 */
@@ -140,12 +167,14 @@ public class Vol {
 			this.nbPassagersFirstClass = nbPassagersFirstClass;
 		}
 
+
 		/**
 		 * @return the nbPassagersSecondClass
 		 */
 		public int getNbPassagersSecondClass() {
 			return nbPassagersSecondClass;
 		}
+
 
 		/**
 		 * @param nbPassagersSecondClass the nbPassagersSecondClass to set
@@ -161,6 +190,8 @@ public class Vol {
 			return priceFirstClass;
 		}
 
+
+
 		/**
 		 * @param priceFirstClass the priceFirstClass to set
 		 */
@@ -168,12 +199,14 @@ public class Vol {
 			this.priceFirstClass = priceFirstClass;
 		}
 
+
 		/**
 		 * @return the priceSecondClass
 		 */
 		public float getPriceSecondClass() {
 			return priceSecondClass;
 		}
+
 
 		/**
 		 * @param priceSecondClass the priceSecondClass to set
@@ -189,6 +222,7 @@ public class Vol {
 			return delaiAnnulation;
 		}
 
+
 		/**
 		 * @param delaiAnnulation the delaiAnnulation to set
 		 */
@@ -196,102 +230,6 @@ public class Vol {
 			this.delaiAnnulation = delaiAnnulation;
 		}
 
-		/* (non-Javadoc)
-		 * @see java.lang.Object#hashCode()
-		 */
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + id_vol;
-			return result;
-		}
 
-		/** looking only id_vol
-		 * @see java.lang.Object#equals(java.lang.Object)
-		 */
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Vol other = (Vol) obj;
-			if (id_vol != other.id_vol)
-				return false;
-			return true;
-		}
-
-
-		/**
-		 * @return the heureDuree
-		 */
-		public int getHeureDuree() {
-			return heureDuree;
-		}
-
-
-		/**
-		 * @param heureDuree the heureDuree to set
-		 */
-		public void setHeureDuree(int heureDuree) {
-			this.heureDuree = heureDuree;
-		}
-
-
-		/**
-		 * @return the heureDepart
-		 */
-		public int getHeureDepart() {
-			return heureDepart;
-		}
-
-
-		/**
-		 * @param heureDepart the heureDepart to set
-		 */
-		public void setHeureDepart(int heureDepart) {
-			this.heureDepart = heureDepart;
-		}
-
-
-		/**
-		 * @return the minDepart
-		 */
-		public int getMinDepart() {
-			return minDepart;
-		}
-
-
-		/**
-		 * @param minDepart the minDepart to set
-		 */
-		public void setMinDepart(int minDepart) {
-			this.minDepart = minDepart;
-		}
-
-
-		/**
-		 * @return the minDuree
-		 */
-		public int getMinDuree() {
-			return minDuree;
-		}
-
-
-		/**
-		 * @param minDuree the minDuree to set
-		 */
-		public void setMinDuree(int minDuree) {
-			this.minDuree = minDuree;
-		}
-		
-	
-		public String toString(){
-			return this.id_vol+","+this.id_villeDepart+","+this.id_villeArrivee+","+this.heureDepart+","+this.heureDuree;
-		}
-		
 	
 }

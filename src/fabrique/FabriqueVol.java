@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import domaine.Vol;
@@ -39,16 +40,17 @@ public class FabriqueVol {
 	 * @param tarif
 	 * @return la Vol
 	 */
-	public Vol addVol(int id_villeDepart, int id_villeArrivee,String jours,
-			int heure,int min ,int heureDuree,int minDuree,int nb1ereClasse, float prix1ereClasse,
+	public Vol addVol(int id_villeDepart, int id_villeArrivee,Date depart,
+			Date arrivee,int nb1ereClasse, float prix1ereClasse,
 			int nb2emeClasse, float prix2emeClasse, int dureeAnnulation,
 			int PlaceRestante1ereClasse,int PlaceRestante2emeClasse){
-		int numero_id_Vol = BDDConnection.addVol(id_villeDepart,id_villeArrivee,jours,
-				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
+		int numero_id_Vol = BDDConnection.addVol(id_villeDepart,id_villeArrivee,
+				depart, arrivee,nb1ereClasse,prix1ereClasse,
 				nb2emeClasse,prix2emeClasse,dureeAnnulation,PlaceRestante1ereClasse,PlaceRestante2emeClasse);	
-		Vol vol = new Vol(numero_id_Vol,id_villeDepart,id_villeArrivee,jours,
-				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
-				nb2emeClasse,prix2emeClasse,dureeAnnulation);
+		ArrayList<Integer> id = new ArrayList<Integer>();
+		id.add(numero_id_Vol);
+		Vol vol = new Vol(id,id_villeDepart,id_villeArrivee,depart,arrivee,nb1ereClasse,
+				nb2emeClasse,prix1ereClasse,prix2emeClasse,dureeAnnulation);
 		this.lesVols.put(numero_id_Vol, vol);
 		return vol;
 	}
@@ -60,7 +62,7 @@ public class FabriqueVol {
 	 * @param tarif
 	 * @return la Vol
 	 */
-	public Vol addVolDansFabrique(int idVol ,int id_villeDepart, int id_villeArrivee,String jours,
+/**	public Vol addVolDansFabrique(int idVol ,int id_villeDepart, int id_villeArrivee,String jours,
 			int heure,int min ,int heureDuree,int minDuree,int nb1ereClasse, float prix1ereClasse,
 			int nb2emeClasse, float prix2emeClasse, int dureeAnnulation){
 		Vol vol = new Vol(idVol,id_villeDepart,id_villeArrivee,jours,
@@ -68,7 +70,7 @@ public class FabriqueVol {
 				nb2emeClasse,prix2emeClasse,dureeAnnulation);
 		this.lesVols.put(idVol, vol);
 		return vol;
-	}
+	}*/
 
 	
 	/**

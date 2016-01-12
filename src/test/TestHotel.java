@@ -1,6 +1,11 @@
 package test;
 
+import metier.GestionHotel;
+
+import org.junit.Test;
+
 import domaine.Hotel;
+import fabrique.BDDConnection;
 import fabrique.FabriqueHotel;
 /**
  *    HOTEL OKKKKKKKKKKKKK
@@ -12,7 +17,7 @@ import fabrique.FabriqueHotel;
 
 public class TestHotel {
 
-	@Test
+/**	@Test
 	public void deleteHotel(){
 		FabriqueHotel fv = FabriqueHotel.getInstance();
 		int n = fv.getHotelBDDWithVilleAndNom(1, "ChezBenoit").getId_hotel();
@@ -21,8 +26,7 @@ public class TestHotel {
 	
 	@Test
 	public void ajoutHotel(){
-		FabriqueHotel fv = FabriqueHotel.getInstance();
-		fv.addHotel(1,"ChezMaryse");
+		BDDConnection.addHotel(1, "ChezLea");
 		Hotel hotel = fv.getHotelBDDWithVilleAndNom(1,"ChezMaryse");
 		System.out.println(hotel);
 	}
@@ -38,6 +42,9 @@ public class TestHotel {
 	
 	*/
 
-	
+	@Test
+	public void testHotel(){
+		GestionHotel.ajoutHotel(1,"Incconu3");
+				}
 
 }
