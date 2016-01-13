@@ -1,6 +1,7 @@
 package interfaceGraphique;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -97,22 +98,22 @@ public class TabReservation extends JPanel{
 		//En tete de liste
 		rightMiddlePane.add(InterfaceGraphique.createGroupRadioButton("Les vols possibles : ",rbPriceOrder, "Tier par prix", rbTimeOrder, "Trier par temps de voyage",true));
 		// La liste
-		rightMiddlePane.add(InterfaceGraphique.createListVol(dlmVols, lVols, 2, 200));
+		rightMiddlePane.add(InterfaceGraphique.createListVol(dlmVols, lVols, 50, 200));
 		// A voir pour l'ajout du bouton deselectionner tout si nécessaire
 		rightMiddlePane.add(InterfaceGraphique.createGroupRadioButton("Classe :", rb1Classe, "1ère classe", rb2Classe, "2ème classe",true));
 		rightMiddlePane.add(InterfaceGraphique.createSubTitle("Les hébergements possibles :"));
 		// Les 2 listes hotels et catégories de chambres
 		JPanel twoListPane = new JPanel();
 		rightMiddlePane.add(twoListPane);
-		twoListPane.setLayout(new GridLayout(1,2));
+		twoListPane.setLayout(new FlowLayout());
 		JPanel leftTwoListPane = new JPanel();
 		leftTwoListPane.setLayout(new BoxLayout(leftTwoListPane, BoxLayout.Y_AXIS));
 		JPanel rightTwoListPane = new JPanel();
 		rightTwoListPane.setLayout(new BoxLayout(rightTwoListPane, BoxLayout.Y_AXIS));
 		twoListPane.add(leftTwoListPane);
 		twoListPane.add(rightTwoListPane);
-		leftTwoListPane.add(InterfaceGraphique.createListHotel(dlmHotel, lHotel, 200, 200, new LstHotelListener()));
-		rightTwoListPane.add(InterfaceGraphique.createListCat(dlmCat, lCat, 300, 200));
+		leftTwoListPane.add(InterfaceGraphique.createListHotel(dlmHotel, lHotel, 250, 200, new LstHotelListener()));
+		rightTwoListPane.add(InterfaceGraphique.createListCat(dlmCat, lCat, 250, 200));
 		return rightMiddlePane;
 	}
 	

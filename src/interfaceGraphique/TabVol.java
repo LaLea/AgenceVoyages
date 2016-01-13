@@ -1,5 +1,6 @@
 package interfaceGraphique;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,6 +45,7 @@ public class TabVol extends JPanel{
 		add(InterfaceGraphique.createTitle("Gestion des vols, du planning des vols."));
 		JPanel midPane = new JPanel();
 		add(midPane);
+		midPane.setAlignmentY(BOTTOM_ALIGNMENT);
 		midPane.add(createPaneOne());
 		midPane.add(createPaneTwo());
 		midPane.add(createPaneThree());
@@ -65,6 +67,7 @@ public class TabVol extends JPanel{
 		four.add(InterfaceGraphique.createInputBox("Tarif en 2ème classe : ", tfTarif2Class));
 		four.add(InterfaceGraphique.createInputBox("Délai d'annulation :", tfDelai));
 		four.add(InterfaceGraphique.createButtonAddDelEd(new addVolListener(), new delVolListener(), new editVolListener()));
+		four.add(InterfaceGraphique.createOneButton(new GenerateLinesListener(), "Générer les lignes"));
 		return four;
 	}
 
@@ -72,7 +75,7 @@ public class TabVol extends JPanel{
 		JPanel three = new JPanel();
 		three.setLayout(new BoxLayout(three,BoxLayout.Y_AXIS));
 		three.add(InterfaceGraphique.createSubTitle("Jour et heure des vols :"));
-		three.add(InterfaceGraphique.createListVol(dlmVol, lVol, 60, 200));
+		three.add(InterfaceGraphique.createListVol(dlmVol, lVol, 60, 440));
 		three.add(InterfaceGraphique.createOneButton(new DeselVolListener(), "Déselectionner tout"));
 		return three;
 	}
@@ -82,7 +85,7 @@ public class TabVol extends JPanel{
 		two.setLayout(new BoxLayout(two,BoxLayout.Y_AXIS));
 		two.add(InterfaceGraphique.createSubTitle("Ville d'arrivée :"));
 		two.add(InterfaceGraphique.createSimpleSearch(tfSearchVilleArr, new SearchVilleArrListener()));
-		two.add(InterfaceGraphique.createListVilles(dlmVillesArr, lVillesArr, 60, 200, new lstVilleArrListener()));
+		two.add(InterfaceGraphique.createListVilles(dlmVillesArr, lVillesArr, 60, 400, new lstVilleArrListener()));
 		two.add(InterfaceGraphique.createButtonsPair(new DeselVilleArrListener(), new AffVilleArrListener()));
 		return two;
 	}
@@ -92,7 +95,7 @@ public class TabVol extends JPanel{
 		one.setLayout(new BoxLayout(one,BoxLayout.Y_AXIS));
 		one.add(InterfaceGraphique.createSubTitle("Ville de départ :"));
 		one.add(InterfaceGraphique.createSimpleSearch(tfSearchVilleDep, new SearchVilleDepListener()));
-		one.add(InterfaceGraphique.createListVilles(dlmVillesDep, lVillesDep, 60, 200, new lstVilleDepListener()));
+		one.add(InterfaceGraphique.createListVilles(dlmVillesDep, lVillesDep, 60, 400, new lstVilleDepListener()));
 		one.add(InterfaceGraphique.createButtonsPair(new DeselVilleDepListener(), new AffVilleDepListener()));
 		return one;
 	}
@@ -192,6 +195,14 @@ public class TabVol extends JPanel{
 	private class lstVilleArrListener implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	private class GenerateLinesListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			
 		}

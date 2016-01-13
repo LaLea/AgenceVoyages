@@ -81,7 +81,7 @@ public class TabVoyage extends JPanel{
 		JPanel middleMidPane = new JPanel();
 		middleMidPane.setLayout(new BoxLayout(middleMidPane, BoxLayout.Y_AXIS));
 		middleMidPane.add(InterfaceGraphique.createSubTitle("Les voyages du client :"));
-		middleMidPane.add(InterfaceGraphique.createListVoyage(dlmVoyage, lVoyage, 60, 200));
+		middleMidPane.add(InterfaceGraphique.createListVoyage(dlmVoyage, lVoyage, 60, 460));
 		middleMidPane.add(InterfaceGraphique.createOneButton(new DeselVoyageListener(), "Désélectionner tout"));
 		return middleMidPane;
 	}
@@ -92,7 +92,7 @@ public class TabVoyage extends JPanel{
 		leftMidPane.add(InterfaceGraphique.createSubTitle("Rechercher un client :"));
 		leftMidPane.add(InterfaceGraphique.createSearchCust(tfSearchCust, cbSearchCust, dlmCust, lCust));
 		leftMidPane.add(InterfaceGraphique.createSubTitle("Les clients :"));
-		leftMidPane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 200, null));
+		leftMidPane.add(InterfaceGraphique.createListCust(dlmCust, lCust, 60, 400, null));
 		//InterfaceGraphique.addAllClientsIntoList(dlmCust);
 		leftMidPane.add(InterfaceGraphique.createButtonsPair(new DeselCustListener(), new AffToutCustListener()));
 		return leftMidPane;

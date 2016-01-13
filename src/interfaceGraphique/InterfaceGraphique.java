@@ -170,6 +170,7 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Vol>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Vol>();
 		l.setModel(dlm);
 		return sp;
@@ -222,6 +223,7 @@ public class InterfaceGraphique extends JFrame {
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
 		//dlm = new DefaultListModel<Hotel>();
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		l.setModel(dlm);
 		l.addListSelectionListener(lstListener);
 		return sp;
@@ -238,6 +240,7 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Categorie>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Categorie>();
 		l.setModel(dlm);
 		return sp;
@@ -254,6 +257,7 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Ville>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Ville>();
 		l.addListSelectionListener(lsl);
 		l.setModel(dlm);
@@ -291,6 +295,7 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Chambre>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Chambre>();
 		l.setModel(dlm);
 		return sp;
@@ -301,6 +306,7 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Voyage>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Voyage>();
 		l.setModel(dlm);
 		return sp;

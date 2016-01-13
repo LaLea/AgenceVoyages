@@ -58,7 +58,7 @@ public class TabClient extends JPanel{
 		p.add(InterfaceGraphique.createSubTitle("Rechercher un client :"));
 		p.add(InterfaceGraphique.createSearchCust(tfSearchCust, cbSearchCust, dlmCust, lClient));
 		p.add(InterfaceGraphique.createSubTitle("Les clients :"));
-		p.add(InterfaceGraphique.createListCust(dlmCust, lClient, 60, 200, new lstCustListener()));
+		p.add(InterfaceGraphique.createListCust(dlmCust, lClient, 40, 300, new lstCustListener()));
 		p.add(InterfaceGraphique.createButtonsPair(new DeselCustListener(), new AffToutCustListener()));
 		return p;
 	}
