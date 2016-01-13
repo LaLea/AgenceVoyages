@@ -1119,15 +1119,15 @@ public class BDDConnection {
 	}
 	
 	
-	public static ResultSet getVol(int idDepart, int idArrivee,String jours) {
+	public static ResultSet getVol(int idDepart, int idArrivee,java.util.Date jours) {
 		PreparedStatement stmt;
 		ResultSet VolVol = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? and Jour=?");
+			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? and Depart=?");
 			stmt.setInt(1, idDepart);
 			stmt.setInt(2, idArrivee);
-			stmt.setString(3, jours);
+			stmt.setTimestamp(3 , new Timestamp(jours.getTime()));
 			VolVol = stmt.executeQuery();
 			VolVol.next();
 		} catch (SQLException e) {

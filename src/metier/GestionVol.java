@@ -18,14 +18,12 @@ import fabrique.FabriqueVol;
 public class GestionVol {
 
 
-	public static Vol ajouterVol(int id_villeDepart,int  id_villeArrivee,String jours,int heure,int min,int heureDuree,
-			 int minDuree,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
+	public static Vol ajouterVol(int id_villeDepart,int  id_villeArrivee,Date depart,Date arrivee,
+			int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
 			 int PlaceRestante1ereClasse,int PlaceRestante2emeClasse){
-		Calendar cal = Calendar.getInstance();
-		Time time= cal.getTime()
 		FabriqueVol fv = FabriqueVol.getInstance();
-		Vol Vol = fv.addVol(id_villeDepart, id_villeArrivee, jours, heure, min, heureDuree,
-				minDuree, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation, PlaceRestante1ereClasse, PlaceRestante2emeClasse);
+
+		Vol Vol = fv.addVol(id_villeDepart, id_villeArrivee, depart,arrivee, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation, PlaceRestante1ereClasse, PlaceRestante2emeClasse);
 		return Vol;
 	}
 	
@@ -34,12 +32,11 @@ public class GestionVol {
 		fv.deleteVol(idVol);
 	}
 	
-	public static Vol modifierVol(int id_villeDepart,int  id_villeArrivee,String jours,int heure,int min,int heureDuree,
-			 int minDuree,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
+	public static Vol modifierVol(int id_villeDepart,int  id_villeArrivee,Date depart, Date arrivee,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
 			 int PlaceRestante1ereClasse,int PlaceRestante2emeClasse){
 		FabriqueVol fv = FabriqueVol.getInstance();
-		fv.deleteVol(fv.getVolAvecVilleDepartEtArriveeEtJours(id_villeDepart, id_villeArrivee,jours));
-		return fv.addVol(id_villeDepart, id_villeArrivee, jours, heure, min, heureDuree, minDuree, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation, PlaceRestante1ereClasse,PlaceRestante2emeClasse);
+		fv.deleteVol(fv.getVolAvecVilleDepartEtArriveeEtJours(id_villeDepart, id_villeArrivee,depart));
+		return fv.addVol(id_villeDepart, id_villeArrivee, depart,arrivee, nb1ereClasse, prix1ereClasse, nb2emeClasse, prix2emeClasse, dureeAnnulation, PlaceRestante1ereClasse,PlaceRestante2emeClasse);
 	}
 	
 	public static void genererLesVolsDeLaSemaine(){

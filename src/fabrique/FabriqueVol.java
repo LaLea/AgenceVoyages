@@ -62,15 +62,13 @@ public class FabriqueVol {
 	 * @param tarif
 	 * @return la Vol
 	 */
-/**	public Vol addVolDansFabrique(int idVol ,int id_villeDepart, int id_villeArrivee,String jours,
-			int heure,int min ,int heureDuree,int minDuree,int nb1ereClasse, float prix1ereClasse,
+	public Vol addVolDansFabrique(ArrayList<Integer> idsVol ,int id_villeDepart, int id_villeArrivee,Date depart, Date arrivee
+			,int nb1ereClasse, float prix1ereClasse,
 			int nb2emeClasse, float prix2emeClasse, int dureeAnnulation){
-		Vol vol = new Vol(idVol,id_villeDepart,id_villeArrivee,jours,
-				heure,min ,heureDuree,minDuree,nb1ereClasse,prix1ereClasse,
-				nb2emeClasse,prix2emeClasse,dureeAnnulation);
-		this.lesVols.put(idVol, vol);
+		Vol vol = new Vol(idsVol,id_villeDepart,id_villeArrivee,depart,arrivee,nb1ereClasse,
+				nb2emeClasse,prix1ereClasse,prix2emeClasse,dureeAnnulation);
 		return vol;
-	}*/
+	}
 
 	
 	/**
@@ -91,20 +89,21 @@ public class FabriqueVol {
 		//si la Vol n'existe pas dans al farbqiue, il faut aller chercher les
 		//infos dans la base pour le creer
 		if (vol== null){
-			ResultSet ligneVol = BDDConnection.selectVol(idVol);
+			ResultSet leVol = BDDConnection.selectVol(idVol);
 			try{
-				int idVilleDepart = ligneVol.getInt(2);
-				int idVilleArrivee = ligneVol.getInt(3);
-				String jours = ligneVol.getString(4);
-				Time heure = ligneVol.getTime(5);
-				Time duree = ligneVol.getTime(6);
-				int nb1ereClasse = ligneVol.getInt(7);
-				float prix1ere = ligneVol.getFloat(8);
-				int nb2emeClasse = ligneVol.getInt(9);
-				float prix2eme = ligneVol.getFloat(10);
-				int dureeAnnulation = ligneVol.getInt(11);
-				vol = this.addVolDansFabrique(idVol,idVilleDepart,idVilleArrivee,jours,heure.getHours(),heure.getMinutes(),
-						duree.getHours(),duree.getMinutes(),nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
+				int idVilleDepart = leVol.getInt(2);
+				int idVilleArrivee = leVol.getInt(3);
+				Date depart = leVol.getDate(4);
+				Date arrivee = leVol.getDate(5);
+				int nb1ereClasse = leVol.getInt(6);
+				float prix1ere = leVol.getFloat(7);
+				int nb2emeClasse = leVol.getInt(8);
+				float prix2eme = leVol.getFloat(9);
+				int dureeAnnulation = leVol.getInt(10);
+				ArrayList<Integer> lesVol = new ArrayList<Integer>();
+				lesVol.add(idVol);
+				vol = this.addVolDansFabrique(lesVol,idVilleDepart,idVilleArrivee,depart,arrivee,nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
+				return vol;
 			}
 			catch (SQLException e){
 				return null;
@@ -155,22 +154,22 @@ public class FabriqueVol {
 	}
 	
 
-	private void recupereVol(ResultSet ligneVol, ArrayList<Vol> lesVols){
+	private void recupereVol(ResultSet leVol, ArrayList<Vol> lesVols){
 		try{
-			while (ligneVol.next()){
-				int idVol = ligneVol.getInt(1);
-				int idVilleDepart = ligneVol.getInt(2);
-				int idVilleArrivee = ligneVol.getInt(3);
-				String jours = ligneVol.getString(4);
-				Time heure = ligneVol.getTime(5);
-				Time duree = ligneVol.getTime(6);
-				int nb1ereClasse = ligneVol.getInt(7);
-				float prix1ere = ligneVol.getFloat(8);
-				int nb2emeClasse = ligneVol.getInt(9);
-				float prix2eme = ligneVol.getFloat(10);
-				int dureeAnnulation = ligneVol.getInt(11);
-				Vol vol = this.addVolDansFabrique(idVol,idVilleDepart,idVilleArrivee,jours,heure.getHours(),heure.getMinutes(),
-						duree.getHours(),duree.getMinutes(),nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
+			while (leVol.next()){
+				int idVol = leVol.getInt(1);
+				int idVilleDepart = leVol.getInt(2);
+				int idVilleArrivee = leVol.getInt(3);
+				Date depart = leVol.getDate(4);
+				Date arrivee = leVol.getDate(5);
+				int nb1ereClasse = leVol.getInt(6);
+				float prix1ere = leVol.getFloat(7);
+				int nb2emeClasse = leVol.getInt(8);
+				float prix2eme = leVol.getFloat(9);
+				int dureeAnnulation = leVol.getInt(10);
+				ArrayList<Integer> lesVol = new ArrayList<Integer>();
+				lesVol.add(idVol);
+				Vol vol = this.addVolDansFabrique(lesVol,idVilleDepart,idVilleArrivee,depart,arrivee,nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
 				lesVols.add(vol);
 			}
 		}
@@ -186,24 +185,24 @@ public class FabriqueVol {
 	 * @param jour le jours du vol
 	 * @return l'id du vol qui part de iDdepart et à destination de idArrivee ce jours là
 	 */
-	public int getVolAvecVilleDepartEtArriveeEtJours(int idDepart, int idArrivee,String jour){
-		ResultSet VolVol = BDDConnection.getVol(idDepart,idArrivee,jour);
+	public int getVolAvecVilleDepartEtArriveeEtJours(int idDepart, int idArrivee,Date jour){
+		ResultSet leVol = BDDConnection.getVol(idDepart,idArrivee,jour);
 		try{
-			if (VolVol.next()){
-				int idVol = VolVol.getInt(1);
-				int idVilleDepart = VolVol.getInt(2);
-				int idVilleArrivee = VolVol.getInt(3);
-				String jours = VolVol.getString(4);
-				Time heure = VolVol.getTime(5);
-				Time duree = VolVol.getTime(6);
-				int nb1ereClasse = VolVol.getInt(7);
-				float prix1ere = VolVol.getFloat(8);
-				int nb2emeClasse = VolVol.getInt(9);
-				float prix2eme = VolVol.getFloat(10);
-				int dureeAnnulation = VolVol.getInt(11);
-				Vol vol = this.addVolDansFabrique(idVol,idVilleDepart,idVilleArrivee,jours,heure.getHours(),heure.getMinutes(),
-						duree.getHours(),duree.getMinutes(),nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
-				return vol.getId_vol();
+			if (leVol.next()){
+				int idVol = leVol.getInt(1);
+				int idVilleDepart = leVol.getInt(2);
+				int idVilleArrivee = leVol.getInt(3);
+				Date depart = leVol.getDate(4);
+				Date arrivee = leVol.getDate(5);
+				int nb1ereClasse = leVol.getInt(6);
+				float prix1ere = leVol.getFloat(7);
+				int nb2emeClasse = leVol.getInt(8);
+				float prix2eme = leVol.getFloat(9);
+				int dureeAnnulation = leVol.getInt(10);
+				ArrayList<Integer> lesVol = new ArrayList<Integer>();
+				lesVol.add(idVol);
+				Vol vol = this.addVolDansFabrique(lesVol,idVilleDepart,idVilleArrivee,depart,arrivee,nb1ereClasse,prix1ere,nb2emeClasse,prix2eme,dureeAnnulation);
+				return lesVol.get(1);
 			}
 		}
 		catch (Exception e){
