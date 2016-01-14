@@ -29,4 +29,9 @@ public class GestionVille {
 		return fv.allVilles();
 	}
 	
+	public static ArrayList<Ville> rechercheVille(String nom){
+		FabriqueVille fv = FabriqueVille.getInstance();
+		return fv.rechercheVille(nom);
+	}
+	
 }

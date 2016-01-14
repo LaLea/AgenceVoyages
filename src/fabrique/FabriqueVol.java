@@ -34,8 +34,8 @@ public class FabriqueVol {
 	}
 	
 	/**
-	 * crée la Vol dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
-	 * puis l'ajoute a la BDD et à la fabrique
+	 * crï¿½e la Vol dans la base de donnï¿½es si elle n'existe pas dï¿½jï¿½ dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et ï¿½ la fabrique
 	 * @param capacite
 	 * @param tarif
 	 * @return la Vol
@@ -56,8 +56,8 @@ public class FabriqueVol {
 	}
 	
 	/**
-	 * crée la Vol dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
-	 * puis l'ajoute a la BDD et à la fabrique
+	 * crï¿½e la Vol dans la base de donnï¿½es si elle n'existe pas dï¿½jï¿½ dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et ï¿½ la fabrique
 	 * @param capacite
 	 * @param tarif
 	 * @return la Vol
@@ -114,7 +114,7 @@ public class FabriqueVol {
 	
 	/**
 	 * permet de supprimer un vol
-	 * @param id_Vol l'id du vol à supprimer
+	 * @param id_Vol l'id du vol ï¿½ supprimer
 	 */
 	public void deleteVol(int id_Vol){
 		BDDConnection.deleteVol(id_Vol);
@@ -129,7 +129,7 @@ public class FabriqueVol {
 	 * permet de recuperer les vols grace aux villes de depart et d'arrivee
 	 * @param id_ville l'id de la ville de depart
 	 * @param id_ville2 l'id de la ville d'arrivee
-	 * @return la liste des vols correspondant à ces parametres
+	 * @return la liste des vols correspondant ï¿½ ces parametres
 	 */
 	public ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParPrix(int id_ville,
 			int id_ville2) {
@@ -143,7 +143,7 @@ public class FabriqueVol {
 	 * permet de recuperer les vols grace aux villes de depart et d'arrivee
 	 * @param id_ville l'id de la ville de depart
 	 * @param id_ville2 l'id de la ville d'arrivee
-	 * @return la liste des vols correspondant à ces parametres
+	 * @return la liste des vols correspondant ï¿½ ces parametres
 	 */
 	public ArrayList<Vol> getVolsAvecVilleDepartEtArriveeParDuree(int id_ville,
 			int id_ville2) {
@@ -178,12 +178,27 @@ public class FabriqueVol {
 		}
 	}
 	
+	
+	
+	public ArrayList<Vol> volsAvecEscales(int depart, int arrivee,ArrayList<Integer> dejaParcouru, Arr){
+		dejaParcouru.add(depart);
+		try {
+			ResultSet rs = BDDConnection.lesVolsAvecVilleDepart(depart);
+			while (rs.next()){
+				if (!dejaParcouru.contains(rs.get(2))){
+					
+				}
+			}
+		}
+	
+	
+	
 	/**
 	 * permet de recuperer les vols
 	 * @param idDepart l'id de la ville de depart
 	 * @param idArrivee l'id de la ville d'arrivee
 	 * @param jour le jours du vol
-	 * @return l'id du vol qui part de iDdepart et à destination de idArrivee ce jours là
+	 * @return l'id du vol qui part de iDdepart et ï¿½ destination de idArrivee ce jours lï¿½
 	 */
 	public int getVolAvecVilleDepartEtArriveeEtJours(int idDepart, int idArrivee,Date jour){
 		ResultSet leVol = BDDConnection.getVol(idDepart,idArrivee,jour);

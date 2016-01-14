@@ -149,10 +149,10 @@ public class BDDConnection {
 	}
 	
 	/**
-	 * permet de recuperer la ligne entiere d'une categorie grace à l'id 
+	 * permet de recuperer la ligne entiere d'une categorie grace ï¿½ l'id 
 	 * de la categorie
 	 * @param idCategorie
-	 * @return le ResultSet si la ligne existe sinon null, ( le next pour être 
+	 * @return le ResultSet si la ligne existe sinon null, ( le next pour ï¿½tre 
 	 * sur la ligne a deja ete realise
 	 */
 	public static ResultSet ligneCategorie(int idCategorie){
@@ -170,7 +170,7 @@ public class BDDConnection {
 	}
 	
 	/**
-	 * supprime la categorie de la base grace à son id
+	 * supprime la categorie de la base grace ï¿½ son id
 	 * @param id_categorie
 	 */
 	public static void deleteCategorie( int id_categorie){
@@ -267,12 +267,12 @@ public class BDDConnection {
 	}
 
 	/**
-	 * permet de creer une chambre dans la base de données, ne la crée pas 
-	 * si elle existe déjà
+	 * permet de creer une chambre dans la base de donnï¿½es, ne la crï¿½e pas 
+	 * si elle existe dï¿½jï¿½
 	 * @param id_hotel id_hotel
 	 * @param id_categorie id_categorie
 	 * @param numero numero de la chambre
-	 * @return le numero de l'id_chambre que l'on vient de créer ou recuperer
+	 * @return le numero de l'id_chambre que l'on vient de crï¿½er ou recuperer
 	 * dans la base, 0 si il y a eu un quelconque probleme
 	 */
 	public static int addChambre(int id_hotel,int id_categorie,int numero){
@@ -327,7 +327,7 @@ public class BDDConnection {
 		PreparedStatement stmt;
 		ResultSet client = null;
 		try {
-			stmt = c.prepareStatement("select * from Client where Nom = ? and Prenom= ?");
+			stmt = c.prepareStatement("select * from Client where Nom = ? and Prenom= ? order by Nom,Prenom");
 			stmt.setString(1, nom);
 			stmt.setString(2, prenom);
 			client = stmt.executeQuery();
@@ -349,7 +349,7 @@ public class BDDConnection {
 		PreparedStatement stmt;
 		ResultSet client = null;
 		try {
-			stmt = c.prepareStatement("select * from Client where Nom=?");
+			stmt = c.prepareStatement("select * from Client where Nom=? order by Nom");
 			stmt.setString(1,nom);
 			client = stmt.executeQuery();
 		} catch (SQLException e) {
@@ -474,7 +474,7 @@ public class BDDConnection {
 	
 	
 	/**
-	 * supprime le client de la base grace à son id
+	 * supprime le client de la base grace ï¿½ son id
 	 * @param id_categorie
 	 */
 	public static void deleteClient(int id_client){
@@ -558,10 +558,10 @@ public class BDDConnection {
 	 * permet de creer un hotel
 	 * @param id_ville
 	 * @param nom
-	 * @return l'id de l'hotel créé ou récuperé sinon 0 si la base n'a pas reussi à le creer.
+	 * @return l'id de l'hotel crï¿½ï¿½ ou rï¿½cuperï¿½ sinon 0 si la base n'a pas reussi ï¿½ le creer.
 	 */
 	public static int addHotel(int id_ville, String nom){
-		BDDConnection.getInstance();
+		BDDConnection.getInstance();nom
 		int idHotel = BDDConnection.getHotel(id_ville, nom);
 		if (idHotel == 0){ //si le retour du select est vide alors il doit le creer
 			try { 
@@ -631,7 +631,7 @@ public class BDDConnection {
 		PreparedStatement stmt;
 		ResultSet hotel = null;
 		try {
-			stmt = c.prepareStatement("select * from Ville where Nom = ? and Pays= ?;");
+			stmt = c.prepareStatement("select * from Ville where Nom = ? and Pays= ? order by Pays,Nom");
 			stmt.setString(1, nom);
 			stmt.setString(2, pays);
 			hotel = stmt.executeQuery();
@@ -648,7 +648,7 @@ public class BDDConnection {
 		ResultSet ligneVille = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Ville where Nom=?");
+			stmt = c.prepareStatement("select * from Ville where Nom=? order by Nom");
 			stmt.setString(1, nom);
 			ligneVille = stmt.executeQuery();
 			ligneVille.next();
@@ -725,14 +725,14 @@ public class BDDConnection {
 	}
 	
 	/**
-	 * supprime une ville de la base grace à son id
+	 * supprime une ville de la base grace ï¿½ son id
 	 * @param nom
 	 * @param pays
 	 */
 	public static void deleteVille(int idVille){
 			try {
 				BDDConnection.getInstance();
-				PreparedStatement stmt = c.prepareStatement("delete from Ville where ID_Ville=?");
+				PreparedStatement stmt = c.prepareStatement(nom"delete from Ville where ID_Ville=?");
 				stmt.clearParameters();		
 				stmt.setInt(1, idVille);
 				stmt.execute();
@@ -862,8 +862,8 @@ public class BDDConnection {
 	
 
 	/**
-	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de départ
-	 * @param idVille ville de départ
+	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de dï¿½part
+	 * @param idVille ville de dï¿½part
 	 * @return la ligne de la Vol sinon null
 	 */
 	public static  ResultSet lesVolsAvecVilleDepartetArriveeParPrix(int ID_VilleD, int ID_VilleA ){
@@ -882,8 +882,8 @@ public class BDDConnection {
 	}
 	
 	/**
-	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de départ
-	 * @param idVille ville de départ
+	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de dï¿½part
+	 * @param idVille ville de dï¿½part
 	 * @return la ligne de la Vol sinon null
 	 */
 	public static  ResultSet lesVolsAvecVilleDepartetArriveeParTemps(int ID_VilleD, int ID_VilleA ){
@@ -902,8 +902,8 @@ public class BDDConnection {
 	}
 	
 	/**
-	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de départ
-	 * @param idVille ville de départ
+	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de dï¿½part
+	 * @param idVille ville de dï¿½part
 	 * @return la ligne de la Vol sinon null
 	 */
 	public static  ResultSet lesVolsAvecVilleDepart(int ID_Ville ){
@@ -921,8 +921,8 @@ public class BDDConnection {
 	}
 
 	/**
-	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de départ
-	 * @param idVille ville de départ
+	 * permet de recuperer une ligne de la table Vol grace a l'id de la ville de dï¿½part
+	 * @param idVille ville de dï¿½part
 	 * @return la ligne de la Vol sinon null
 	 */
 	public static  ResultSet lesVolsAvecVilleArrivee(int ID_Ville ){
@@ -1103,7 +1103,7 @@ public class BDDConnection {
 	
 	
 	/**
-	 * supprime une Vol de la base grace à son id
+	 * supprime une Vol de la base grace ï¿½ son id
 	 * @param nom
 	 * @param pays
 	 */
@@ -1263,8 +1263,8 @@ public class BDDConnection {
 	
 	
 	/**
-	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de départ
-	 * @param idVille ville de départ
+	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de dï¿½part
+	 * @param idVille ville de dï¿½part
 	 * @return la ligne de la Ligne sinon null
 	 */
 	public static  ResultSet lesLignesAvecVilleDepartetArrivee(int ID_VilleD, int ID_VilleA ){
@@ -1283,8 +1283,8 @@ public class BDDConnection {
 	}
 	
 	/**
-	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de départ
-	 * @param idVille ville de départ
+	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de dï¿½part
+	 * @param idVille ville de dï¿½part
 	 * @return la ligne de la Ligne sinon null
 	 */
 	public static  ResultSet lesLignesAvecVilleDepart(int ID_Ville ){
@@ -1302,8 +1302,8 @@ public class BDDConnection {
 	}
 
 	/**
-	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de départ
-	 * @param idVille ville de départ
+	 * permet de recuperer une ligne de la table Ligne grace a l'id de la ville de dï¿½part
+	 * @param idVille ville de dï¿½part
 	 * @return la ligne de la Ligne sinon null
 	 */
 	public static  ResultSet lesLignesAvecVilleArrivee(int ID_Ville ){
@@ -1434,7 +1434,7 @@ public class BDDConnection {
 	}
 	
 	/**
-	 * supprime une Ligne de la base grace à son id
+	 * supprime une Ligne de la base grace ï¿½ son id
 	 * @param nom
 	 * @param pays
 	 */

@@ -39,8 +39,8 @@ public class FabriqueVille {
 	
 	
 	/**
-	 * crée la Ville dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
-	 * puis l'ajoute a la BDD et à la fabrique
+	 * crï¿½e la Ville dans la base de donnï¿½es si elle n'existe pas dï¿½jï¿½ dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et ï¿½ la fabrique
 	 * @param capacite
 	 * @param tarif
 	 * @return la Ville
@@ -55,8 +55,8 @@ public class FabriqueVille {
 	
 	
 	/**
-	 * crée la Ville dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
-	 * puis l'ajoute a la BDD et à la fabrique
+	 * crï¿½e la Ville dans la base de donnï¿½es si elle n'existe pas dï¿½jï¿½ dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et ï¿½ la fabrique
 	 * @param capacite
 	 * @param tarif
 	 * @return la Ville
@@ -140,8 +140,8 @@ public class FabriqueVille {
 	}
 	
 	/**
-	 * permet de supprimer une ville grace à l'id de la ville
-	 * @param id_Ville l'id de la ville à supprimer
+	 * permet de supprimer une ville grace ï¿½ l'id de la ville
+	 * @param id_Ville l'id de la ville ï¿½ supprimer
 	 */
 	public void deleteVille(int id_Ville){
 		BDDConnection.deleteVille(id_Ville);
@@ -159,6 +159,24 @@ public class FabriqueVille {
 	public ArrayList<Ville> allVilles(){
 		ArrayList<Ville> lesVilles = new ArrayList<Ville>();
 		ResultSet rs = BDDConnection.laTable("Ville");
+		try{
+			while (rs.next()){
+				int n = rs.getInt(1);
+				String nom1= rs.getString(2);
+				String pays =  rs.getString(3);
+				Ville ville= this.addVilleDansFabrique(n,nom1,pays);
+				lesVilles.add(ville);	
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();;
+		}
+		return lesVilles;
+	}
+
+	public ArrayList<Ville> rechercheVille(String nom) {
+		ArrayList<Ville> lesVilles = new ArrayList<Ville>();
+		ResultSet rs = BDDConnection.getVille(nom);
 		try{
 			while (rs.next()){
 				int n = rs.getInt(1);
