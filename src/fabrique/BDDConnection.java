@@ -113,6 +113,22 @@ public class BDDConnection {
 		return idCategorie;
 	}
 	
+	public static void modifieCategorie(int idCategorie, int id_hotel,
+			String nom, int capacite, float tarif, int delai) {
+				try {
+					PreparedStatement stmt;
+					stmt = c.prepareStatement("UPDATE `Categorie` SET `IDHotel`=?,`Nom`=?,"
+							+ "`Capacite`=?,`Tarif`=?,`Delai`=? WHERE ID_Categorie="+idCategorie);
+					stmt.setInt(1, id_hotel);		
+					stmt.setString(2, nom);
+					stmt.setInt(3, capacite);
+					stmt.setFloat(4, tarif);
+					stmt.setInt(5, delai);
+					stmt.executeUpdate();
+				} catch (SQLException e) {
+				}
+	}
+	
 	
 	/**
 	 * recupere l'id de la categorie
@@ -431,6 +447,22 @@ public class BDDConnection {
 		return idClient;
 	}	
 	
+	
+	public static void modifieClient(int id_client, String nom, String prenom,
+			int idVille, java.util.Date date) {
+			try {
+				PreparedStatement stmt;
+				stmt= c.prepareStatement("UPDATE `Client` SET `IDVilleOrigine`=?,`Nom`=?,`Prenom`=?,`DateNaissance`=? WHERE ID_Client="+id_client);
+				stmt.setInt(1, idVille);
+				stmt.setString(2, nom );
+				stmt.setString(3, prenom);
+				java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+				stmt.setDate(4,sqlDate);
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+			}
+		
+	}
 	
 	public static int addClient2( String nom, String prenom, int id_ville, Date date) {
 		BDDConnection.getInstance();
@@ -1464,6 +1496,9 @@ public class BDDConnection {
 		}
 		return ligneLigne;
 	}
+
+
+
 
 
 	

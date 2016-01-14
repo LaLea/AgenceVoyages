@@ -13,9 +13,10 @@ public class GestionLigne {
 		return Ligne;
 	}
 	
-	public static void supprimerligne(int idLigne){
+	public static Ligne supprimerligne(int idLigne){
 		FabriqueLigne fv = FabriqueLigne.getInstance();
 		fv.deleteLigne(idLigne);
+		return fv.getLigneBDDWithIdLigne(idLigne);
 	}
 	
 	public static Ligne modifierLigne(int id_villeDepart,int  id_villeArrivee,String jours,int heure,int min,int heureDuree,

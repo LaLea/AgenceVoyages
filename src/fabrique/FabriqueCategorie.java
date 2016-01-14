@@ -153,4 +153,11 @@ public class FabriqueCategorie {
 			}
 		return lesCategories;
 	}
+
+	public Categorie modifierCategorie(int idCategorie,int id_hotel, String nom, int capacite,
+			float tarif, int delai) {
+			BDDConnection.modifieCategorie(idCategorie,id_hotel,nom,capacite,tarif,delai);
+			this.lesCategories.remove(idCategorie);
+			return getCategorieWithIdCategorie(idCategorie);
+	}
 }

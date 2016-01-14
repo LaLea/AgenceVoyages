@@ -17,10 +17,11 @@ public class GestionHotel {
 		fh.deleteHotel(idHotel);
 	}
 	
-	public static void supprimerHotel(int idVille,String nomHotel){
+	public static Hotel supprimerHotel(int idVille,String nomHotel){
 		FabriqueHotel fh = FabriqueHotel.getInstance();
 		Hotel hotel = fh.getHotelBDDWithVilleAndNom(idVille, nomHotel);
 		fh.deleteHotel(hotel.getId_hotel());
+		return fh.getHotelBDDWithVilleAndNom(idVille, nomHotel);
 	}
 	
 	public static ArrayList<Hotel> listerHotelDUneVille(int idVille){

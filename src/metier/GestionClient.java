@@ -21,15 +21,17 @@ public class GestionClient {
 	public static Client modifierClient(String nom, String prenom, String ville,String pays,Date date){
 		FabriqueClient fc = FabriqueClient.getInstance();
 		Client client = fc.getClientBDDWithNomAndPrenom(nom, prenom);
-		fc.deleteClient(client.getId_client());
-		client= ajoutVoyageur(nom, prenom, ville,pays, date);
-		return client;
+		FabriqueVille fv = FabriqueVille.getInstance();
+		Ville ville2 = fv.addVille(ville, pays);
+		fc.modifierClient(client.getId_client(), nom,  prenom,  ville2.getId_ville(), date);
+		return fc.getClientWithIdClient(client.getId_client());
 	}
 	
-	public static void supprimerClient(String nom, String prenom){
+	public static Client supprimerClient(String nom, String prenom){
 		FabriqueClient fc = FabriqueClient.getInstance();
 		Client client = fc.getClientBDDWithNomAndPrenom(nom, prenom);
 		fc.deleteClient(client.getId_client());
+		return fc.getClientBDDWithNomAndPrenom(nom, prenom);
 	}
 	
 	public static void supprimerClient(int idclient){

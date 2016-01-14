@@ -13,9 +13,10 @@ public class GestionVille {
 		return ville;
 		}
 	
-	public static void supprimerVille(int id_Ville){
+	public static Ville supprimerVille(int id_Ville){
 		FabriqueVille fv = FabriqueVille.getInstance();
 		fv.deleteVille(id_Ville);
+		return fv.getVilleWithIdVille(id_Ville);
 	}
 	
 	public static void supprimerVille(String nom, String pays){

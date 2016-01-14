@@ -1,6 +1,12 @@
 package test;
 
-import fabrique.FabriqueCategorie;
+import java.util.ArrayList;
+
+import metier.GestionCategorie;
+
+import org.junit.Test;
+
+import domaine.Categorie;
 /**
  *  CATEGORIE OKKKKKKKK
  * @author Tchioben
@@ -10,11 +16,11 @@ import fabrique.FabriqueCategorie;
 
 public class TestCategorie {
 
-	@Test
+/**	@Test
 	public void addCategorie(){
 		FabriqueCategorie fc = FabriqueCategorie.getInstance();
 		fc.addCategorie(1, "Luxe",2, new Float(350),5);
-	}
+	}*/
 
 /**	@Test
 	public void deleteCategorie(){
@@ -22,4 +28,12 @@ public class TestCategorie {
 		fc.deleteCategorie(fc.getCategorieBDDWithNomAndHotel(1, "Luxe").getId_categorie());
 	}
 	*/
+	
+	@Test
+	public void getCategorie(){
+		ArrayList<Categorie> l = GestionCategorie.listerCategorieHotel(1);
+		for (Categorie l2 : l){
+			System.out.println(l2);
+		}
+	}
 }

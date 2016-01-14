@@ -15,9 +15,10 @@ public class GestionChambre {
 			return chambre;
 		}
 		
-		public static void supprimerChambre(int idChambre){
+		public static Chambre supprimerChambre(int idChambre){
 			FabriqueChambre fc = FabriqueChambre.getInstance();
 			fc.deleteChambre(idChambre);
+			return fc.getChambreWithIdChambre(idChambre);
 		}
 		
 		public static ArrayList<Chambre> listerChambre(int idHotel){

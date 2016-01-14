@@ -209,5 +209,14 @@ public class FabriqueClient {
 		}
 		return lesClients;
 	}
+
+
+
+	public void modifierClient(int id_client, String nom, String prenom,
+			int id_ville, Date date) {
+		BDDConnection.modifieClient(id_client,  nom,  prenom,id_ville,date);
+		this.lesClients.remove(id_client);
+		
+	}
 	
 }

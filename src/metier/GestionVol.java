@@ -25,9 +25,10 @@ public class GestionVol {
 		return Vol;
 	}
 	
-	public static void supprimerVol(int idVol){
+	public static Vol supprimerVol(int idVol){
 		FabriqueVol fv = FabriqueVol.getInstance();
 		fv.deleteVol(idVol);
+		return fv.getVolBDDWithIdVol(idVol);
 	}
 	
 	public static Vol modifierVol(int id_villeDepart,int  id_villeArrivee,Date depart, Date arrivee,int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
