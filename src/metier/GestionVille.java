@@ -7,6 +7,12 @@ import fabrique.FabriqueVille;
 
 public class GestionVille {
 	
+	/**
+	 * ajout d'une ville
+	 * @param nom nom de la ville
+	 * @param pays pays de la ville
+	 * @return la ville créée
+	 */
 	public static Ville ajouterVille(String nom, String pays){
 		FabriqueVille fv = FabriqueVille.getInstance();
 		Ville ville = fv.addVille(nom, pays);
