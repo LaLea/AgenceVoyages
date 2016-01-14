@@ -143,11 +143,12 @@ public class FabriqueCategorie {
 		ArrayList<Categorie> lesCategories = new ArrayList<Categorie>();
 		try {
 			while (rs.next()){
-				Categorie categorie = getCategorieWithId(rs.getInt(1));
+				Categorie categorie = addCategorieDansFabrique(rs.getInt(1),rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getFloat(5), rs.getInt(6));
 				lesCategories.add(categorie);
 			}
 		}
 		catch (Exception e){
+			e.printStackTrace();
 			return lesCategories;
 			}
 		return lesCategories;
