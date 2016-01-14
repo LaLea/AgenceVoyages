@@ -180,15 +180,19 @@ public class FabriqueVol {
 	
 	
 	
-	public ArrayList<Vol> volsAvecEscales(int depart, int arrivee,ArrayList<Integer> dejaParcouru, Arr){
+	public void volsAvecEscales(int depart, int arrivee,ArrayList<Integer> dejaParcouru){
 		dejaParcouru.add(depart);
 		try {
 			ResultSet rs = BDDConnection.lesVolsAvecVilleDepart(depart);
 			while (rs.next()){
-				if (!dejaParcouru.contains(rs.get(2))){
+				if (!dejaParcouru.contains(rs.getInt(2))){
 					
 				}
 			}
+		}
+			catch(Exception e){
+			}
+			
 		}
 	
 	

@@ -561,7 +561,7 @@ public class BDDConnection {
 	 * @return l'id de l'hotel cr�� ou r�cuper� sinon 0 si la base n'a pas reussi � le creer.
 	 */
 	public static int addHotel(int id_ville, String nom){
-		BDDConnection.getInstance();nom
+		BDDConnection.getInstance();
 		int idHotel = BDDConnection.getHotel(id_ville, nom);
 		if (idHotel == 0){ //si le retour du select est vide alors il doit le creer
 			try { 
@@ -732,7 +732,7 @@ public class BDDConnection {
 	public static void deleteVille(int idVille){
 			try {
 				BDDConnection.getInstance();
-				PreparedStatement stmt = c.prepareStatement(nom"delete from Ville where ID_Ville=?");
+				PreparedStatement stmt = c.prepareStatement("delete from Ville where ID_Ville=?");
 				stmt.clearParameters();		
 				stmt.setInt(1, idVille);
 				stmt.execute();
