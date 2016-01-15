@@ -20,7 +20,18 @@ import fabrique.FabriqueVol;
  */
 public class GestionVoyages {
 
-	
+	/**
+	 * permet d'ajouter une reservation à un voyage 
+	 * @param idClient l'id du client
+	 * @param nombrePersonne nombre de personne ( client compris)
+	 * @param idVolAller id du vol aller
+	 * @param classe la classe du vol
+	 * @param dateVolAller date vol aller
+	 * @param idCategorie id de la categorie de chambre
+	 * @param dateReservationChambre date reservation chambre
+	 * @param idVolRetour id vol retour 
+	 * @param dateVolRetour date vol retour
+	 */
 	public static void ajouterUnVoyage(int idClient, int nombrePersonne,int idVolAller,
 			int classe, Date dateVolAller, int idCategorie, Date dateReservationChambre,
 			int idVolRetour, Date dateVolRetour){
@@ -41,12 +52,21 @@ public class GestionVoyages {
 		}
 	}
 	
+	/**
+	 * permet d'afficher les reservations
+	 * @param idClient l'id du client
+	 * @return la liste des reservation pour un client
+	 */
 	public static ArrayList<Reservation> consultationReservation(int idClient){
 		FabriqueReservation fr = FabriqueReservation.getInstance();
 		ArrayList<Reservation> lesReservs= fr.getReservationDUnePersonne(idClient);
 		return lesReservs;
 	}
 	
+	/**
+	 * supprime une reservation
+	 * @param lesReservs
+	 */
 	public static void supprimeReservation(ArrayList<Reservation> lesReservs){
 		FabriqueCategorie fc = FabriqueCategorie.getInstance();
 		FabriqueVol fv = FabriqueVol.getInstance();
@@ -66,6 +86,11 @@ public class GestionVoyages {
 		}
 	}
 	
+	/**
+	 * recuperer la reservation d'un client
+	 * @param idReservation l'id de la reservation 
+	 * @return la reservation
+	 */
 	public static Reservation recuperationReservation(int idReservation){
 		FabriqueReservation fr = FabriqueReservation.getInstance();
 		Reservation reservation = fr.getReservation(idReservation);

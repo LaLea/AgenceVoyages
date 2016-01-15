@@ -15,7 +15,21 @@ import fabrique.FabriqueVol;
 
 public class GestionVol {
 
-
+	/**
+	 * ajout d'un vol
+	 * @param id_villeDepart l'id de la ville de depart
+	 * @param id_villeArrivee l'id de la ville d'arrivee
+	 * @param depart date de depart
+	 * @param arrivee date d'arrivee
+	 * @param nb1ereClasse nombre place 1 ere classe
+	 * @param prix1ereClasse prix d'une place en 1ere classe
+	 * @param nb2emeClasse nombre place 2 eme classe
+	 * @param prix2emeClasse prix d'une place en 2 eme classe
+	 * @param dureeAnnulation nombre de jours aavant à laquelle on peut annuler le vol
+	 * @param PlaceRestante1ereClasse places restantes dans la 1 ere classe
+	 * @param PlaceRestante2emeClasse places restantes dans la 2 eme classe
+	 * @return
+	 */
 	public static Vol ajouterVol(int id_villeDepart,int  id_villeArrivee,Date depart,Date arrivee,
 			int nb1ereClasse,float prix1ereClasse,int nb2emeClasse,float prix2emeClasse,int dureeAnnulation,
 			 int PlaceRestante1ereClasse,int PlaceRestante2emeClasse){
@@ -25,6 +39,11 @@ public class GestionVol {
 		return Vol;
 	}
 	
+	/**
+	 * supprimer un vol
+	 * @param idVol l'id du vol
+	 * @return le vol si n'a pas ete supp
+	 */
 	public static Vol supprimerVol(int idVol){
 		FabriqueVol fv = FabriqueVol.getInstance();
 		fv.deleteVol(idVol);
