@@ -291,7 +291,7 @@ public class Ligne {
 		
 	
 		public String toString(){
-			return this.id_Ligne+","+this.id_villeDepart+","+this.id_villeArrivee+","+this.heureDepart+","+this.heureDuree;
+			return String.valueOf(this.id_Ligne);
 		}
 
 

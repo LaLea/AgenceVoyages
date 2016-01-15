@@ -30,6 +30,7 @@ import domaine.Categorie;
 import domaine.Chambre;
 import domaine.Client;
 import domaine.Hotel;
+import domaine.Ligne;
 import domaine.Ville;
 import domaine.Vol;
 import domaine.Voyage;
@@ -69,9 +70,9 @@ public class InterfaceGraphique extends JFrame {
         tabs.setTabPlacement(SwingConstants.TOP);
         frame.add(tabs);
         tabs.addTab("Reservation", tReserv);
+        tabs.addTab("Gestion des voyages", tVoy);
         tabs.addTab("Gestion des hotels", tHotel);
         tabs.addTab("Gestion des clients", tClient);
-        tabs.addTab("Gestion des voyages", tVoy);
         tabs.addTab("Gestion des vols", tVol); // gestion des lignes et du planning des lignes
         
         //Display the window.
@@ -165,15 +166,24 @@ public class InterfaceGraphique extends JFrame {
 		return search;
 	}
 	
-	// Liste des vols
-	public static JScrollPane createListVol(DefaultListModel<Vol> dlm, JList<Vol> l, int lgr, int htr){
+	// Liste des lignes
+	public static JScrollPane createListLigne(DefaultListModel<Ligne> dlm, JList<Ligne> l, int lgr, int htr, ListSelectionListener ls){
 		//l = new JList<Vol>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
-		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Vol>();
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		l.setModel(dlm);
+		l.addListSelectionListener(ls);
 		return sp;
+	}
+	
+	public static void addLignesIntoList(DefaultListModel<Ligne> dlm, ArrayList<Ligne> l){
+		for (Ligne ligne : l) {
+			dlm.addElement(ligne);
+			System.out.println(l);
+		}
+		System.out.println("================");
 	}
 	
 	// Liste des clients
@@ -240,8 +250,8 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Categorie>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
-		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Categorie>();
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		l.setModel(dlm);
 		return sp;
 	}
@@ -257,8 +267,8 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Ville>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
-		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Ville>();
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		l.addListSelectionListener(lsl);
 		l.setModel(dlm);
 		return sp;
@@ -282,12 +292,14 @@ public class InterfaceGraphique extends JFrame {
 	
 	public static void addVilleIntoAllList(Ville v){
 		tHotel.getDlmVille().addElement(v);
-		tVol.getDlmVille().addElement(v);
+		tVol.getDlmVilleDep().addElement(v);
+		tVol.getDlmVilleArr().addElement(v);
 	}
 	
 	public static void delVilleIntoAllList(Ville v){
 		tHotel.getDlmVille().removeElement(v);
-		tVol.getDlmVille().removeElement(v);
+		tVol.getDlmVilleArr().removeElement(v);
+		tVol.getDlmVilleDep().removeElement(v);
 	}
 	
 	// Liste des chambres
@@ -295,8 +307,8 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Chambre>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
-		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Chambre>();
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		l.setModel(dlm);
 		return sp;
 	}
@@ -306,11 +318,23 @@ public class InterfaceGraphique extends JFrame {
 		//l = new JList<Voyage>();
 		JScrollPane sp = new JScrollPane(l);
 		sp.setPreferredSize(new Dimension(lgr, htr));
-		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		//dlm = new DefaultListModel<Voyage>();
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
 		l.setModel(dlm);
 		return sp;
 	}
+	
+	// Liste des vols
+	public static JScrollPane createListVol(DefaultListModel<Vol> dlm, JList<Vol> l, int lgr, int htr, ListSelectionListener lstListener) {
+		JScrollPane sp = new JScrollPane(l);
+		sp.setPreferredSize(new Dimension(lgr, htr));
+		l.setFont(new Font("Calibri", Font.PLAIN, 14));
+		l.setModel(dlm);
+		l.addListSelectionListener(lstListener);
+		return sp;
+	}
+	
+	
 	
 	public static JPanel createOneButton(ActionListener al, String label) {
 		JPanel b = new JPanel();

@@ -84,6 +84,7 @@ public class TabReservation extends JPanel{
 		leftMiddlePane.add(InterfaceGraphique.createButtonsPair(new bDeselCustListener(),new bAffCustListener()));
 		//Champs a remplir
 		leftMiddlePane.add(InterfaceGraphique.createCBVille("Ville de départ* :", cbVilleDep));
+		//cbVilleDep.addActionListener(new cbVilleDepListener());
 		leftMiddlePane.add(InterfaceGraphique.createCBVille("Ville d'arrivée :", cbVilleArr));
 		leftMiddlePane.add(InterfaceGraphique.createDateChooser("Date de départ :",dcDteAller));
 		leftMiddlePane.add(InterfaceGraphique.createDateChooser("Date de retour :",dcDteRetr));
@@ -98,7 +99,8 @@ public class TabReservation extends JPanel{
 		//En tete de liste
 		rightMiddlePane.add(InterfaceGraphique.createGroupRadioButton("Les vols possibles : ",rbPriceOrder, "Tier par prix", rbTimeOrder, "Trier par temps de voyage",true));
 		// La liste
-		rightMiddlePane.add(InterfaceGraphique.createListVol(dlmVols, lVols, 50, 200));
+		rightMiddlePane.add(InterfaceGraphique.createListVol(dlmVols, lVols, 50, 200, new LstVolListener()));
+		
 		// A voir pour l'ajout du bouton deselectionner tout si nécessaire
 		rightMiddlePane.add(InterfaceGraphique.createGroupRadioButton("Classe :", rb1Classe, "1ère classe", rb2Classe, "2ème classe",true));
 		rightMiddlePane.add(InterfaceGraphique.createSubTitle("Les hébergements possibles :"));
@@ -151,11 +153,26 @@ public class TabReservation extends JPanel{
 		}
 	}
 	
+	private class LstVolListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			
+			
+		}
+	}
+	
 	private class LstHotelListener implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			// TODO Auto-generated method stub
 			
+		}
+	}
+	
+	private class cbVilleDepListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			cbVilleArr.removeItemAt(cbVilleDep.getSelectedIndex());
 		}
 	}
 }
