@@ -33,8 +33,8 @@ public class FabriqueLigne {
 	}
 	
 	/**
-	 * crée la Ligne dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
-	 * puis l'ajoute a la BDD et à la fabrique
+	 * crï¿½e la Ligne dans la base de donnï¿½es si elle n'existe pas dï¿½jï¿½ dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et ï¿½ la fabrique
 	 * @param capacite
 	 * @param tarif
 	 * @return la Ligne
@@ -53,8 +53,8 @@ public class FabriqueLigne {
 	}
 	
 	/**
-	 * crée la Ligne dans la base de données si elle n'existe pas déjà dans la fabrique, et la BDD 
-	 * puis l'ajoute a la BDD et à la fabrique
+	 * crï¿½e la Ligne dans la base de donnï¿½es si elle n'existe pas dï¿½jï¿½ dans la fabrique, et la BDD 
+	 * puis l'ajoute a la BDD et ï¿½ la fabrique
 	 * @param capacite
 	 * @param tarif
 	 * @return la Ligne
@@ -112,8 +112,8 @@ public class FabriqueLigne {
 	}
 	
 	/**
-	 * permet de supprimer une ligne grace à l'id de la ligne
-	 * @param id_Ligne l'id de la ligne à supprimer
+	 * permet de supprimer une ligne grace ï¿½ l'id de la ligne
+	 * @param id_Ligne l'id de la ligne ï¿½ supprimer
 	 */
 	public void deleteLigne(int id_Ligne){
 		BDDConnection.deleteLigne(id_Ligne);
@@ -125,10 +125,10 @@ public class FabriqueLigne {
 	}
 
 	/**
-	 * permet de recuperer les lignes grace à la ville de départ et la ville d'arrivée
-	 * @param id_ville l'id de la ville de départ
-	 * @param id_ville2 l'id de la ville d'arrivée
-	 * @return la liste des lignes qui correspondent à ces 2 villes
+	 * permet de recuperer les lignes grace ï¿½ la ville de dï¿½part et la ville d'arrivï¿½e
+	 * @param id_ville l'id de la ville de dï¿½part
+	 * @param id_ville2 l'id de la ville d'arrivï¿½e
+	 * @return la liste des lignes qui correspondent ï¿½ ces 2 villes
 	 */
 	public ArrayList<Ligne> getLignesAvecVilleDepartEtArrivee(int id_ville,
 			int id_ville2) {
@@ -163,10 +163,10 @@ public class FabriqueLigne {
 	}
 	
 	/**
-	 * permet de recuperer l'id d'une ligne grace à la ville de depart et celle d'arrivee
+	 * permet de recuperer l'id d'une ligne grace ï¿½ la ville de depart et celle d'arrivee
 	 * @param idDepart l'id de la ville de depart
 	 * @param idArrivee l'id de la ville d'arrivee
-	 * @return l'id de la ligne qui correspond à ces villes
+	 * @return l'id de la ligne qui correspond ï¿½ ces villes
 	 */
 	public int getLigneAvecVilleDepartEtArrivee(int idDepart, int idArrivee){
 		ResultSet ligneLigne = BDDConnection.getLigne(idDepart,idArrivee);

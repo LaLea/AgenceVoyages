@@ -903,7 +903,7 @@ public class BDDConnection {
 		ResultSet ligneVol = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? order by Tarif1Classe desc");
+			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? and `Depart`>= 'NOW()' order by Tarif1Classe desc");
 			stmt.setInt(1, ID_VilleD);
 			stmt.setInt(2, ID_VilleA);
 			ligneVol = stmt.executeQuery();
@@ -923,7 +923,7 @@ public class BDDConnection {
 		ResultSet ligneVol = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? order by Duree desc");
+			stmt = c.prepareStatement("select * from Vol where IDVilleDepart=? and IDVilleArrivee=? and `Depart`>= 'NOW()' order by Duree desc");
 			stmt.setInt(1, ID_VilleD);
 			stmt.setInt(2, ID_VilleA);
 			ligneVol = stmt.executeQuery();
@@ -977,7 +977,7 @@ public class BDDConnection {
 		ResultSet ligneVol = null;
 		try {
 			BDDConnection.getInstance();
-			stmt = c.prepareStatement("select * from Vol where ID_Vol=?");
+			stmt = c.prepareStatement("select * from Vol where ID_Vol=? and `Depart`>= 'NOW()'");
 			stmt.setInt(1, ID_Vol);
 			ligneVol = stmt.executeQuery();
 			ligneVol.next();
